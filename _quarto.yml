@@ -6,42 +6,41 @@ website:
   title: "QSTEP"
 
   navbar:
-    left:
-      - href: index.qmd
-        text: QSTEP
-
+    background: dark
     right:
       - icon: github
         href: https://github.com/kaufmann-group/qstep-demo
+        aria-label: GitHub
 
   sidebar:
-    title: "D-Wave Tutorials"
     style: docked
-    search: true
+    search: false
 
     contents:
-      - section: "Getting Started"
-        contents:
-          - href: index.qmd
-            text: Overview
+      - href: index.qmd
+        text: Overview
 
-      - section: "Quantum Annealing"
+      - section: "Modules"
         contents:
           - href: "D-wave Demonstration.ipynb"
             text: D-Wave Demonstration
 
-      - section: "Advanced Topics"
-        contents:
           - href: "Additional D-wave Topics.ipynb"
             text: Additional D-Wave Topics
 
+  page-navigation: true
+
 format:
   html:
-    theme: cosmo
+    theme: darkly
     toc: true
+    toc-title: "On this page"
     toc-location: right
+    toc-depth: 3
     code-copy: true
     code-overflow: wrap
+    smooth-scroll: true
+    anchor-sections: true
     css: styles.css
 
 execute:

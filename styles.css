@@ -1,15 +1,314 @@
-.content {
-  max-width: 1000px;
+/* ============================================================
+   QSTEP — IBM Quantum inspired layout
+   ============================================================ */
+
+:root {
+  --qstep-bg: #21272a;
+  --qstep-sidebar: #161616;
+  --qstep-navbar: #21272a;
+  --qstep-active: #393939;
+  --qstep-border: #393939;
+
+  --qstep-text: #f4f4f4;
+  --qstep-muted: #c6c6c6;
+  --qstep-secondary: #a8a8a8;
+
+  --qstep-link: #78a9ff;
+  --qstep-code: #161616;
 }
 
-.cell-code {
-  border-radius: 6px;
+
+/* ------------------------------------------------------------
+   Entire page
+   ------------------------------------------------------------ */
+
+html,
+body {
+  background-color: var(--qstep-bg);
+  color: var(--qstep-text);
+  font-family:
+    "IBM Plex Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
-h1 {
+
+/* ------------------------------------------------------------
+   Navbar
+   ------------------------------------------------------------ */
+
+.navbar {
+  background-color: var(--qstep-navbar) !important;
+  border-bottom: 1px solid var(--qstep-border);
+  min-height: 48px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.navbar-brand {
+  color: var(--qstep-text) !important;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.navbar-nav .nav-link {
+  color: var(--qstep-muted) !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: white !important;
+}
+
+
+/* ------------------------------------------------------------
+   Left sidebar
+   ------------------------------------------------------------ */
+
+#quarto-sidebar {
+  background-color: var(--qstep-sidebar);
+  border-right: 1px solid var(--qstep-border);
+}
+
+.sidebar {
+  background-color: var(--qstep-sidebar);
+}
+
+.sidebar-menu-container {
+  padding-top: 1rem;
+}
+
+.sidebar-item-text {
+  color: var(--qstep-muted);
+  font-size: 0.9rem;
+}
+
+.sidebar-item .sidebar-link:hover .sidebar-item-text {
+  color: var(--qstep-text);
+}
+
+
+/* Active page, similar to IBM */
+.sidebar-item .active {
+  background-color: var(--qstep-active);
+}
+
+.sidebar-item .active .sidebar-item-text {
+  color: var(--qstep-text) !important;
+  font-weight: 600;
+}
+
+
+/* Section heading e.g. Modules */
+.sidebar-item-section > .sidebar-item-container {
   margin-top: 1rem;
 }
 
-.navbar {
+.sidebar-item-section > .sidebar-item-container .sidebar-item-text {
+  color: var(--qstep-text);
+  font-weight: 600;
+}
+
+
+/* ------------------------------------------------------------
+   Main article
+   ------------------------------------------------------------ */
+
+main.content {
+  max-width: 850px;
+  padding-top: 3rem;
+  padding-bottom: 5rem;
+}
+
+#quarto-content {
+  background-color: var(--qstep-bg);
+}
+
+.quarto-title {
+  margin-bottom: 2.5rem;
+}
+
+.quarto-title h1.title {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  font-weight: 300;
+  color: var(--qstep-text);
+}
+
+h1 {
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--qstep-text);
+}
+
+h2 {
+  margin-top: 2.6rem;
+  font-size: 1.65rem;
+  font-weight: 400;
+  color: var(--qstep-text);
+}
+
+h3 {
+  margin-top: 2rem;
+  font-size: 1.25rem;
   font-weight: 500;
+  color: var(--qstep-text);
+}
+
+p,
+li {
+  color: var(--qstep-text);
+  line-height: 1.65;
+  font-size: 1rem;
+}
+
+a {
+  color: var(--qstep-link);
+}
+
+a:hover {
+  color: #a6c8ff;
+}
+
+
+/* ------------------------------------------------------------
+   Right-side "On this page"
+   ------------------------------------------------------------ */
+
+#quarto-margin-sidebar {
+  padding-top: 3rem;
+}
+
+#TOC {
+  border-left: 1px solid var(--qstep-border);
+  padding-left: 1rem;
+}
+
+#TOC .toc-title {
+  color: var(--qstep-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+#TOC a {
+  color: var(--qstep-secondary);
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+#TOC a:hover {
+  color: var(--qstep-text);
+}
+
+#TOC .active {
+  color: var(--qstep-link) !important;
+}
+
+
+/* ------------------------------------------------------------
+   Code cells
+   ------------------------------------------------------------ */
+
+div.sourceCode {
+  background-color: var(--qstep-code);
+  border: none;
+  border-radius: 0;
+}
+
+pre.sourceCode {
+  background-color: var(--qstep-code);
+  color: var(--qstep-text);
+  padding: 1rem;
+}
+
+code {
+  background-color: #161616;
+  color: var(--qstep-text);
+  border-radius: 0;
+}
+
+.cell-output {
+  margin-top: 0.5rem;
+}
+
+
+/* ------------------------------------------------------------
+   Tables
+   ------------------------------------------------------------ */
+
+table {
+  color: var(--qstep-text);
+}
+
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--qstep-text);
+  --bs-table-border-color: var(--qstep-border);
+}
+
+
+/* ------------------------------------------------------------
+   Horizontal rules
+   ------------------------------------------------------------ */
+
+hr {
+  border-color: var(--qstep-border);
+  opacity: 1;
+}
+
+
+/* ------------------------------------------------------------
+   Remove Quarto elements that don't fit IBM layout
+   ------------------------------------------------------------ */
+
+.quarto-secondary-nav {
+  display: none;
+}
+
+.breadcrumb {
+  display: none;
+}
+
+
+/* ------------------------------------------------------------
+   Page navigation at bottom
+   ------------------------------------------------------------ */
+
+.page-navigation {
+  border-top: 1px solid var(--qstep-border);
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+}
+
+
+/* ------------------------------------------------------------
+   Scrollbar
+   ------------------------------------------------------------ */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--qstep-sidebar);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #525252;
+}
+
+
+/* ------------------------------------------------------------
+   Mobile
+   ------------------------------------------------------------ */
+
+@media (max-width: 991px) {
+  main.content {
+    padding-top: 1.5rem;
+  }
+
+  .quarto-title h1.title {
+    font-size: 2rem;
+  }
 }
