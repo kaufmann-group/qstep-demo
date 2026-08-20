@@ -1,0 +1,9 @@
+dwave-neal
+dimod
+dwave-ocean-sdk
+python-dotenv
+ipykernel
+jupyter
+notebook
+yfinance
+urllib3<2
