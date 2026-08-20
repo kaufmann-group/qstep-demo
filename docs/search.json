@@ -4,10 +4,21 @@
     "href": "Additional D-wave Topics.html",
     "title": "Additional D-wave Topics",
     "section": "",
-    "text": "Here additional topics not referenced in the tutorial will be covered regarding the D-wave SDK.",
+    "text": "Here additional topics not referenced in the tutorial will be covered regarding the D-wave SDK.\n Download notebook ↓",
     "crumbs": [
       "Modules",
       "Additional D-Wave Topics"
+    ]
+  },
+  {
+    "objectID": "D-wave Demonstration.html",
+    "href": "D-wave Demonstration.html",
+    "title": "QSTEP",
+    "section": "",
+    "text": "Download notebook ↓",
+    "crumbs": [
+      "Modules",
+      "D-Wave Demonstration"
     ]
   },
   {
