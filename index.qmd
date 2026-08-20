@@ -1,0 +1,29 @@
+---
+title: "QSTEP D-Wave Demonstration"
+---
+
+# Quantum Annealing with D-Wave
+
+These interactive tutorials introduce quantum annealing and the
+D-Wave Ocean software stack.
+
+## Tutorials
+
+### D-Wave Demonstration
+
+An introduction to formulating and solving optimization problems
+using D-Wave Ocean.
+
+[Start the demonstration →](D-wave%20Demonstration.ipynb)
+
+### Additional D-Wave Topics
+
+Additional examples and advanced topics involving D-Wave quantum
+annealing.
+
+[Explore additional topics →](Additional%20D-wave%20Topics.ipynb)
+
+## About
+
+These materials were developed for the Quantum Science, Technology,
+and Engineering Workshop at Purdue University.

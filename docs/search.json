@@ -1,0 +1,50 @@
+[
+  {
+    "objectID": "Additional D-wave Topics.html",
+    "href": "Additional D-wave Topics.html",
+    "title": "Additional D-wave Topics",
+    "section": "",
+    "text": "Here additional topics not referenced in the tutorial will be covered regarding the D-wave SDK.",
+    "crumbs": [
+      "QSTEP",
+      "Advanced Topics",
+      "Additional D-Wave Topics"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "QSTEP D-Wave Demonstration",
+    "section": "",
+    "text": "These interactive tutorials introduce quantum annealing and the D-Wave Ocean software stack.\n\n\n\n\nAn introduction to formulating and solving optimization problems using D-Wave Ocean.\nStart the demonstration →\n\n\n\nAdditional examples and advanced topics involving D-Wave quantum annealing.\nExplore additional topics →\n\n\n\n\nThese materials were developed for the Quantum Science, Technology, and Engineering Workshop at Purdue University.",
+    "crumbs": [
+      "QSTEP",
+      "Getting Started",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#tutorials",
+    "href": "index.html#tutorials",
+    "title": "QSTEP D-Wave Demonstration",
+    "section": "",
+    "text": "An introduction to formulating and solving optimization problems using D-Wave Ocean.\nStart the demonstration →\n\n\n\nAdditional examples and advanced topics involving D-Wave quantum annealing.\nExplore additional topics →",
+    "crumbs": [
+      "QSTEP",
+      "Getting Started",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#about",
+    "href": "index.html#about",
+    "title": "QSTEP D-Wave Demonstration",
+    "section": "",
+    "text": "These materials were developed for the Quantum Science, Technology, and Engineering Workshop at Purdue University.",
+    "crumbs": [
+      "QSTEP",
+      "Getting Started",
+      "Overview"
+    ]
+  }
+]
