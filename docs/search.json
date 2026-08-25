@@ -11,11 +11,11 @@
     ]
   },
   {
-    "objectID": "D-wave Demonstration.html",
-    "href": "D-wave Demonstration.html",
+    "objectID": "D-wave Demonstration.html#review",
+    "href": "D-wave Demonstration.html#review",
     "title": "D-wave Ocean",
-    "section": "",
-    "text": "Reall that Quantum Annealer’s solve only a specific class of problems; namely",
+    "section": "Review",
+    "text": "Review\nRecall that Quantum Annealer’s natively only solve a specific class of problems, namely Quadratic Binary Unconstrained Optimization (QUBO) problems. The hardware does so by implementing the Ising Hamiltonian via that has the form,\n\\[H(\\mathbf{s}) = \\sum_i h_i s_i + \\sum_{i&lt;j} J_{ij} s_i\\, s_j, \\quad s_i\\in\\{-1, +1\\},\\]\na simple linear transformation \\(\\mathbb{s} \\rightarrow \\mathbb{x}\\) allows us to write a QUBO objective function in terms of the Ising Hamiltonian,\n\\[Q(\\mathbf{x}) = \\sum_i a_i x_i + \\sum_{i&lt;j} b_{ij} x_i\\, x_j, \\quad x_i\\in\\{0, 1\\}.\\]\nThis powerful technique allows us to write a QUBO objective function in terms of a Ising Hamiltonian for D-wave systems to use an array of superconducting circuits to simulate the system and measure its ground state energy which corresponds to the minimum of the QUBO objective function.",
     "crumbs": [
       "Modules",
       "D-Wave Demonstration"
@@ -25,8 +25,8 @@
     "objectID": "D-wave Demonstration.html#problem-statement",
     "href": "D-wave Demonstration.html#problem-statement",
     "title": "D-wave Ocean",
-    "section": "",
-    "text": "Reall that Quantum Annealer’s solve only a specific class of problems; namely",
+    "section": "Problem Statement",
+    "text": "Problem Statement\nThe quadratic binary optimization problem that will be solved in this tutorial will be dynamic asset allocation",
     "crumbs": [
       "Modules",
       "D-Wave Demonstration"
@@ -81,7 +81,7 @@
     "href": "index.html",
     "title": "Quantum annealing with D-Wave",
     "section": "",
-    "text": "This module introduces quantum annealing and the D-Wave Ocean software stack through two computational tutorials.",
+    "text": "This module introduces quantum annealing and the D-Wave Ocean software stack through two tutorials.",
     "crumbs": [
       "Overview"
     ]
@@ -91,7 +91,7 @@
     "href": "index.html#modules",
     "title": "Quantum annealing with D-Wave",
     "section": "Modules",
-    "text": "Modules\n\nD-Wave Demonstration\nLearn how optimization problems can be represented and solved using D-Wave’s Ocean software tools.\nStart D-Wave Demonstration →\n\n\nAdditional D-Wave Topics\nExplore additional concepts and examples involving quantum annealing and D-Wave systems.\nExplore Additional D-Wave Topics →",
+    "text": "Modules\n\nD-Wave Demonstration\nLearn how optimization problems can be represented and solved using D-Wave’s Ocean software tools.\nStart D-Wave Demonstration →\n\n\nAdditional D-Wave Topics\nExplore additional examples involving quantum annealing and more D-Wave Ocean system features.\nExplore Additional D-Wave Topics →",
     "crumbs": [
       "Overview"
     ]
