@@ -13,9 +13,64 @@
   {
     "objectID": "D-wave Demonstration.html",
     "href": "D-wave Demonstration.html",
-    "title": "QSTEP",
+    "title": "D-wave Ocean",
     "section": "",
-    "text": "Download notebook ↓",
+    "text": "Reall that Quantum Annealer’s solve only a specific class of problems; namely",
+    "crumbs": [
+      "Modules",
+      "D-Wave Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave Demonstration.html#problem-statement",
+    "href": "D-wave Demonstration.html#problem-statement",
+    "title": "D-wave Ocean",
+    "section": "",
+    "text": "Reall that Quantum Annealer’s solve only a specific class of problems; namely",
+    "crumbs": [
+      "Modules",
+      "D-Wave Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave Demonstration.html#establish-sampler",
+    "href": "D-wave Demonstration.html#establish-sampler",
+    "title": "D-wave Ocean",
+    "section": "Establish Sampler",
+    "text": "Establish Sampler",
+    "crumbs": [
+      "Modules",
+      "D-Wave Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave Demonstration.html#define-qubo-objective-matrix",
+    "href": "D-wave Demonstration.html#define-qubo-objective-matrix",
+    "title": "D-wave Ocean",
+    "section": "Define Qubo Objective Matrix",
+    "text": "Define Qubo Objective Matrix",
+    "crumbs": [
+      "Modules",
+      "D-Wave Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave Demonstration.html#query-matrix-to-solver",
+    "href": "D-wave Demonstration.html#query-matrix-to-solver",
+    "title": "D-wave Ocean",
+    "section": "Query Matrix to Solver",
+    "text": "Query Matrix to Solver",
+    "crumbs": [
+      "Modules",
+      "D-Wave Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave Demonstration.html#evaluate-response",
+    "href": "D-wave Demonstration.html#evaluate-response",
+    "title": "D-wave Ocean",
+    "section": "Evaluate Response",
+    "text": "Evaluate Response\n Download notebook ↓",
     "crumbs": [
       "Modules",
       "D-Wave Demonstration"
