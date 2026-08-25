@@ -1,0 +1,42 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "QSTEP"
+
+  navbar:
+    right:
+      - icon: github
+        href: https://github.com/kaufmann-group/qstep-demo
+        aria-label: GitHub
+
+  sidebar:
+    style: docked
+    search: false
+    contents:
+      - href: index.qmd
+        text: Overview
+
+      - section: "Modules"
+        contents:
+          - href: "D-wave Demonstration.ipynb"
+            text: D-Wave Demonstration
+
+          - href: "Additional D-wave Topics.ipynb"
+            text: Additional D-Wave Topics
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-title: "On this page"
+    toc-location: right
+    toc-depth: 3
+    code-copy: true
+    code-overflow: wrap
+    smooth-scroll: true
+    css: styles.css
+
+execute:
+  freeze: auto
