@@ -4,10 +4,54 @@
     "href": "Additional D-wave Topics.html",
     "title": "Additional D-wave Topics",
     "section": "",
-    "text": "Here additional topics not referenced in the tutorial will be covered regarding the D-wave SDK.\n Download notebook ↓",
+    "text": "Here additional topics not referenced in the tutorial will be covered.",
     "crumbs": [
       "Modules",
       "Additional D-Wave Topics"
+    ]
+  },
+  {
+    "objectID": "Additional D-wave Topics.html#additional-qubo-optimization-problems",
+    "href": "Additional D-wave Topics.html#additional-qubo-optimization-problems",
+    "title": "Additional D-wave Topics",
+    "section": "Additional QUBO Optimization Problems",
+    "text": "Additional QUBO Optimization Problems\n\nCommunity Detection\n\n\nMax-Cut\n\n\nTraveling Salesman Problem",
+    "crumbs": [
+      "Modules",
+      "Additional D-Wave Topics"
+    ]
+  },
+  {
+    "objectID": "Additional D-wave Topics.html#additional-d-wave-sdk-features",
+    "href": "Additional D-wave Topics.html#additional-d-wave-sdk-features",
+    "title": "Additional D-wave Topics",
+    "section": "Additional D-Wave SDK Features",
+    "text": "Additional D-Wave SDK Features\n Download notebook ↓",
+    "crumbs": [
+      "Modules",
+      "Additional D-Wave Topics"
+    ]
+  },
+  {
+    "objectID": "D-wave Demonstration.html",
+    "href": "D-wave Demonstration.html",
+    "title": "D-wave Ocean",
+    "section": "",
+    "text": "import dwave-neal\nimport dimod\nimport dwave-ocean-sdk",
+    "crumbs": [
+      "Modules",
+      "D-Wave Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave Demonstration.html#installation-setup",
+    "href": "D-wave Demonstration.html#installation-setup",
+    "title": "D-wave Ocean",
+    "section": "",
+    "text": "import dwave-neal\nimport dimod\nimport dwave-ocean-sdk",
+    "crumbs": [
+      "Modules",
+      "D-Wave Demonstration"
     ]
   },
   {
@@ -26,7 +70,7 @@
     "href": "D-wave Demonstration.html#problem-statement",
     "title": "D-wave Ocean",
     "section": "Problem Statement",
-    "text": "Problem Statement\nThe quadratic binary optimization problem that will be solved in this tutorial will be dynamic asset allocation",
+    "text": "Problem Statement\nIn this tutorial dynamic asset allocation which can be written in terms of a quadratic binary optimization problem.",
     "crumbs": [
       "Modules",
       "D-Wave Demonstration"

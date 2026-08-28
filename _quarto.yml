@@ -4,7 +4,7 @@ project:
 
 website:
   title: "QSTEP"
-  favicon: favicon.png
+  favicon: purdue.ico
 
   navbar:
     right:
