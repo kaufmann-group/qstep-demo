@@ -16,7 +16,7 @@ Learn how optimization problems can be formulated as QUBOs and solved using D-Wa
 
 Work through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.
 
-<a href="#">Start Local Simulated Annealing Demonstration → <em>(Coming Soon)</em></a>
+[Start Local Simulated Annealing Demonstration →](<D-wave SDK Demonstration Quantum Annealing.ipynb>)
 
 ## Background and Additional Material
 

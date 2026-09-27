@@ -4,6 +4,7 @@ project:
   render:
     - index.qmd
     - "D-wave SDK Demonstration Quantum Annealing.ipynb"
+    - "D-wave SDK Demonstration Simulated Annealing.ipynb"
     - "Quantum Annealing Explained.ipynb"
     - "Additional D-wave Topics.ipynb"
 
@@ -28,6 +29,9 @@ website:
         contents:
           - href: "D-wave SDK Demonstration Quantum Annealing.ipynb"
             text: D-Wave Quantum Annealing
+
+          - href: "D-wave SDK Demonstration Simulated Annealing.ipynb"
+            text: D-Wave Simulated Annealing
 
       - section: "Background & Additional Topics"
         contents:
