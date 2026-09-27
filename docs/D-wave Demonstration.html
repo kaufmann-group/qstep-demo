@@ -235,6 +235,7 @@ window.Quarto = {
   <li><a href="#define-qubo-objective-matrix" id="toc-define-qubo-objective-matrix" class="nav-link" data-scroll-target="#define-qubo-objective-matrix">Define Qubo Objective Matrix</a></li>
   <li><a href="#query-matrix-to-solver" id="toc-query-matrix-to-solver" class="nav-link" data-scroll-target="#query-matrix-to-solver">Query Matrix to Solver</a></li>
   <li><a href="#evaluate-response" id="toc-evaluate-response" class="nav-link" data-scroll-target="#evaluate-response">Evaluate Response</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -262,17 +263,23 @@ window.Quarto = {
 
 <section id="installation-setup" class="level2">
 <h2 class="anchored" data-anchor-id="installation-setup">Installation &amp; Setup</h2>
+<p>In this section we outline how to install the Ocean SDK, it is recommended that the user uses a Python virtual environment to store all of the libraries; the user can then have the Python kernal run the virtual environment directly within the notebook. The following commands will all be run within <code>bash</code>.</p>
+<p>To create the virtual environment and activate it run the following commands.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv ocean</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ocean/bin/activate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To install the</p>
+<p>Once the virtual environment has been created the user can</p>
 <div id="9d00fc8c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;plaintext&quot;}}">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dwave<span class="op">-</span>neal</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dimod</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dwave<span class="op">-</span>ocean<span class="op">-</span>sdk</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dwave<span class="op">-</span>neal</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dimod</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dwave<span class="op">-</span>ocean<span class="op">-</span>sdk</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="review" class="level2">
 <h2 class="anchored" data-anchor-id="review">Review</h2>
 <p>Recall that Quantum Annealer’s natively only solve a specific class of problems, namely Quadratic Binary Unconstrained Optimization (QUBO) problems. The hardware does so by implementing the Ising Hamiltonian via that has the form,</p>
 <p><span class="math display">\[H(\mathbf{s}) = \sum_i h_i s_i + \sum_{i&lt;j} J_{ij} s_i\, s_j, \quad s_i\in\{-1, +1\},\]</span></p>
-<p>a simple linear transformation <span class="math inline">\(\mathbb{s} \rightarrow \mathbb{x}\)</span> allows us to write a QUBO objective function in terms of the Ising Hamiltonian,</p>
+<p>a simple linear transformation <span class="math inline">\(\mathbf{s} \rightarrow \mathbf{x}\)</span> allows us to write a QUBO objective function in terms of the Ising Hamiltonian,</p>
 <p><span class="math display">\[Q(\mathbf{x}) = \sum_i a_i x_i + \sum_{i&lt;j} b_{ij} x_i\, x_j, \quad x_i\in\{0, 1\}.\]</span></p>
 <p>This powerful technique allows us to write a QUBO objective function in terms of a Ising Hamiltonian for D-wave systems to use an array of superconducting circuits to simulate the system and measure its ground state energy which corresponds to the minimum of the QUBO objective function.</p>
 </section>
@@ -291,6 +298,9 @@ window.Quarto = {
 </section>
 <section id="evaluate-response" class="level2">
 <h2 class="anchored" data-anchor-id="evaluate-response">Evaluate Response</h2>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
 <p><a class="notebook-download" href="https://github.com/kaufmann-group/qstep-demo/raw/refs/heads/main/D-wave%20Demonstration.ipynb" download=""> Download notebook ↓ </a></p>
 
 

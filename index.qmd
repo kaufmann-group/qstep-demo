@@ -1,27 +1,37 @@
 ---
-title: "Quantum annealing with D-Wave"
+title: "Quantum Annealing with D-Wave"
 ---
 
-This module introduces quantum annealing and the D-Wave Ocean software
-stack through two tutorials.
+This module introduces quantum annealing and the D-Wave Ocean SDK through a set of tutorials and demonstrations. The two main workshop notebooks provide hands-on examples using both D-Wave's quantum hardware and a local simulated annealer.
 
-## Modules
+## Main Tutorials
 
-### D-Wave Demonstration
+### D-Wave Quantum Annealing Demonstration
 
-Learn how optimization problems can be represented and solved using
-D-Wave's Ocean software tools.
+Learn how optimization problems can be formulated as QUBOs and solved using D-Wave's Ocean SDK and a D-Wave quantum processing unit through Leap Quantum Cloud.
 
-[Start D-Wave Demonstration →](D-wave%20Demonstration.ipynb)
+[Start D-Wave Quantum Annealing Demonstration →](<D-wave SDK Demonstration Quantum Annealing.ipynb>)
+
+### Local Simulated Annealing Demonstration
+
+Work through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.
+
+<a href="#">Start Local Simulated Annealing Demonstration → <em>(Coming Soon)</em></a>
+
+## Background and Additional Material
+
+### Quantum Annealing Explained
+
+Learn more about how quantum annealing works, including the connection between optimization problems, Ising models, and the physical operation of a quantum annealer.
+
+[Learn How Quantum Annealing Works →](<Quantum Annealing Explained.ipynb>)
 
 ### Additional D-Wave Topics
 
-Explore additional examples involving quantum annealing
-and more D-Wave Ocean system features.
+Explore additional D-Wave Ocean features, optimization problems, and examples beyond those covered in the main workshop.
 
-[Explore Additional D-Wave Topics →](Additional%20D-wave%20Topics.ipynb)
+[Explore Additional D-Wave Topics →](<Additional D-wave Topics.ipynb>)
 
 ## About
 
-These materials were developed for the Quantum Science, Technology,
-and Engineering Workshop at Purdue University. 
+These materials were developed for the Quantum Science, Technology, and Engineering Workshop at Purdue University.

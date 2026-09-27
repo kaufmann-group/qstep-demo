@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Quantum annealing with D-Wave – QSTEP</title>
+<title>Quantum Annealing with D-Wave – QSTEP</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -134,7 +134,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Modules</span></a>
+ <span class="menu-text">Main Tutorials</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -142,8 +142,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./D-wave Demonstration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">D-Wave Demonstration</span></a>
+  <a href="./D-wave SDK Demonstration Quantum Annealing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">D-Wave Quantum Annealing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Background &amp; Additional Topics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Quantum Annealing Explained.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quantum Annealing Explained</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -164,9 +181,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#modules" id="toc-modules" class="nav-link active" data-scroll-target="#modules">Modules</a>
+  <li><a href="#main-tutorials" id="toc-main-tutorials" class="nav-link active" data-scroll-target="#main-tutorials">Main Tutorials</a>
   <ul class="collapse">
-  <li><a href="#d-wave-demonstration" id="toc-d-wave-demonstration" class="nav-link" data-scroll-target="#d-wave-demonstration">D-Wave Demonstration</a></li>
+  <li><a href="#d-wave-quantum-annealing-demonstration" id="toc-d-wave-quantum-annealing-demonstration" class="nav-link" data-scroll-target="#d-wave-quantum-annealing-demonstration">D-Wave Quantum Annealing Demonstration</a></li>
+  <li><a href="#local-simulated-annealing-demonstration" id="toc-local-simulated-annealing-demonstration" class="nav-link" data-scroll-target="#local-simulated-annealing-demonstration">Local Simulated Annealing Demonstration</a></li>
+  </ul></li>
+  <li><a href="#background-and-additional-material" id="toc-background-and-additional-material" class="nav-link" data-scroll-target="#background-and-additional-material">Background and Additional Material</a>
+  <ul class="collapse">
+  <li><a href="#quantum-annealing-explained" id="toc-quantum-annealing-explained" class="nav-link" data-scroll-target="#quantum-annealing-explained">Quantum Annealing Explained</a></li>
   <li><a href="#additional-d-wave-topics" id="toc-additional-d-wave-topics" class="nav-link" data-scroll-target="#additional-d-wave-topics">Additional D-Wave Topics</a></li>
   </ul></li>
   <li><a href="#about" id="toc-about" class="nav-link" data-scroll-target="#about">About</a></li>
@@ -178,7 +200,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quantum annealing with D-Wave</h1>
+<h1 class="title">Quantum Annealing with D-Wave</h1>
 </div>
 
 
@@ -195,17 +217,30 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This module introduces quantum annealing and the D-Wave Ocean software stack through two tutorials.</p>
-<section id="modules" class="level2">
-<h2 class="anchored" data-anchor-id="modules">Modules</h2>
-<section id="d-wave-demonstration" class="level3">
-<h3 class="anchored" data-anchor-id="d-wave-demonstration">D-Wave Demonstration</h3>
-<p>Learn how optimization problems can be represented and solved using D-Wave’s Ocean software tools.</p>
-<p><a href="./D-wave Demonstration.html">Start D-Wave Demonstration →</a></p>
+<p>This module introduces quantum annealing and the D-Wave Ocean SDK through a set of tutorials and demonstrations. The two main workshop notebooks provide hands-on examples using both D-Wave’s quantum hardware and a local simulated annealer.</p>
+<section id="main-tutorials" class="level2">
+<h2 class="anchored" data-anchor-id="main-tutorials">Main Tutorials</h2>
+<section id="d-wave-quantum-annealing-demonstration" class="level3">
+<h3 class="anchored" data-anchor-id="d-wave-quantum-annealing-demonstration">D-Wave Quantum Annealing Demonstration</h3>
+<p>Learn how optimization problems can be formulated as QUBOs and solved using D-Wave’s Ocean SDK and a D-Wave quantum processing unit through Leap Quantum Cloud.</p>
+<p><a href="./D-wave SDK Demonstration Quantum Annealing.html">Start D-Wave Quantum Annealing Demonstration →</a></p>
+</section>
+<section id="local-simulated-annealing-demonstration" class="level3">
+<h3 class="anchored" data-anchor-id="local-simulated-annealing-demonstration">Local Simulated Annealing Demonstration</h3>
+<p>Work through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.</p>
+<p><a href="#">Start Local Simulated Annealing Demonstration → <em>(Coming Soon)</em></a></p>
+</section>
+</section>
+<section id="background-and-additional-material" class="level2">
+<h2 class="anchored" data-anchor-id="background-and-additional-material">Background and Additional Material</h2>
+<section id="quantum-annealing-explained" class="level3">
+<h3 class="anchored" data-anchor-id="quantum-annealing-explained">Quantum Annealing Explained</h3>
+<p>Learn more about how quantum annealing works, including the connection between optimization problems, Ising models, and the physical operation of a quantum annealer.</p>
+<p><a href="./Quantum Annealing Explained.html">Learn How Quantum Annealing Works →</a></p>
 </section>
 <section id="additional-d-wave-topics" class="level3">
 <h3 class="anchored" data-anchor-id="additional-d-wave-topics">Additional D-Wave Topics</h3>
-<p>Explore additional examples involving quantum annealing and more D-Wave Ocean system features.</p>
+<p>Explore additional D-Wave Ocean features, optimization problems, and examples beyond those covered in the main workshop.</p>
 <p><a href="./Additional D-wave Topics.html">Explore Additional D-Wave Topics →</a></p>
 </section>
 </section>

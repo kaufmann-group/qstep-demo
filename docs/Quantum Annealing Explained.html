@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Additional D-wave Topics – QSTEP</title>
+<title>Introduction – QSTEP</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,41 +25,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -111,6 +76,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -148,7 +142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./D-wave Demonstration.html">Modules</a></li><li class="breadcrumb-item"><a href="./Additional D-wave Topics.html">Additional D-Wave Topics</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Introduction</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -177,13 +171,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./D-wave Demonstration.html" class="sidebar-item-text sidebar-link">
+  <a href="./D-wave Demonstration.ipynb" class="sidebar-item-text sidebar-link">
  <span class="menu-text">D-Wave Demonstration</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Additional D-wave Topics.html" class="sidebar-item-text sidebar-link active">
+  <a href="./Additional D-wave Topics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Additional D-Wave Topics</span></a>
   </div>
 </li>
@@ -199,23 +193,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quantum-annealers" id="toc-quantum-annealers" class="nav-link active" data-scroll-target="#quantum-annealers">Quantum Annealers</a></li>
-  <li><a href="#additional-qubo-optimization-problems" id="toc-additional-qubo-optimization-problems" class="nav-link" data-scroll-target="#additional-qubo-optimization-problems">Additional QUBO Optimization Problems</a>
-  <ul class="collapse">
-  <li><a href="#community-detection" id="toc-community-detection" class="nav-link" data-scroll-target="#community-detection">Community Detection</a></li>
-  <li><a href="#max-cut" id="toc-max-cut" class="nav-link" data-scroll-target="#max-cut">Max-Cut</a></li>
-  <li><a href="#traveling-salesman-problem" id="toc-traveling-salesman-problem" class="nav-link" data-scroll-target="#traveling-salesman-problem">Traveling Salesman Problem</a></li>
-  </ul></li>
-  <li><a href="#additional-d-wave-sdk-features" id="toc-additional-d-wave-sdk-features" class="nav-link" data-scroll-target="#additional-d-wave-sdk-features">Additional D-Wave SDK Features</a></li>
+  <li><a href="#basic-quantum-mechanics" id="toc-basic-quantum-mechanics" class="nav-link active" data-scroll-target="#basic-quantum-mechanics">Basic Quantum Mechanics</a></li>
+  <li><a href="#quantum-annealing" id="toc-quantum-annealing" class="nav-link" data-scroll-target="#quantum-annealing">Quantum Annealing</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./D-wave Demonstration.html">Modules</a></li><li class="breadcrumb-item"><a href="./Additional D-wave Topics.html">Additional D-Wave Topics</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Additional D-wave Topics</h1>
+<h1 class="title">Introduction</h1>
 </div>
 
 
@@ -232,31 +220,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Here additional topics not referenced in the tutorial will be covered.</p>
-<div id="bb55d294-ef6e-496f-bc9d-5ccbfe832521" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dwave<span class="op">-</span>neal</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dimod</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dwave<span class="op">-</span>ocean<span class="op">-</span>sdk</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<section id="quantum-annealers" class="level2">
-<h2 class="anchored" data-anchor-id="quantum-annealers">Quantum Annealers</h2>
-<p>This section will explain in depth how Quantum Annealing works.</p>
+<p>This notebook will discuss an introduction to quantum mechanics and explain how quantum annealing works and how it is used in order to solve optimization problems. Many of these topics will be covered by the <a href="https://purdue0-my.sharepoint.com/:p:/g/personal/dupreti_purdue_edu/IQCabNVUHYGxSogMtXEbLlMoATQRPXtEjgYG9-Sb9Fblhoo?e=wSYkjd">slides</a>.</p>
+<section id="basic-quantum-mechanics" class="level2">
+<h2 class="anchored" data-anchor-id="basic-quantum-mechanics">Basic Quantum Mechanics</h2>
+<p>In classical computation bits can be either in a state of <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, however in quantum computing a <strong>qubit</strong> is a vector that takes in values on <span class="math inline">\(\mathbb{C}^2\)</span>:</p>
+<p><span class="math display">\[|\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \qquad |0\rangle = \begin{pmatrix}1\\0\end{pmatrix}, \qquad |1\rangle = \begin{pmatrix}0\\1\end{pmatrix}, \qquad |\alpha|^2 + |\beta|^2 = 1\]</span></p>
+<p>The <strong>Born rule</strong> states for the wavefunction <span class="math inline">\(\ket{\psi}\)</span> above, you get <span class="math inline">\(0\)</span> with probability <span class="math inline">\(|\alpha|^2\)</span> and <span class="math inline">\(1\)</span> with probability <span class="math inline">\(|\beta|^2\)</span>, and measurement collapses the state into one of the two measurements.</p>
+<p>The <strong>Hamiltonain</strong>, denoted <span class="math inline">\(\mathcal{H}\)</span> is a Hermetian matrix that encodes the energy of the system as its eigenvalues, while its eigenvectors are the states with those respective energies. The lowest eigenstate of the Hamiltonian is known as the <strong>ground state</strong>.</p>
 </section>
-<section id="additional-qubo-optimization-problems" class="level2">
-<h2 class="anchored" data-anchor-id="additional-qubo-optimization-problems">Additional QUBO Optimization Problems</h2>
-<section id="community-detection" class="level3">
-<h3 class="anchored" data-anchor-id="community-detection">Community Detection</h3>
-</section>
-<section id="max-cut" class="level3">
-<h3 class="anchored" data-anchor-id="max-cut">Max-Cut</h3>
-</section>
-<section id="traveling-salesman-problem" class="level3">
-<h3 class="anchored" data-anchor-id="traveling-salesman-problem">Traveling Salesman Problem</h3>
-</section>
-</section>
-<section id="additional-d-wave-sdk-features" class="level2">
-<h2 class="anchored" data-anchor-id="additional-d-wave-sdk-features">Additional D-Wave SDK Features</h2>
-<p><a class="notebook-download" href="https://github.com/kaufmann-group/qstep-demo/raw/refs/heads/main/Additional%20D-wave%20Topics.ipynb" download=""> Download notebook ↓ </a></p>
+<section id="quantum-annealing" class="level2">
+<h2 class="anchored" data-anchor-id="quantum-annealing">Quantum Annealing</h2>
 
 
 </section>

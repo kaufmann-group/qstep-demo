@@ -1,6 +1,11 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - index.qmd
+    - "D-wave SDK Demonstration Quantum Annealing.ipynb"
+    - "Quantum Annealing Explained.ipynb"
+    - "Additional D-wave Topics.ipynb"
 
 website:
   title: "QSTEP"
@@ -19,10 +24,15 @@ website:
       - href: index.qmd
         text: Overview
 
-      - section: "Modules"
+      - section: "Main Tutorials"
         contents:
-          - href: "D-wave Demonstration.ipynb"
-            text: D-Wave Demonstration
+          - href: "D-wave SDK Demonstration Quantum Annealing.ipynb"
+            text: D-Wave Quantum Annealing
+
+      - section: "Background & Additional Topics"
+        contents:
+          - href: "Quantum Annealing Explained.ipynb"
+            text: Quantum Annealing Explained
 
           - href: "Additional D-wave Topics.ipynb"
             text: Additional D-Wave Topics
