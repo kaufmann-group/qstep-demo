@@ -10,6 +10,8 @@ project:
 
   resources:
     - assets.txt
+    - "D-wave SDK Demonstration Quantum Annealing.ipynb"
+    - "D-wave SDK Demonstration Simulated Annealing.ipynb"
 
 website:
   title: "QSTEP"
