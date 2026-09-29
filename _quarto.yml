@@ -9,6 +9,7 @@ project:
     - "Additional D-wave Topics.ipynb"
 
   resources:
+    - downloads/
     - assets.txt
     - "D-wave SDK Demonstration Quantum Annealing.ipynb"
     - "D-wave SDK Demonstration Simulated Annealing.ipynb"
