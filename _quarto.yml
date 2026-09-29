@@ -8,6 +8,9 @@ project:
     - "Quantum Annealing Explained.ipynb"
     - "Additional D-wave Topics.ipynb"
 
+  resources:
+    - assets.txt
+
 website:
   title: "QSTEP"
   favicon: purdue.ico
