@@ -234,11 +234,20 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#installation-setup" id="toc-installation-setup" class="nav-link active" data-scroll-target="#installation-setup">Installation &amp; Setup</a></li>
+  <li><a href="#installation-setup" id="toc-installation-setup" class="nav-link active" data-scroll-target="#installation-setup">Installation &amp; Setup</a>
+  <ul class="collapse">
+  <li><a href="#installing-a-virtual-environment" id="toc-installing-a-virtual-environment" class="nav-link" data-scroll-target="#installing-a-virtual-environment">Installing a Virtual Environment</a></li>
+  <li><a href="#installing-packages" id="toc-installing-packages" class="nav-link" data-scroll-target="#installing-packages">Installing Packages</a></li>
+  </ul></li>
   <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review">Review</a></li>
-  <li><a href="#optimization-problem-statement-markowitz-portfolio-optimization" id="toc-optimization-problem-statement-markowitz-portfolio-optimization" class="nav-link" data-scroll-target="#optimization-problem-statement-markowitz-portfolio-optimization">Optimization Problem Statement: Markowitz Portfolio Optimization</a></li>
-  <li><a href="#yahoo-finiance-data" id="toc-yahoo-finiance-data" class="nav-link" data-scroll-target="#yahoo-finiance-data">Yahoo Finiance Data</a></li>
-  <li><a href="#using-oceans-simulated-annealing-sampler" id="toc-using-oceans-simulated-annealing-sampler" class="nav-link" data-scroll-target="#using-oceans-simulated-annealing-sampler">Using Ocean’s Simulated Annealing Sampler</a></li>
+  <li><a href="#optimization-problem-statement-max-cut" id="toc-optimization-problem-statement-max-cut" class="nav-link" data-scroll-target="#optimization-problem-statement-max-cut">Optimization Problem Statement: Max-Cut</a></li>
+  <li><a href="#using-d-waves-quantum-annealer" id="toc-using-d-waves-quantum-annealer" class="nav-link" data-scroll-target="#using-d-waves-quantum-annealer">Using D-Wave’s Quantum Annealer</a></li>
+  <li><a href="#qubo-formulation-practice" id="toc-qubo-formulation-practice" class="nav-link" data-scroll-target="#qubo-formulation-practice">QUBO Formulation Practice</a>
+  <ul class="collapse">
+  <li><a href="#problem-1-number-partitioning" id="toc-problem-1-number-partitioning" class="nav-link" data-scroll-target="#problem-1-number-partitioning">Problem 1: Number Partitioning</a></li>
+  <li><a href="#problem-2-minimum-vertex-cover" id="toc-problem-2-minimum-vertex-cover" class="nav-link" data-scroll-target="#problem-2-minimum-vertex-cover">Problem 2: Minimum Vertex Cover</a></li>
+  <li><a href="#problem-3-knapsack" id="toc-problem-3-knapsack" class="nav-link" data-scroll-target="#problem-3-knapsack">Problem 3: Knapsack</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -268,22 +277,45 @@ window.Quarto = {
 <p><strong>If you do have access to the Leap quantum cloud service then check out our tutorial on <a href="https://kaufmann-group.github.io/qstep-demo/D-wave%20SDK%20Demonstration%20Quantum%20Annealing.html">solving QUBO problems using a quantum annealer</a>.</strong></p>
 <section id="installation-setup" class="level2">
 <h2 class="anchored" data-anchor-id="installation-setup">Installation &amp; Setup</h2>
-<p>In this section, we outline how to install the D-Wave Ocean SDK. It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system as virtual environments keep the packages used for this project isolated from other Python projects and avoid potential dependency conflicts.</p>
-<p>The virtual environment can also be registered as a Jupyter kernel, allowing a Jupyter notebook to run directly inside the same environment in which the Ocean SDK is installed. To create a virtual environment and activate it in macOS or Linux run,</p>
+<p>In this section, we outline how to install the D-Wave Ocean SDK. <strong>All of these steps should be performed in a terminal opened in the directory where you downloaded or saved the notebook.</strong> It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system. Virtual environments keep the packages used for this project isolated from other Python projects and avoid potential dependency conflicts. <strong><a href="https://www.python.org/downloads/">Python</a> must already be installed on the machine running this demonstration.</strong></p>
+<section id="installing-a-virtual-environment" class="level3">
+<h3 class="anchored" data-anchor-id="installing-a-virtual-environment">Installing a Virtual Environment</h3>
+<p>The virtual environment can also be registered as a Jupyter kernel, allowing the notebook to run directly inside the same environment in which the Ocean SDK is installed.</p>
+<section id="macos-or-linux" class="level4">
+<h4 class="anchored" data-anchor-id="macos-or-linux">macOS or Linux</h4>
+<p>To create and activate the virtual environment, run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv ocean</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ocean/bin/activate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>To create and run a virtual environment in Windows’ command shell run,</p>
+</section>
+<section id="windows-command-prompt" class="level4">
+<h4 class="anchored" data-anchor-id="windows-command-prompt">Windows Command Prompt</h4>
+<p>To create and activate the virtual environment, run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bat code-with-copy"><code class="sourceCode dosbat"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> venv ocean</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ocean\Scripts\activate.bat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Once the environment is activated, any Python packages installed with <code>pip</code> will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run,</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">--upgrade</span> pip</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install dwave-ocean-sdk</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install yfinance </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="windows-powershell" class="level4">
+<h4 class="anchored" data-anchor-id="windows-powershell">Windows PowerShell</h4>
+<p>To create and activate the virtual environment, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m venv ocean</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\ocean\Scripts\Activate<span class="op">.</span><span class="fu">ps1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If PowerShell reports that <em>“running scripts is disabled on this system,”</em> run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-ExecutionPolicy</span> <span class="op">-</span>ExecutionPolicy RemoteSigned <span class="op">-</span>Scope CurrentUser</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then retry the activation command.</p>
+</section>
+</section>
+<section id="installing-packages" class="level3">
+<h3 class="anchored" data-anchor-id="installing-packages">Installing Packages</h3>
+<p>Once the environment is activated, any Python packages installed with <code>pip</code> will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run the commands (for any operating system),</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">--upgrade</span> pip</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install dwave-ocean-sdk</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install jupyter notebook ipykernel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Since this tutorial uses Jupyter notebooks we must register the environment with Jupyter,</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install ipykernel</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> ocean <span class="at">--display-name</span> <span class="st">"Ocean Environment"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Note after opening the Jupyter Notebook make sure to select the “Ocean Environment” kernel.</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> ocean <span class="at">--display-name</span> <span class="st">"Ocean Environment"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Now you can open the Jupyter Notebook</strong>. To open Jupyter run,</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>After migrating to this notebook within Jupyter <strong>make sure to select the “Ocean Environment” kernel</strong>.</p>
+</section>
 </section>
 <section id="review" class="level2">
 <h2 class="anchored" data-anchor-id="review">Review</h2>
@@ -295,181 +327,231 @@ window.Quarto = {
 <p><span class="math display">\[Q(\mathbf{x}) = \sum_i a_i x_i + \sum_{i&lt;j} b_{ij}x_i x_j, \qquad x_i\in\{0,1\}.\]</span></p>
 <p>This allows an optimization problem written as a QUBO to be mapped directly onto the Ising model implemented by the D-Wave hardware. The QPU uses a network of superconducting qubits whose interactions are programmed according to the coefficients of the problem. During quantum annealing, the system is driven toward low-energy configurations of the Ising Hamiltonian. After measurement, these spin configurations can be converted back into binary variables, with the lowest-energy solutions corresponding to minima of the original QUBO objective function. Learn more about the physics of quantum annealing in <a href="">this</a> notebook!</p>
 </section>
-<section id="optimization-problem-statement-markowitz-portfolio-optimization" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-problem-statement-markowitz-portfolio-optimization">Optimization Problem Statement: Markowitz Portfolio Optimization</h2>
+<section id="optimization-problem-statement-max-cut" class="level2">
+<h2 class="anchored" data-anchor-id="optimization-problem-statement-max-cut">Optimization Problem Statement: Max-Cut</h2>
 <div style="display: flex; align-items: center; gap: 30px;">
 <div style="flex: 2;">
 <p>
-</p><p>A common financial optimization problem is known as the Markowitz mean variance portfolio optimization. It states that given a set of assets with known expected returns and correlations, the goal is to determine how much of a portfolio should be allocated to each asset.</p>
-It states that an optimal portfolio balances two competing objectives: maximizing expected return while minimizing financial risk. The set of portfolios that provide the best possible return for a given level of risk forms what is known as the efficient frontier.
-<p></p>
+A canonical example of a QUBO is the NP-hard <strong>Max-Cut problem</strong>. Given a graph consisting of vertices connected by edges, the goal is to divide the vertices into two groups such that the total weight of the edges crossing between the groups is as large as possible. In other words, we want to find a partition that maximizes the total weight of the edges crossing the cut. Max-Cut is a useful example because it has a simple mathematical formulation while still showing how a combinatorial optimization problem can be mapped onto a QUBO and solved using the D-Wave framework.
+</p>
 </div>
 <div style="flex: 1; text-align: center;">
-<p><img src="https://raw.githubusercontent.com/kaufmann-group/qstep-demo/main/images/efficient-frontier.jpg" style="width: 100%; max-width: 300px; height: auto;"></p>
+<p><img src="https://raw.githubusercontent.com/kaufmann-group/qstep-demo/main/images/max-cut.png" style="width: 100%; max-width: 260px; height: auto;"></p>
 </div>
 </div>
-<p>Say we have a collection of assets in a portfolio and the variable,</p>
-<p><span class="math display">\[\mathbf{w} = \begin{pmatrix} w_1 \\ w_2 \\ \vdots \\ w_N \end{pmatrix}\]</span></p>
-<p>represents the fraction of the portfolio allocated to each asset, where <span class="math inline">\(\mu_i\)</span> is the <a href="https://en.wikipedia.org/wiki/Expected_return">expected return</a> of asset <span class="math inline">\(i\)</span> and <span class="math inline">\(\Sigma\)</span> is the <a href="https://en.wikipedia.org/wiki/Covariance_matrix">covariance matrix</a> describing the risk and correlations between assets. The expected of the portfolio is given by the expression,</p>
-<p><span class="math display">\[\boldsymbol{\mu}^{T}\mathbf{w},\]</span></p>
-<p>while the portfolio variance, which is used as a <a href="https://en.wikipedia.org/wiki/Risk_measure">measure of risk</a>, is given by the expression,</p>
-<p><span class="math display">\[\mathbf{w}^{T}\Sigma\mathbf{w}.\]</span></p>
-<p>The optimization problem can therefore be written as</p>
-<p><span class="math display">\[\min_{\mathbf{w}} \left[ \lambda_1 \mathbf{w}^{T}\Sigma\mathbf{w} - \lambda_2 \boldsymbol{\mu}^{T}\mathbf{w} \right],\]</span></p>
-<p>where the first term penalizes portfolio risk and the second term rewards expected return. In this optimization problem we also require the entire portfolio to be allocated, or simply put the weights must sum to <span class="math inline">\(1\)</span>.</p>
-<p><span class="math display">\[\sum_i w_i = 1\]</span></p>
-<p>Because a QUBO is an unconstrained optimization problem, this condition can be included using a quadratic penalty,</p>
-<p><span class="math display">\[\lambda_3 \left( \sum_i w_i - 1 \right)^2.\]</span></p>
-<p>Therefore complete objective function we seek to mimize becomes,</p>
-<p><span class="math display">\[H(\mathbf{w}) = \lambda_1 \mathbf{w}^{T}\Sigma\mathbf{w} - \lambda_2 \boldsymbol{\mu}^{T}\mathbf{w} + \lambda_3 \left( \sum_i w_i - 1 \right)^2.\]</span></p>
-<p>Here, <span class="math inline">\(\lambda_1\)</span> controls the importance of expected return, <span class="math inline">\(\lambda_2\)</span> controls the penalty associated with portfolio risk and <span class="math inline">\(\lambda_3\)</span> controls the portfolio normalization constraint. Something worth noting is that the portfolio weights <span class="math inline">\(w_i\)</span> are continuous variables, while a QUBO requires binary variables. So to represent each portfolio weight using several binary variables we look at its binary expansion</p>
-<p><span class="math display">\[w_i = \sum_{k=0}^{b-1} \frac{2^k}{2^b -1}x_{ik}, \quad x_{ik}\in\{0,1\}.\]</span></p>
-<p>Substituting these binary representations into the objective converts the portfolio optimization problem into a quadratic function of binary variables,</p>
-<p><span class="math display">\[H(\mathbf{x})=\mathbf{x}^{T}Q\mathbf{x}.\]</span></p>
-</section>
-<section id="yahoo-finiance-data" class="level2">
-<h2 class="anchored" data-anchor-id="yahoo-finiance-data">Yahoo Finiance Data</h2>
-<p>For this demonstration we get the average returns from Yahoo Finiance from the <code>yfinance</code> library (ensure it is installed in this virtual environment). A full list of the assets accessable are given <a href="assets.txt">here</a>.</p>
-<div id="ef8b016c-32b1-4c23-be54-a19515c534dc" class="cell" data-execution_count="50">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yfinance <span class="im">as</span> yf</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>assets <span class="op">=</span> [<span class="st">"AAPL"</span>, <span class="st">"MSFT"</span>, <span class="st">"NVDA"</span>, <span class="st">"CSCO"</span>, <span class="st">"ORCL"</span>, <span class="st">"QCOM"</span>, <span class="st">"IBM"</span>]</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>start<span class="op">=</span><span class="st">"2025-04-04"</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>end<span class="op">=</span><span class="st">"2026-04-04"</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> yf.download(assets, start<span class="op">=</span>start, end<span class="op">=</span>end)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>closing_prices <span class="op">=</span> data[<span class="st">"Close"</span>].pct_change().dropna()</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># The 252 represents the number of business days in a year</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> closing_prices.mean() <span class="op">*</span> <span class="dv">252</span> </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>covariance <span class="op">=</span> closing_prices.cov() <span class="op">*</span> <span class="dv">252</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>[*********************100%***********************]  7 of 7 completed</code></pre>
-</div>
+<p>We assign each vertex a binary variable,</p>
+<p><span class="math display">\[x_i = \begin{cases} 0 &amp; \text{if vertex } i \text{ is in group 0},\\ 1 &amp; \text{if vertex } i \text{ is in group 1}. \end{cases}\]</span></p>
+<p>For an edge connecting vertices <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, the expression</p>
+<p><span class="math display">\[x_i+x_j-2x_ix_j\]</span></p>
+<p>is equal to <span class="math inline">\(1\)</span> when the two vertices are in different groups and <span class="math inline">\(0\)</span> when they are in the same group. This can be seen directly from the truth table, which is identical to the XOR truth table:</p>
+<p><span class="math display">\[\begin{array}{c|c|c} x_i &amp; x_j &amp; x_i+x_j-2x_ix_j\\ \hline 0 &amp; 0 &amp; 0\\ 0 &amp; 1 &amp; 1\\ 1 &amp; 0 &amp; 1\\ 1 &amp; 1 &amp; 0 \end{array}\]</span></p>
+<p>Therefore, this expression indicates whether a given edge crosses the cut. If each edge has a weight <span class="math inline">\(w_{ij}\)</span>, then the total weight of all edges crossing between the two groups is</p>
+<p><span class="math display">\[\sum_{(i,j)} w_{ij}\left(x_i+x_j-2x_ix_j\right).\]</span></p>
+<p>The goal of the Max-Cut problem is therefore to maximize this quantity,</p>
+<p><span class="math display">\[\max_{\mathbf{x}} \sum_{(i,j)} w_{ij} \left(x_i+x_j-2x_ix_j\right)\]</span></p>
+<p>Because the objective is quadratic in binary variables, it can be written directly as a QUBO. Since QUBOs are conventionally expressed as minimization problems, maximizing the cut weight is equivalent to minimizing its negative:</p>
+<p><span class="math display">\[H(\mathbf{x}) = -\sum_{(i,j)} w_{ij} \left(x_i+x_j-2x_ix_j\right)\]</span></p>
+<p>with</p>
+<p><span class="math display">\[x_i\in\{0,1\}.\]</span></p>
+<p>The minimum of <span class="math inline">\(H(\mathbf{x})\)</span> therefore corresponds to the partition of the graph with the maximum total edge weight crossing between the two groups.</p>
+<p>For this simple demonstration let’s attempt to solve the max-cut problem for this weighted graph,</p>
+<p><span class="math display">\[(A,B)=4,\qquad (A,C)=2,\qquad (B,C)=1,\qquad (B,D)=5,\qquad (C,D)=3.\]</span></p>
+<div id="9112525b-9aa0-4954-a1a2-62ae1159940f" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>edges <span class="op">=</span> [(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="dv">4</span>), (<span class="st">"A"</span>, <span class="st">"C"</span>, <span class="dv">2</span>), (<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="dv">1</span>), (<span class="st">"B"</span>, <span class="st">"D"</span>, <span class="dv">5</span>), (<span class="st">"C"</span>, <span class="st">"D"</span>, <span class="dv">3</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="using-oceans-simulated-annealing-sampler" class="level2">
-<h2 class="anchored" data-anchor-id="using-oceans-simulated-annealing-sampler">Using Ocean’s Simulated Annealing Sampler</h2>
-<p>The</p>
-<div id="59ac4181-ba03-4448-9eee-4247942c35af" class="cell" data-execution_count="51">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>lambda_1 <span class="op">=</span> <span class="fl">1.0</span>    <span class="co"># Portfolio risk </span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>lambda_2 <span class="op">=</span> <span class="fl">100.0</span>  <span class="co"># Budget constraint</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>lambda_3 <span class="op">=</span> <span class="fl">1.0</span>    <span class="co"># Expected return</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>bits_per_asset <span class="op">=</span> <span class="dv">12</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Binary coefficients used to represent each portfolio weight: ~ 1/2, ~ 1/4, ~1/8, ... </span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>bit_weights <span class="op">=</span> [<span class="dv">2</span><span class="op">**</span>k <span class="op">/</span> (<span class="dv">2</span><span class="op">**</span>bits_per_asset <span class="op">-</span> <span class="dv">1</span>) <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(bits_per_asset)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>This loop enumerates the binary variables of the encoding. For each asset <span class="math inline">\(i \in \{1,\dots,n\}\)</span> and each bit index <span class="math inline">\(k \in \{0,\dots,b-1\}\)</span>, it registers the variable <span class="math inline">\(x_{ik}\)</span> together with the asset it belongs to and its associated coefficient <span class="math inline">\(c_k\)</span>, where</p>
-<p><span class="math display">\[w_i = \sum_{k=0}^{b-1} c_k\,x_{ik}, \qquad c_k = \frac{2^k}{2^b-1}.\]</span></p>
-<p>This yields a total of <span class="math inline">\(nb\)</span> binary variables. Storing each variable alongside its asset index and coefficient allows the subsequent construction of the QUBO matrix to retrieve <span class="math inline">\(\mu_i\)</span>, <span class="math inline">\(\sigma_{ij}\)</span> and <span class="math inline">\(c_k\)</span> directly, without re-deriving them from the variable labels.</p>
-<div id="6295d1b8-d25e-492a-8d02-89e23eec099f" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>variables <span class="op">=</span> []</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> asset <span class="kw">in</span> assets:</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(bits_per_asset):</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        variable <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>asset<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        coefficient <span class="op">=</span> bit_weights[k]</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        variables.append((variable, asset, coefficient))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>This loop assigns the diagonal entries of the QUBO matrix. Since <span class="math inline">\(x_{ik}^2 = x_{ik}\)</span> for binary variables, every squared term collapses to a linear one and lands on the diagonal:</p>
-<p><span class="math display">\[Q[(ik,ik)] = \lambda_3\,\sigma_{ii}c_k^2 \;-\; \lambda_2\,\mu_i c_k \;+\; \lambda_1\left(c_k^2 - 2c_k\right).\]</span></p>
-<p>The three contributions come from the risk term, the expected return, which is linear and so appears only here, and the budget penalty. The constant <span class="math inline">\(\lambda_1\)</span> left over from expanding the penalty carries no variables and is omitted, as it shifts every energy equally and does not change the minimizer.</p>
-<div id="b0f0edd7-bb5f-4a4e-8d9b-9bd917bc49cf" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> variable, asset, coefficient <span class="kw">in</span> variables:</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    mu_i <span class="op">=</span> returns.loc[asset]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    sigma_ii <span class="op">=</span> covariance.loc[asset, asset]</span>
+<section id="using-d-waves-quantum-annealer" class="level2">
+<h2 class="anchored" data-anchor-id="using-d-waves-quantum-annealer">Using D-Wave’s Quantum Annealer</h2>
+<p>The input to the D-Wave system is a QUBO objective matrix in the form of a dictionary where each element represents the coefficient multiplying the <span class="math inline">\(x_ix_j\)</span> term,</p>
+<p><span class="math display">\[Q[(i,j)] = \text{coefficient multiplying } x_i x_j.\]</span></p>
+<p>Using <code>defaultdict</code> we break down the expression,</p>
+<p><span class="math display">\[-w_{ij}\left(x_i+x_j-2x_ix_j\right)\]</span></p>
+<p>as follows.</p>
+<div id="a5b22310-13da-4ea3-bef4-f3da379c6d9b" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    Q[(variable, variable)] <span class="op">+=</span> (lambda_3 <span class="op">*</span> sigma_ii <span class="op">*</span> coefficient<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> lambda_2 <span class="op">*</span> mu_i <span class="op">*</span> coefficient <span class="op">+</span> lambda_1 <span class="op">*</span> (coefficient<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> coefficient))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, j, weight <span class="kw">in</span> edges:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -w_ij * x_i terms</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    Q[(i, i)] <span class="op">-=</span> weight</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -w_ij * x_j terms</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    Q[(j, j)] <span class="op">-=</span> weight</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># +2 * w_ij * x_i * x_j terms</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    Q[(i, j)] <span class="op">+=</span> <span class="dv">2</span> <span class="op">*</span> weight</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="bu">dict</span>(Q)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>This loop assigns the off-diagonal entries of the QUBO matrix. The inner index begins at <span class="math inline">\(a+1\)</span> so that each unordered pair is visited exactly once, with the factor of <span class="math inline">\(2\)</span> absorbing the symmetric counterpart:</p>
-<p><span class="math display">\[Q[(ik,jl)] = 2\,c_k c_l\left(\lambda_3\,\sigma_{ij} + \lambda_1\right).\]</span></p>
-<p>The two contributions come from the cross terms of <span class="math inline">\(\mathbf{w}^\top\Sigma\mathbf{w}\)</span> and of the budget penalty; the expected return, being linear, contributes nothing here. Pairs with <span class="math inline">\(i = j\)</span> are included, since <span class="math inline">\(\sigma_{ij}\)</span> then reduces to the variance <span class="math inline">\(\sigma_{ii}\)</span> and these terms form part of the risk of a single asset.</p>
-<div id="28c204fc" class="cell" data-execution_count="44">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(variables)):</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    variable_i, asset_i, coefficient_i <span class="op">=</span> variables[a]</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> b <span class="kw">in</span> <span class="bu">range</span>(a <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(variables)):</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        variable_j, asset_j, coefficient_j <span class="op">=</span> variables[b]</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        sigma_ij <span class="op">=</span> covariance.loc[asset_i, asset_j]</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        Q[(variable_i, variable_j)] <span class="op">+=</span> (<span class="dv">2</span> <span class="op">*</span> coefficient_i <span class="op">*</span> coefficient_j <span class="op">*</span> ( lambda_3 <span class="op">*</span> sigma_ij <span class="op">+</span> lambda_1 ))</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="bu">dict</span>(Q)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Unlike D-Wave’s quantum annealer, simulated annealing runs locally and does not require access to the Leap quantum cloud service. We can create a simulated annealing sampler using <code>SimulatedAnnealingSampler</code>.</p>
+<div id="b80586d6-2027-4c6f-90e4-edcfad295d49" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dwave.samplers <span class="im">import</span> SimulatedAnnealingSampler</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sampler <span class="op">=</span> SimulatedAnnealingSampler()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Because simulated annealing runs on a classical computer rather than on a QPU, there is no hardware graph to map the problem onto and no minor embedding step. Any QUBO can be passed to the sampler directly, regardless of how its variables are connected.</p>
-<p>Simulated annealing mimics the physical annealing process. Each run starts from a random configuration at a high effective temperature, where moves that increase the energy are often accepted, and the temperature is then lowered over a series of sweeps so that the search gradually settles into a low-energy configuration. Ocean provides this through <code>SimulatedAnnealingSampler</code>, which is part of the <code>dwave-samplers</code> package included in the Ocean SDK.</p>
-<div id="dc607706" class="cell" data-execution_count="45">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dwave.samplers <span class="im">import</span> SimulatedAnnealingSampler</span>
+<p>Next the QUBO is directly passed into the sampler. The <code>num_reads</code> parameter specifies how many times the simulated annealing process is run, with the lowest-energy solution returned as the best solution found and is exactally analogous to the quantum annealer.</p>
+<div id="cffa1a66-31e8-4868-a542-baa896cd5db1" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sampleset <span class="op">=</span> sampler.sample_qubo(Q, num_reads<span class="op">=</span><span class="dv">1000</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>sampler <span class="op">=</span> SimulatedAnnealingSampler()</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sampleset <span class="op">=</span> sampler.sample_qubo(Q, num_reads<span class="op">=</span><span class="dv">1000</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>best <span class="op">=</span> sampleset.first <span class="co"># returns lowest energy sample in the SampleSet</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> <span class="bu">dict</span>(best.sample)  </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Solution (binary representation of weights):"</span>)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Prints the binary output in a readable format </span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> asset <span class="kw">in</span> assets:</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    bits <span class="op">=</span> <span class="st">""</span>.join(<span class="bu">str</span>(solution[<span class="ss">f"</span><span class="sc">{</span>asset<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>]) <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">reversed</span>(<span class="bu">range</span>(bits_per_asset)))</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>asset<span class="sc">:&lt;10}</span><span class="ss"> </span><span class="sc">{</span>bits<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Energy:"</span>, best.energy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Solution (binary representation of weights):
-  AAPL       000011001111
-  MSFT       000100000000
-  NVDA       110001111111
-  CSCO       000101111111
-  ORCL       000000100011
-  QCOM       000000000000
-  IBM        000000010001
-Energy: -100.50933091360253</code></pre>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>best <span class="op">=</span> sampleset.first <span class="co"># returns lowest energy sample in the SampleSet</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> <span class="bu">dict</span>(best.sample)  </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Solution:"</span>, solution)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Energy:"</span>, best.energy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Recall that <code>solution</code> is still in its binary representation, where each vertex has been assigned either <code>0</code> or <code>1</code>; so it follows to separate the vertices into the two groups.</p>
+<div id="1946d189-d368-48e9-a18d-535c5ccb7e61" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>group_0 <span class="op">=</span> [vertex <span class="cf">for</span> vertex, value <span class="kw">in</span> solution.items() <span class="cf">if</span> value <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>group_1 <span class="op">=</span> [vertex <span class="cf">for</span> vertex, value <span class="kw">in</span> solution.items() <span class="cf">if</span> value <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Group 0:"</span>, group_0)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Group 1:"</span>, group_1)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve for the max cut weight </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>cut_weight <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, j, weight <span class="kw">in</span> edges:</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> solution[i] <span class="op">!=</span> solution[j]:</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        cut_weight <span class="op">+=</span> weight</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cut weight:"</span>, cut_weight)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Solving for the weights gives the following graph.</p>
-<div id="25feab3c-86e5-4170-8d74-e08363988cca" class="cell" data-execution_count="46">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>portfolio <span class="op">=</span> {}</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> asset <span class="kw">in</span> assets:</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    portfolio[asset] <span class="op">=</span> <span class="bu">sum</span>(bit_weights[k] <span class="op">*</span> solution[<span class="ss">f"</span><span class="sc">{</span>asset<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>] <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(bits_per_asset))</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">6</span>))</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>plt.bar(portfolio.keys(), portfolio.values())</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Portfolio Asset Weights"</span>)</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Assets"</span>)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Weight"</span>)</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">90</span>)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="D-wave SDK Demonstration Simulated Annealing_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
-</figure>
+</section>
+<section id="qubo-formulation-practice" class="level1">
+<h1>QUBO Formulation Practice</h1>
+<p>Now that we have seen how Max-Cut can be written as a QUBO, try formulating the following optimization problems yourself.</p>
+<p>For each problem:</p>
+<ol type="1">
+<li>Define the binary variables.</li>
+<li>Write the objective function in terms of those variables.</li>
+<li>Expand the objective into the standard QUBO form</li>
+</ol>
+<p><span class="math display">\[ \min_{\mathbf{x}} \mathbf{x}^T Q \mathbf{x}, \qquad x_i\in\{0,1\}\]</span></p>
+<ol start="4" type="1">
+<li>Construct the corresponding QUBO matrix <span class="math inline">\(Q\)</span>.</li>
+<li>Use simulated annealing to solve an example optimization problem yourself!</li>
+</ol>
+<section id="problem-1-number-partitioning" class="level2">
+<h2 class="anchored" data-anchor-id="problem-1-number-partitioning">Problem 1: Number Partitioning</h2>
+<p>Suppose we are given the numbers</p>
+<p><span class="math display">\[[3,5,6,7,11,12,14,23,26]\]</span></p>
+<p>We want to divide these numbers into two groups such that the difference between the sums of the two groups is as small as possible.</p>
+<p>Define</p>
+<p><span class="math display">\[ x_i = \begin{cases} 0 &amp; \text{if number } a_i \text{ is placed in Group 0},\\ 1 &amp; \text{if number } a_i \text{ is placed in Group 1}. \end{cases} \]</span></p>
+<p>One way to represent the difference between the two group sums is</p>
+<p><span class="math display">\[\sum_i a_i(2x_i-1).\]</span></p>
+<p>Since we want this difference to be as close to zero as possible, construct an objective function that minimizes its magnitude.</p>
+<div id="57dcde47-b716-46f5-8d57-70bec55ecc6d" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">23</span>, <span class="dv">26</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div id="dab1f462-8e71-4e3e-86e8-b7ab5cf457af" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Q_number_partitioning <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Solve for the QUBO objective function here! </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="problem-2-minimum-vertex-cover" class="level2">
+<h2 class="anchored" data-anchor-id="problem-2-minimum-vertex-cover">Problem 2: Minimum Vertex Cover</h2>
+<p>Consider the graph <span class="math inline">\(V=\{0,1,2,3\}\)</span> with the edges,</p>
+<p><span class="math display">\[E=\{(0,1),(1,2),(2,3),(3,0)\}.\]</span></p>
+<p>A <strong>vertex cover</strong> is a set of vertices such that every edge has at least one endpoint included in the set. Say we define</p>
+<p><span class="math display">\[ x_i = \begin{cases} 1 &amp; \text{if vertex } i \text{ is selected},\\ 0 &amp; \text{otherwise}. \end{cases} \]</span></p>
+<p>We want to select as few vertices as possible while still covering every edge. The number of selected vertices is</p>
+<p><span class="math display">\[\sum_i x_i.\]</span></p>
+<p>For an edge <span class="math inline">\((i,j)\)</span>, the edge is left uncovered only when</p>
+<p><span class="math display">\[x_i=0 \qquad\text{and}\qquad x_j=0.\]</span></p>
+<p>A penalty for leaving an edge uncovered can therefore be written using</p>
+<p><span class="math display">\[
+(1-x_i)(1-x_j).
+\]</span></p>
+<p>Construct an objective of the form</p>
+<p><span class="math display">\[
+\text{number of selected vertices}
++
+\lambda
+\left(\text{penalty for uncovered edges}\right),
+\]</span></p>
+<p>where <span class="math inline">\(\lambda&gt;0\)</span> is chosen large enough that covering every edge is preferred.</p>
+<div id="527351db-39ac-4588-9ed5-488624e8d682" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">1</span>), (<span class="dv">1</span>,<span class="dv">2</span>), (<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">3</span>,<span class="dv">0</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Finished? Check out our other tutorials!</p>
-<p><a class="notebook-download" href="./downloads/simulated_annealing_notebook.txt" download="D-wave SDK Demonstration Simulated Annealing.ipynb"> Download notebook ↓ </a></p>
+<div id="c0be3f8a-1e00-44da-a87a-5157a19d045a" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Q_minimum_vertex_cover <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Solve for the QUBO objective function here! </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="problem-3-knapsack" class="level2">
+<h2 class="anchored" data-anchor-id="problem-3-knapsack">Problem 3: Knapsack</h2>
+<p>Suppose we have four items with the following values and weights:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Item</th>
+<th style="text-align: right;">Value <span class="math inline">\(v_i\)</span></th>
+<th style="text-align: right;">Weight <span class="math inline">\(w_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p>The maximum allowed weight is <span class="math inline">\(W = 5\)</span>. Say we define</p>
+<p><span class="math display">\[ x_i = \begin{cases} 1 &amp; \text{if item } i \text{ is selected},\\ 0 &amp; \text{otherwise}. \end{cases} \]</span></p>
+<p>The total value of the selected items is</p>
+<p><span class="math display">\[\sum_i v_i x_i,\]</span></p>
+<p>while the total weight is</p>
+<p><span class="math display">\[
+\sum_i w_i x_i.
+\]</span></p>
+<p>Because QUBOs are usually written as minimization problems, maximizing value can be represented by minimizing</p>
+<p><span class="math display">\[
+-\sum_i v_i x_i.
+\]</span></p>
+<p>The weight constraint must also be enforced using an additional penalty term. For this exercise, introduce binary slack variables if necessary so that the inequality</p>
+<p><span class="math display">\[
+\sum_i w_i x_i \leq W
+\]</span></p>
+<p>can be converted into an equality. The goal here is to construct an objective of the form</p>
+<p><span class="math display">\[
+\text{objective}
++
+\lambda(\text{constraint violation})^2,
+\]</span></p>
+<p>then expand it and determine the full QUBO matrix <span class="math inline">\(Q\)</span>.</p>
+<div id="bd4210c9-9f68-4afe-b99d-8beec5d1b283" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>items <span class="op">=</span> [(<span class="dv">8</span>,<span class="dv">4</span>), (<span class="dv">3</span>,<span class="dv">2</span>), (<span class="dv">6</span>,<span class="dv">3</span>), (<span class="dv">2</span>,<span class="dv">1</span>)] <span class="co"># (Value, Weight)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="03301f0e-3a40-4a54-96e9-ca87df79a76e" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Q_knapsack <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Solve for the QUBO objective function here! </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><a class="notebook-download" href="./downloads/quantum_annealing_notebook.txt" download="D-wave SDK Demonstration Quantum Annealing.ipynb"> Download notebook ↓ </a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
