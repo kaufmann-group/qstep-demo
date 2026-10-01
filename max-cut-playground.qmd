@@ -6,24 +6,27 @@ toc: false
 
 ```{=html}
 <section id="maxcut" aria-label="Interactive Max-Cut playground">
-  <div class="mc-intro"><strong>How large a cut can you find?</strong><p>Split the nodes into two groups. An edge counts toward your score only when its endpoints have different colors. Aim for the <b>largest total weight</b> of these cut edges—not simply the most edges.</p><p>For example, cutting edges of weights 3 and 2 gives a score of 5. The groups do not need to be the same size.</p></div>
+  <div class="mc-intro"><strong>How large a cut can you find?</strong><p>Split the nodes into two groups. An edge counts toward your score only when its endpoints have different colors. Aim for the <b>largest total weight</b> of these cut edges—not simply the most edges.</p><p>For example, cutting edges of weights 3 and 2 gives a score of 5. The groups do not need to be the same size. You’ll see a success message when you find the maximum cut.</p></div>
   <div class="mc-top">
     <div><span class="mc-kicker">YOUR PARTITION</span><p>Click to change groups. Drag to rearrange.</p></div>
     <div class="mc-score" role="status" aria-live="polite" aria-atomic="true"><span>Cut weight</span><strong id="mc-score">0</strong><small id="mc-count">0 edges cut</small></div>
   </div>
   <div class="mc-legend"><span><i class="mc-blue"></i>Group 0</span><span><i class="mc-orange"></i>Group 1</span><span><i class="mc-line"></i>Cut edge</span></div>
-  <div class="mc-canvas"><svg id="mc-graph" viewBox="0 0 720 480" role="group" aria-label="Graph. Click nodes or use Tab and Enter to change groups."></svg></div>
+  <div class="mc-canvas"><svg id="mc-graph" viewBox="0 0 1000 720" role="group" aria-label="Graph. Click nodes or use Tab and Enter to change groups."></svg></div>
+  <div id="mc-success" class="mc-success" role="status" aria-live="polite" aria-atomic="true" hidden></div>
   <div class="mc-groups"><div><span class="mc-group-title">GROUP 0</span><p id="mc-group0"></p></div><div><span class="mc-group-title">GROUP 1</span><p id="mc-group1"></p></div></div>
   <div class="mc-actions"><button type="button" id="mc-reset">Reset groups</button><span id="mc-size"></span></div>
   <p class="mc-footnote">Moving nodes changes only the drawing, not your score. Crossing lines are not connected unless they share a node. Keyboard: Tab to a node, Enter/Space to change its group, arrow keys to move it.</p>
 </section>
 <style>
+#maxcut .mc-success{margin:0 28px 20px;padding:14px 18px;border:1px solid #a7d8be;border-radius:5px;color:#195b3c;background:#edf8f1;font-size:.95rem}#maxcut .mc-success[hidden]{display:none}
+
 #maxcut .mc-intro{padding:22px 28px 18px;border-bottom:1px solid var(--mc-border);background:var(--bs-tertiary-bg,#f8f9fa)}#maxcut .mc-intro strong{font-size:1.05rem;font-weight:600}#maxcut .mc-intro p{font-size:.9rem;margin:8px 0 0;line-height:1.5}#maxcut .mc-intro p:last-child{color:var(--mc-muted);font-size:.82rem}
 
 #maxcut{--mc-blue:#2166ac;--mc-orange:#ad4b00;--mc-cut:#24796c;--mc-border:var(--bs-border-color,#dee2e6);--mc-muted:var(--bs-secondary-color,#626b73);--mc-bg:var(--bs-body-bg,#fff);color:var(--bs-body-color,#373a3c);font-family:inherit;border:1px solid var(--mc-border);border-radius:10px;overflow:hidden;background:var(--mc-bg);margin:1.4rem 0}
 #maxcut *{box-sizing:border-box}#maxcut .mc-top{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 28px 14px}#maxcut .mc-kicker,#maxcut .mc-group-title{font-size:.72rem;letter-spacing:.1em;font-weight:700;color:var(--mc-muted)}#maxcut .mc-top p{margin:6px 0 0;font-size:1.05rem}#maxcut .mc-score{text-align:right;min-width:100px}#maxcut .mc-score span,#maxcut .mc-score small{display:block;color:var(--mc-muted);font-size:.8rem}#maxcut .mc-score strong{display:block;font-size:2.6rem;font-weight:500;line-height:1.15;font-variant-numeric:tabular-nums}
 #maxcut .mc-legend{display:flex;gap:20px;flex-wrap:wrap;padding:0 28px;font-size:.8rem;color:var(--mc-muted)}#maxcut .mc-legend span{display:flex;align-items:center;gap:7px}#maxcut .mc-legend i{display:inline-block;width:11px;height:11px;border-radius:50%}#maxcut .mc-blue{background:var(--mc-blue)}#maxcut .mc-orange{background:var(--mc-orange)}#maxcut i.mc-line{height:3px;width:20px;background:var(--mc-cut);border-radius:0}
-#maxcut .mc-canvas{padding:0 12px}#maxcut svg{display:block;width:100%;height:auto;max-height:510px;overflow:visible}#maxcut .mc-edge{stroke:#bdc5cd;stroke-width:2;stroke-dasharray:5 5}#maxcut .mc-edge.is-cut{stroke:var(--mc-cut);stroke-width:4;stroke-dasharray:none}#maxcut .mc-weight-bg{fill:var(--mc-bg);stroke:var(--mc-border)}#maxcut .mc-weight{fill:var(--mc-muted);font:500 14px system-ui;text-anchor:middle;dominant-baseline:central;pointer-events:none}#maxcut .mc-node{cursor:grab;outline:none;touch-action:none;user-select:none}#maxcut .mc-node:active{cursor:grabbing}#maxcut .mc-node circle{stroke:var(--mc-bg);stroke-width:3}#maxcut .mc-node:hover circle{stroke:#596671;stroke-width:4}#maxcut .mc-node:focus circle{stroke:#15191d;stroke-width:5;stroke-dasharray:4 3}#maxcut .mc-node text{fill:white;text-anchor:middle;dominant-baseline:central;font:600 15px system-ui;pointer-events:none}
+#maxcut .mc-canvas{padding:0 12px;overflow-x:auto}#maxcut svg{display:block;width:100%;height:auto;min-width:700px;max-height:none;overflow:visible}#maxcut .mc-edge{stroke:#bdc5cd;stroke-width:2;stroke-dasharray:5 5}#maxcut .mc-edge.is-cut{stroke:var(--mc-cut);stroke-width:4;stroke-dasharray:none}#maxcut .mc-weight-bg{fill:var(--mc-bg);stroke:var(--mc-border)}#maxcut .mc-weight{fill:var(--mc-muted);font:500 14px system-ui;text-anchor:middle;dominant-baseline:central;pointer-events:none}#maxcut .mc-node{cursor:grab;outline:none;touch-action:none;user-select:none}#maxcut .mc-node:active{cursor:grabbing}#maxcut .mc-node circle{stroke:var(--mc-bg);stroke-width:3}#maxcut .mc-node:hover circle{stroke:#596671;stroke-width:4}#maxcut .mc-node:focus circle{stroke:#15191d;stroke-width:5;stroke-dasharray:4 3}#maxcut .mc-node text{fill:white;text-anchor:middle;dominant-baseline:central;font:600 15px system-ui;pointer-events:none}
 #maxcut .mc-groups{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--mc-border);border-bottom:1px solid var(--mc-border)}#maxcut .mc-groups>div{padding:14px 28px;min-width:0}#maxcut .mc-groups>div+div{border-left:1px solid var(--mc-border)}#maxcut .mc-groups>div:first-child .mc-group-title{color:var(--mc-blue)}#maxcut .mc-groups>div:last-child .mc-group-title{color:var(--mc-orange)}#maxcut .mc-groups p{margin:5px 0 0;font-size:.9rem;overflow-wrap:anywhere}#maxcut .mc-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:18px 28px}#maxcut .mc-actions>span{margin-left:auto;color:var(--mc-muted);font-size:.78rem}
 #maxcut button{font:inherit;font-size:.85rem;border:1px solid var(--mc-border);border-radius:4px;background:var(--mc-bg);color:inherit;padding:8px 12px;cursor:pointer;min-height:40px}#maxcut button:hover{background:var(--bs-tertiary-bg,#f1f3f5)}#maxcut button:focus-visible{outline:3px solid #2166ac;outline-offset:3px}#maxcut .mc-footnote{margin:0;padding:0 28px 20px;color:var(--mc-muted);font-size:.8rem}
 @media(max-width:520px){#maxcut .mc-top{padding:18px 16px 12px}#maxcut .mc-legend{padding:0 16px;gap:14px}#maxcut .mc-groups>div{padding:12px 16px}#maxcut .mc-actions{padding:16px}#maxcut .mc-footnote{padding:0 16px 18px}#maxcut .mc-actions>span{width:100%;margin:0}#maxcut .mc-top p{font-size:.9rem}#maxcut .mc-score strong{font-size:2.1rem}#maxcut .mc-canvas{padding:4px 0}}
@@ -35,9 +38,30 @@ toc: false
   const $ = id => root.querySelector('#mc-' + id);
   const NS = 'http://www.w3.org/2000/svg';
   const graph = {
-    nodes: ['A','B','C','D','E','F','G'],
-    edges: [['A','B',3],['B','C',2],['C','D',4],['D','E',2],['E','F',3],['F','A',1],['A','G',2],['C','G',3],['E','G',4]].map(([a,b,weight])=>({a,b,weight}))
+    nodes: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"],
+    edges: [["A", "B", 5], ["B", "C", 1], ["C", "D", 3], ["E", "F", 5], ["F", "G", 5], ["G", "H", 3], ["I", "J", 1], ["J", "K", 5], ["K", "L", 3], ["A", "E", 4], ["B", "F", 4], ["C", "G", 1], ["D", "H", 1], ["E", "I", 1], ["F", "J", 4], ["G", "K", 6], ["H", "L", 2], ["A", "F", 3], ["B", "G", 1], ["C", "H", 4], ["E", "J", 3], ["F", "K", 5], ["G", "L", 5], ["B", "E", 5], ["D", "G", 3], ["F", "I", 5], ["H", "K", 3]].map(([a,b,weight])=>({a,b,weight}))
   };
+  // Exhaustive scoring is intended only for small workshop graphs.
+  if(graph.nodes.length<2 || graph.nodes.length>16) throw new Error('Use 2–16 nodes for the exact success check.');
+  // Validate author-edited graph data before drawing it.
+  if (new Set(graph.nodes).size !== graph.nodes.length) throw new Error('Graph node names must be unique.');
+  for (const edge of graph.edges) {
+    if (!graph.nodes.includes(edge.a) || !graph.nodes.includes(edge.b)) throw new Error('Every edge endpoint must appear in graph.nodes.');
+    if (!Number.isFinite(edge.weight)) throw new Error('Every edge weight must be a finite number.');
+  }
+  // Exact check for this small challenge; keep the target hidden until reached.
+  // Complementary partitions are equivalent, so hold the first node in group 0.
+  const indexedEdges = graph.edges.map(e=>[graph.nodes.indexOf(e.a),graph.nodes.indexOf(e.b),Math.round(e.weight*1000000)]);
+  const maximumCut = (() => {
+    let best = -Infinity;
+    for (let mask=0; mask<2**(graph.nodes.length-1); mask++) {
+      const bits=mask*2;
+      let total=0;
+      for (const [a,b,w] of indexedEdges) if (((bits>>a)&1)!==((bits>>b)&1)) total+=w;
+      if(total>best)best=total;
+    }
+    return best;
+  })();
   const groups = new Map(graph.nodes.map(n=>[n,0]));
   let edgeViews, nodeViews;
   const fmt = value => Number(value.toFixed(6)).toLocaleString('en-US', { maximumFractionDigits: 6 });
@@ -49,12 +73,66 @@ toc: false
   }
   let positions;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-  // A fixed planar drawing: all nine edges are visible without crossings.
+  function nearest(p,a,b) {
+    const dx=b.x-a.x,dy=b.y-a.y;
+    const t=clamp(((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy||1),0,1);
+    return {x:a.x+t*dx,y:a.y+t*dy,t};
+  }
   function layout() {
-    return new Map(Object.entries({
-      A:{x:360,y:55}, B:{x:615,y:148}, C:{x:615,y:332},
-      D:{x:360,y:425}, E:{x:105,y:332}, F:{x:105,y:148}, G:{x:360,y:240}
-    }));
+    const challengeEdges = [["A", "B", 5], ["B", "C", 1], ["C", "D", 3], ["E", "F", 5], ["F", "G", 5], ["G", "H", 3], ["I", "J", 1], ["J", "K", 5], ["K", "L", 3], ["A", "E", 4], ["B", "F", 4], ["C", "G", 1], ["D", "H", 1], ["E", "I", 1], ["F", "J", 4], ["G", "K", 6], ["H", "L", 2], ["A", "F", 3], ["B", "G", 1], ["C", "H", 4], ["E", "J", 3], ["F", "K", 5], ["G", "L", 5], ["B", "E", 5], ["D", "G", 3], ["F", "I", 5], ["H", "K", 3]];
+    if(JSON.stringify(graph.nodes)===JSON.stringify('ABCDEFGHIJKL'.split('')) &&
+       JSON.stringify(graph.edges)===JSON.stringify(challengeEdges.map(([a,b,weight])=>({a,b,weight})))) {
+      return new Map(graph.nodes.map((n,i)=>[n,{x:110+(i%4)*260,y:100+Math.floor(i/4)*260}]));
+    }
+
+    // A seeded generator keeps the same graph's layout consistent on reload.
+    let seed=2166136261;
+    for(const ch of JSON.stringify(graph))seed=Math.imul(seed^ch.charCodeAt(0),16777619)>>>0;
+    const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
+    const nodes=graph.nodes, edges=graph.edges.map(e=>[nodes.indexOf(e.a),nodes.indexOf(e.b)]);
+    let best,bestCost=Infinity;
+    const cross=(a,b,c)=>(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);
+    for(let trial=0;trial<20;trial++) {
+      const p=nodes.map((_,i)=>{const t=2*Math.PI*i/nodes.length;return trial===0?{x:360+240*Math.cos(t),y:240+170*Math.sin(t)}:{x:90+540*random(),y:65+350*random()};});
+      for(let step=0;step<240;step++) {
+        const f=p.map(q=>({x:(360-q.x)*.012,y:(240-q.y)*.012}));
+        for(let i=0;i<p.length;i++)for(let j=i+1;j<p.length;j++){
+          const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,d=Math.max(1,Math.hypot(dx,dy));
+          const force=2800/(d*d)+Math.max(0,94-d)*.2;
+          f[i].x+=dx/d*force;f[i].y+=dy/d*force;f[j].x-=dx/d*force;f[j].y-=dy/d*force;
+        }
+        for(const [a,b] of edges){
+          const dx=p[b].x-p[a].x,dy=p[b].y-p[a].y,d=Math.max(1,Math.hypot(dx,dy)),force=(d-150)*.025;
+          f[a].x+=dx/d*force;f[a].y+=dy/d*force;f[b].x-=dx/d*force;f[b].y-=dy/d*force;
+          // Repel unrelated nodes from edges, especially collinear connections.
+          for(let i=0;i<p.length;i++)if(i!==a&&i!==b){
+            const q=nearest(p[i],p[a],p[b]);if(q.t<.03||q.t>.97)continue;
+            let vx=p[i].x-q.x,vy=p[i].y-q.y,distance=Math.hypot(vx,vy);
+            if(distance<65){if(distance<.01){vx=-dy/d;vy=dx/d;distance=1;}const push=(65-distance)*.09;
+              const fx=vx/distance*push,fy=vy/distance*push;
+              f[i].x+=fx;f[i].y+=fy;f[a].x-=fx*(1-q.t)*.5;f[a].y-=fy*(1-q.t)*.5;f[b].x-=fx*q.t*.5;f[b].y-=fy*q.t*.5;
+            }
+          }
+        }
+        const temp=4*(1-step/240)+.15;
+        p.forEach((q,i)=>{q.x=clamp(q.x+clamp(f[i].x,-temp,temp),55,665);q.y=clamp(q.y+clamp(f[i].y,-temp,temp),50,430);});
+      }
+      // Use available drawing area before comparing the candidate layouts.
+      const xs=p.map(q=>q.x),ys=p.map(q=>q.y),minX=Math.min(...xs),minY=Math.min(...ys);
+      const spanX=Math.max(...xs)-minX,spanY=Math.max(...ys)-minY;
+      p.forEach(q=>{q.x=spanX>1?75+(q.x-minX)*570/spanX:360;q.y=spanY>1?65+(q.y-minY)*350/spanY:240;});
+      let cost=0;
+      for(let i=0;i<p.length;i++)for(let j=i+1;j<p.length;j++)cost+=Math.pow(Math.max(0,85-Math.hypot(p[i].x-p[j].x,p[i].y-p[j].y)),2)*20;
+      edges.forEach(([a,b],i)=>{
+        cost+=Math.hypot(p[a].x-p[b].x,p[a].y-p[b].y)*.025;
+        p.forEach((q,k)=>{if(k!==a&&k!==b){const r=nearest(q,p[a],p[b]);cost+=Math.pow(Math.max(0,48-Math.hypot(q.x-r.x,q.y-r.y)),2)*30;}});
+        for(let j=i+1;j<edges.length;j++){const [c,d]=edges[j];if(a===c||a===d||b===c||b===d)continue;
+          if(cross(p[a],p[b],p[c])*cross(p[a],p[b],p[d])<0&&cross(p[c],p[d],p[a])*cross(p[c],p[d],p[b])<0)cost+=1500;
+        }
+      });
+      if(cost<bestCost){bestCost=cost;best=p;}
+    }
+    return new Map(nodes.map((n,i)=>[n,{x:best[i].x*1000/720,y:best[i].y*720/480}]));
   }
   const curve=(p,c,q,t)=>({x:(1-t)**2*p.x+2*(1-t)*t*c.x+t*t*q.x,y:(1-t)**2*p.y+2*(1-t)*t*c.y+t*t*q.y});
   function geometry() {
@@ -68,7 +146,7 @@ toc: false
         let score=Math.abs(bend)*.12;
         for(let k=1;k<24;k++){
           const r=curve(p,c,q,k/24);
-          score+=Math.max(0,28-r.x, r.x-692,28-r.y,r.y-452)**2;
+          score+=Math.max(0,28-r.x, r.x-972,28-r.y,r.y-692)**2;
           for(const [n,s] of positions)if(n!==edge.a&&n!==edge.b)score+=Math.max(0,42-Math.hypot(r.x-s.x,r.y-s.y))**2;
         }
         if(score<cost){cost=score;chosen=c;}
@@ -121,7 +199,7 @@ toc: false
         if(!drag||drag.id!==e.pointerId)return;
         if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>5)drag.moved=true;
         if(!drag.moved)return;
-        const p=point(e);positions.set(n,{x:clamp(p.x+drag.dx,35,685),y:clamp(p.y+drag.dy,35,445)});geometry();
+        const p=point(e);positions.set(n,{x:clamp(p.x+drag.dx,35,965),y:clamp(p.y+drag.dy,35,685)});geometry();
       });
       const finish=e=>{if(!drag||drag.id!==e.pointerId)return;suppressClick=drag.moved||e.type==='pointercancel';drag=null;if(el.hasPointerCapture(e.pointerId))el.releasePointerCapture(e.pointerId);};
       el.addEventListener('pointerup',finish);el.addEventListener('pointercancel',finish);
@@ -130,7 +208,7 @@ toc: false
       el.addEventListener('keydown',e=>{
         if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!e.repeat)toggle();}
         const delta={ArrowLeft:[-10,0],ArrowRight:[10,0],ArrowUp:[0,-10],ArrowDown:[0,10]}[e.key];
-        if(delta){e.preventDefault();const p=positions.get(n);positions.set(n,{x:clamp(p.x+delta[0],35,685),y:clamp(p.y+delta[1],35,445)});geometry();}
+        if(delta){e.preventDefault();const p=positions.get(n);positions.set(n,{x:clamp(p.x+delta[0],35,965),y:clamp(p.y+delta[1],35,685)});geometry();}
       });
       return {el,circle,n};
     });
@@ -151,6 +229,11 @@ toc: false
       el.setAttribute('aria-label',`Node ${n}, group ${group}. Activate to switch groups.`);
       el.setAttribute('aria-pressed',String(group===1));
     });
+    const won=score===maximumCut;
+    const success=$('success');
+    if(won && success.hidden)success.textContent=`Maximum cut found! Your score of ${fmt(score/1000000)} is the highest possible. Well done!`;
+    if(!won)success.textContent='';
+    success.hidden=!won;
     $('score').textContent=fmt(score/1000000);
     $('count').textContent=`${count} of ${graph.edges.length} edges cut`;
     [0,1].forEach(g=>{$('group'+g).textContent=graph.nodes.filter(n=>groups.get(n)===g).join(', ')||'Empty';});

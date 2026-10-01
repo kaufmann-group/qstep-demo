@@ -6,6 +6,12 @@ This module introduces quantum annealing and the D-Wave Ocean SDK through a set 
 
 ## Main Tutorials
 
+### Max-Cut Playground
+
+Try your hand at the Max-Cut problem: click nodes to divide them into two groups and aim for the highest score. Your score is the sum of the weights of edges connecting nodes in different groups.
+
+[Open Max-Cut Playground →](max-cut-playground.qmd)
+
 ### D-Wave Quantum Annealing Demonstration
 
 Learn how optimization problems can be formulated as QUBOs and solved using D-Wave's Ocean SDK and a D-Wave quantum processing unit through Leap Quantum Cloud.
@@ -17,20 +23,6 @@ Learn how optimization problems can be formulated as QUBOs and solved using D-Wa
 Work through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.
 
 [Start Local Simulated Annealing Demonstration →](<D-wave SDK Demonstration Simulated Annealing.ipynb>)
-
-## Background and Additional Material
-
-### Quantum Annealing Explained
-
-Learn more about how quantum annealing works, including the connection between optimization problems, Ising models, and the physical operation of a quantum annealer.
-
-[Learn How Quantum Annealing Works →](<Quantum Annealing Explained.ipynb>)
-
-### Additional D-Wave Topics
-
-Explore additional D-Wave Ocean features, optimization problems, and examples beyond those covered in the main workshop.
-
-[Explore Additional D-Wave Topics →](<Additional D-wave Topics.ipynb>)
 
 ## About
 

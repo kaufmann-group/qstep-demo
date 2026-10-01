@@ -5,8 +5,6 @@ project:
     - index.qmd
     - "D-wave SDK Demonstration Quantum Annealing.ipynb"
     - "D-wave SDK Demonstration Simulated Annealing.ipynb"
-    - "Quantum Annealing Explained.ipynb"
-    - "Additional D-wave Topics.ipynb"
     - max-cut-playground.qmd
 
   resources:
@@ -33,18 +31,12 @@ website:
         text: Overview
       - section: "Main Tutorials"
         contents:
+          - href: max-cut-playground.qmd
+            text: Max-Cut Playground
           - href: "D-wave SDK Demonstration Quantum Annealing.ipynb"
             text: D-Wave Quantum Annealing
           - href: "D-wave SDK Demonstration Simulated Annealing.ipynb"
             text: D-Wave Simulated Annealing
-          - href: max-cut-playground.qmd
-            text: Max-Cut Playground
-      - section: "Background & Additional Topics"
-        contents:
-          - href: "Quantum Annealing Explained.ipynb"
-            text: Quantum Annealing Explained
-          - href: "Additional D-wave Topics.ipynb"
-            text: Additional D-Wave Topics
 
 format:
   html:

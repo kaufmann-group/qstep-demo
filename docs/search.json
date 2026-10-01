@@ -4,43 +4,10 @@
     "href": "max-cut-playground.html",
     "title": "Max-Cut Playground",
     "section": "",
-    "text": "How large a cut can you find?Split the nodes into two groups. An edge counts toward your score only when its endpoints have different colors. Aim for the largest total weight of these cut edges—not simply the most edges.For example, cutting edges of weights 3 and 2 gives a score of 5. The groups do not need to be the same size.\n  \n    YOUR PARTITIONClick to change groups. Drag to rearrange.\n    Cut weight00 edges cut\n  \n  Group 0Group 1Cut edge\n  \n  GROUP 0GROUP 1\n  Reset groups\n  Moving nodes changes only the drawing, not your score. Crossing lines are not connected unless they share a node. Keyboard: Tab to a node, Enter/Space to change its group, arrow keys to move it.",
+    "text": "How large a cut can you find?Split the nodes into two groups. An edge counts toward your score only when its endpoints have different colors. Aim for the largest total weight of these cut edges—not simply the most edges.For example, cutting edges of weights 3 and 2 gives a score of 5. The groups do not need to be the same size. You’ll see a success message when you find the maximum cut.\n  \n    YOUR PARTITIONClick to change groups. Drag to rearrange.\n    Cut weight00 edges cut\n  \n  Group 0Group 1Cut edge\n  \n  \n  GROUP 0GROUP 1\n  Reset groups\n  Moving nodes changes only the drawing, not your score. Crossing lines are not connected unless they share a node. Keyboard: Tab to a node, Enter/Space to change its group, arrow keys to move it.",
     "crumbs": [
       "Main Tutorials",
       "Max-Cut Playground"
-    ]
-  },
-  {
-    "objectID": "Quantum Annealing Explained.html",
-    "href": "Quantum Annealing Explained.html",
-    "title": "Introduction",
-    "section": "",
-    "text": "This notebook will discuss an introduction to quantum mechanics and explain how quantum annealing works and how it is used in order to solve optimization problems. Many of these topics will be covered by the slides.",
-    "crumbs": [
-      "Background & Additional Topics",
-      "Quantum Annealing Explained"
-    ]
-  },
-  {
-    "objectID": "Quantum Annealing Explained.html#basic-quantum-mechanics",
-    "href": "Quantum Annealing Explained.html#basic-quantum-mechanics",
-    "title": "Introduction",
-    "section": "Basic Quantum Mechanics",
-    "text": "Basic Quantum Mechanics\nIn classical computation bits can be either in a state of \\(0\\) or \\(1\\), however in quantum computing a qubit is a vector that takes in values on \\(\\mathbb{C}^2\\):\n\\[|\\psi\\rangle = \\alpha|0\\rangle + \\beta|1\\rangle, \\qquad |0\\rangle = \\begin{pmatrix}1\\\\0\\end{pmatrix}, \\qquad |1\\rangle = \\begin{pmatrix}0\\\\1\\end{pmatrix}, \\qquad |\\alpha|^2 + |\\beta|^2 = 1\\]\nThe Born rule states for the wavefunction \\(\\ket{\\psi}\\) above, you get \\(0\\) with probability \\(|\\alpha|^2\\) and \\(1\\) with probability \\(|\\beta|^2\\), and measurement collapses the state into one of the two measurements.\nThe Hamiltonain, denoted \\(\\mathcal{H}\\) is a Hermetian matrix that encodes the energy of the system as its eigenvalues, while its eigenvectors are the states with those respective energies. The lowest eigenstate of the Hamiltonian is known as the ground state.",
-    "crumbs": [
-      "Background & Additional Topics",
-      "Quantum Annealing Explained"
-    ]
-  },
-  {
-    "objectID": "Quantum Annealing Explained.html#quantum-annealing",
-    "href": "Quantum Annealing Explained.html#quantum-annealing",
-    "title": "Introduction",
-    "section": "Quantum Annealing",
-    "text": "Quantum Annealing",
-    "crumbs": [
-      "Background & Additional Topics",
-      "Quantum Annealing Explained"
     ]
   },
   {
@@ -135,17 +102,7 @@
     "href": "index.html#main-tutorials",
     "title": "Quantum Annealing with D-Wave",
     "section": "Main Tutorials",
-    "text": "Main Tutorials\n\nD-Wave Quantum Annealing Demonstration\nLearn how optimization problems can be formulated as QUBOs and solved using D-Wave’s Ocean SDK and a D-Wave quantum processing unit through Leap Quantum Cloud.\nStart D-Wave Quantum Annealing Demonstration →\n\n\nLocal Simulated Annealing Demonstration\nWork through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.\nStart Local Simulated Annealing Demonstration →",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#background-and-additional-material",
-    "href": "index.html#background-and-additional-material",
-    "title": "Quantum Annealing with D-Wave",
-    "section": "Background and Additional Material",
-    "text": "Background and Additional Material\n\nQuantum Annealing Explained\nLearn more about how quantum annealing works, including the connection between optimization problems, Ising models, and the physical operation of a quantum annealer.\nLearn How Quantum Annealing Works →\n\n\nAdditional D-Wave Topics\nExplore additional D-Wave Ocean features, optimization problems, and examples beyond those covered in the main workshop.\nExplore Additional D-Wave Topics →",
+    "text": "Main Tutorials\n\nMax-Cut Playground\nTry your hand at the Max-Cut problem: click nodes to divide them into two groups and aim for the highest score. Your score is the sum of the weights of edges connecting nodes in different groups.\nOpen Max-Cut Playground →\n\n\nD-Wave Quantum Annealing Demonstration\nLearn how optimization problems can be formulated as QUBOs and solved using D-Wave’s Ocean SDK and a D-Wave quantum processing unit through Leap Quantum Cloud.\nStart D-Wave Quantum Annealing Demonstration →\n\n\nLocal Simulated Annealing Demonstration\nWork through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.\nStart Local Simulated Annealing Demonstration →",
     "crumbs": [
       "Overview"
     ]
@@ -224,50 +181,6 @@
     "crumbs": [
       "Main Tutorials",
       "D-Wave Simulated Annealing"
-    ]
-  },
-  {
-    "objectID": "Additional D-wave Topics.html",
-    "href": "Additional D-wave Topics.html",
-    "title": "Additional D-wave Topics",
-    "section": "",
-    "text": "Here additional topics not referenced in the tutorial will be covered.\nimport dwave-neal\nimport dimod\nimport dwave-ocean-sdk",
-    "crumbs": [
-      "Background & Additional Topics",
-      "Additional D-Wave Topics"
-    ]
-  },
-  {
-    "objectID": "Additional D-wave Topics.html#quantum-annealers",
-    "href": "Additional D-wave Topics.html#quantum-annealers",
-    "title": "Additional D-wave Topics",
-    "section": "Quantum Annealers",
-    "text": "Quantum Annealers\nThis section will explain in depth how Quantum Annealing works.",
-    "crumbs": [
-      "Background & Additional Topics",
-      "Additional D-Wave Topics"
-    ]
-  },
-  {
-    "objectID": "Additional D-wave Topics.html#additional-qubo-optimization-problems",
-    "href": "Additional D-wave Topics.html#additional-qubo-optimization-problems",
-    "title": "Additional D-wave Topics",
-    "section": "Additional QUBO Optimization Problems",
-    "text": "Additional QUBO Optimization Problems\n\nCommunity Detection\n\n\nMax-Cut\n\n\nTraveling Salesman Problem",
-    "crumbs": [
-      "Background & Additional Topics",
-      "Additional D-Wave Topics"
-    ]
-  },
-  {
-    "objectID": "Additional D-wave Topics.html#additional-d-wave-sdk-features",
-    "href": "Additional D-wave Topics.html#additional-d-wave-sdk-features",
-    "title": "Additional D-wave Topics",
-    "section": "Additional D-Wave SDK Features",
-    "text": "Additional D-Wave SDK Features\n Download notebook ↓",
-    "crumbs": [
-      "Background & Additional Topics",
-      "Additional D-Wave Topics"
     ]
   }
 ]
