@@ -36,35 +36,61 @@
     }
    },
    "source": [
-    "In this section, we outline how to install the D-Wave Ocean SDK. **All of these steps will be done in a terminal in the directory where you installed the Notebook**. It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system as virtual environments keep the packages used for this project isolated from other Python projects and avoids potential dependency conflicts.\n",
+    "In this section, we outline how to install the D-Wave Ocean SDK. **All of these steps should be performed in a terminal opened in the directory where you downloaded or saved the notebook.** It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system. Virtual environments keep the packages used for this project isolated from other Python projects and avoid potential dependency conflicts. **[Python](https://www.python.org/downloads/) must already be installed on the machine running this demonstration.**\n",
     "\n",
-    "The virtual environment can also be registered as a Jupyter kernel, allowing a Jupyter notebook to run directly inside the same environment in which the Ocean SDK is installed. To create a virtual environment and activate it in macOS or Linux run,\n",
+    "### Installing a Virtual Environment\n",
     "\n",
-    "``` bash\n",
+    "The virtual environment can also be registered as a Jupyter kernel, allowing the notebook to run directly inside the same environment in which the Ocean SDK is installed.\n",
+    "\n",
+    "#### macOS or Linux\n",
+    "\n",
+    "To create and activate the virtual environment, run:\n",
+    "\n",
+    "```bash\n",
     "python3 -m venv ocean\n",
     "source ocean/bin/activate\n",
-    "``` \n",
+    "```\n",
     "\n",
-    "To create and run a virtual environment in Window's command shell run,\n",
+    "#### Windows Command Prompt\n",
     "\n",
-    "``` bat\n",
+    "To create and activate the virtual environment, run:\n",
+    "\n",
+    "```bat \n",
     "python -m venv ocean\n",
     "ocean\\Scripts\\activate.bat\n",
     "```\n",
     "\n",
-    "Once the environment is activated, any Python packages installed with `pip` will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run,\n",
+    "#### Windows PowerShell\n",
+    "\n",
+    "To create and activate the virtual environment, run:\n",
+    "\n",
+    "```powershell \n",
+    "python -m venv ocean\n",
+    ".\\ocean\\Scripts\\Activate.ps1\n",
+    "```\n",
+    "\n",
+    "If PowerShell reports that *\"running scripts is disabled on this system,\"* run:\n",
+    "\n",
+    "```powershell \n",
+    "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser\n",
+    "```\n",
+    "\n",
+    "Then retry the activation command.\n",
+    "\n",
+    "### Installing Packages\n",
+    "\n",
+    "Once the environment is activated, any Python packages installed with `pip` will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run the commands (for any operating system),\n",
     "\n",
     "``` bash\n",
     "python -m pip install --upgrade pip\n",
     "\n",
     "python -m pip install dwave-ocean-sdk\n",
-    "python -m pip install jupyter notebook\n",
+    "python -m pip install jupyter notebook ipykernel\n",
     "```\n",
     "\n",
     "Since this tutorial uses Jupyter notebooks we must register the environment with Jupyter,\n",
     "\n",
     "``` bash\n",
-    "python -m pip install ipykernel\n",
     "python -m ipykernel install --user --name ocean --display-name \"Ocean Environment\"\n",
     "```\n",
     "\n",
@@ -74,7 +100,7 @@
     "jupyter notebook\n",
     "```\n",
     "\n",
-    "After migrating to this notebook within Jupyter **make sure to select the \"Ocean Environment\" kernal**."
+    "After migrating to this notebook within Jupyter **make sure to select the \"Ocean Environment\" kernel**."
    ]
   },
   {
@@ -195,7 +221,7 @@
    "id": "fc23c142-7c75-48ca-ac8d-4dd111350b43",
    "metadata": {},
    "source": [
-    "For this simple demonstration lets attempt to solve the max-cut problem for this weighted graph,\n",
+    "For this simple demonstration let's attempt to solve the max-cut problem for this weighted graph,\n",
     "\n",
     "$$(A,B)=4,\\qquad (A,C)=2,\\qquad (B,C)=1,\\qquad (B,D)=5,\\qquad (C,D)=3.$$"
    ]
@@ -317,7 +343,7 @@
    "id": "e36e398e-a411-422a-933b-32f35eaf4d1e",
    "metadata": {},
    "source": [
-    "Recall that `solution` is still in its binary representation, where each vertex has been assigned either `0` or `1`; so it follows to seperate the vertices into the two groups."
+    "Recall that `solution` is still in its binary representation, where each vertex has been assigned either `0` or `1`; so it follows to separate the vertices into the two groups."
    ]
   },
   {
@@ -360,7 +386,7 @@
    "source": [
     "## Using D-Wave's Hybrid Sampler\n",
     "\n",
-    "The same QUBO can also be solved directly using D-Wave's hybrid solver instead of the QPU. Unlike direct QPU sampling, the hybrid solver combines classical and quantum resources internally and outputs a single sample (as compaired to a distribution like the QPU), so we do not need to manually define a minor embedding or define a sample size. "
+    "The same QUBO can also be solved directly using D-Wave's hybrid solver instead of the QPU. Unlike direct QPU sampling, the hybrid solver combines classical and quantum resources internally and outputs a single sample (as compared to a distribution like the QPU), so we do not need to manually define a minor embedding or define a sample size. "
    ]
   },
   {

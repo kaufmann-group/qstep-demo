@@ -236,6 +236,8 @@ window.Quarto = {
   <ul>
   <li><a href="#installation-setup" id="toc-installation-setup" class="nav-link active" data-scroll-target="#installation-setup">Installation &amp; Setup</a>
   <ul class="collapse">
+  <li><a href="#installing-a-virtual-environment" id="toc-installing-a-virtual-environment" class="nav-link" data-scroll-target="#installing-a-virtual-environment">Installing a Virtual Environment</a></li>
+  <li><a href="#installing-packages" id="toc-installing-packages" class="nav-link" data-scroll-target="#installing-packages">Installing Packages</a></li>
   <li><a href="#authenticating-d-wave" id="toc-authenticating-d-wave" class="nav-link" data-scroll-target="#authenticating-d-wave">Authenticating D-Wave</a></li>
   </ul></li>
   <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review">Review</a></li>
@@ -272,35 +274,56 @@ window.Quarto = {
 <p><strong>If you do not have access to the Leap quantum cloud service then check out our tutorial on <a href="">solving QUBO problems using simulated annealing</a>.</strong></p>
 <section id="installation-setup" class="level2">
 <h2 class="anchored" data-anchor-id="installation-setup">Installation &amp; Setup</h2>
-<p>In this section, we outline how to install the D-Wave Ocean SDK. <strong>All of these steps will be done in a terminal in the directory where you installed the Notebook</strong>. It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system as virtual environments keep the packages used for this project isolated from other Python projects and avoids potential dependency conflicts.</p>
-<p>The virtual environment can also be registered as a Jupyter kernel, allowing a Jupyter notebook to run directly inside the same environment in which the Ocean SDK is installed. To create a virtual environment and activate it in macOS or Linux run,</p>
+<p>In this section, we outline how to install the D-Wave Ocean SDK. <strong>All of these steps should be performed in a terminal opened in the directory where you downloaded or saved the notebook.</strong> It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system. Virtual environments keep the packages used for this project isolated from other Python projects and avoid potential dependency conflicts. <strong><a href="https://www.python.org/downloads/">Python</a> must already be installed on the machine running this demonstration.</strong></p>
+<section id="installing-a-virtual-environment" class="level3">
+<h3 class="anchored" data-anchor-id="installing-a-virtual-environment">Installing a Virtual Environment</h3>
+<p>The virtual environment can also be registered as a Jupyter kernel, allowing the notebook to run directly inside the same environment in which the Ocean SDK is installed.</p>
+<section id="macos-or-linux" class="level4">
+<h4 class="anchored" data-anchor-id="macos-or-linux">macOS or Linux</h4>
+<p>To create and activate the virtual environment, run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv ocean</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ocean/bin/activate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>To create and run a virtual environment in Window’s command shell run,</p>
+</section>
+<section id="windows-command-prompt" class="level4">
+<h4 class="anchored" data-anchor-id="windows-command-prompt">Windows Command Prompt</h4>
+<p>To create and activate the virtual environment, run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bat code-with-copy"><code class="sourceCode dosbat"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> venv ocean</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ocean\Scripts\activate.bat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Once the environment is activated, any Python packages installed with <code>pip</code> will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run,</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">--upgrade</span> pip</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install dwave-ocean-sdk</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install jupyter notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="windows-powershell" class="level4">
+<h4 class="anchored" data-anchor-id="windows-powershell">Windows PowerShell</h4>
+<p>To create and activate the virtual environment, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m venv ocean</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\ocean\Scripts\Activate<span class="op">.</span><span class="fu">ps1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If PowerShell reports that <em>“running scripts is disabled on this system,”</em> run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-ExecutionPolicy</span> <span class="op">-</span>ExecutionPolicy RemoteSigned <span class="op">-</span>Scope CurrentUser</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then retry the activation command.</p>
+</section>
+</section>
+<section id="installing-packages" class="level3">
+<h3 class="anchored" data-anchor-id="installing-packages">Installing Packages</h3>
+<p>Once the environment is activated, any Python packages installed with <code>pip</code> will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run the commands (for any operating system),</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">--upgrade</span> pip</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install dwave-ocean-sdk</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install jupyter notebook ipykernel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Since this tutorial uses Jupyter notebooks we must register the environment with Jupyter,</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install ipykernel</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> ocean <span class="at">--display-name</span> <span class="st">"Ocean Environment"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> ocean <span class="at">--display-name</span> <span class="st">"Ocean Environment"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Now you can open the Jupyter Notebook</strong>. To open Jupyter run,</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>After migrating to this notebook within Jupyter <strong>make sure to select the “Ocean Environment” kernal</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>After migrating to this notebook within Jupyter <strong>make sure to select the “Ocean Environment” kernel</strong>.</p>
+</section>
 <section id="authenticating-d-wave" class="level3">
 <h3 class="anchored" data-anchor-id="authenticating-d-wave">Authenticating D-Wave</h3>
 <p><strong>This section requires access to the D-Wave Leap quantum cloud service</strong>.</p>
 <p>Once the virtual environment is activated, the user can connect Ocean to their D-Wave Leap account by running</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dwave</span> setup <span class="at">--auth</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dwave</span> setup <span class="at">--auth</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This command authorizes Ocean to access the user’s Leap account, retrieves the required Solver API (SAPI) token, and creates the D-Wave configuration file used to access remote solvers. Depending on the system, the authentication process may open a browser window and prompt the user to sign in to their Leap account.</p>
 <p>To confirm that the configuration was successful, the user can ping an available QPU:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dwave</span> ping <span class="at">--client</span> qpu</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dwave</span> ping <span class="at">--client</span> qpu</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This submits a small test problem to a D-Wave quantum processor and confirms that Ocean can communicate with the Leap service.</p>
 <p>The solvers available to the user’s account can also be viewed with</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dwave</span> solvers <span class="at">--list</span> <span class="at">--all</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dwave</span> solvers <span class="at">--list</span> <span class="at">--all</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This will list the QPU and hybrid solvers currently accessible through the user’s Leap account.</p>
 </section>
 </section>
@@ -341,10 +364,10 @@ A canonical example of a QUBO is the NP-hard <strong>Max-Cut problem</strong>. G
 <p>with</p>
 <p><span class="math display">\[x_i\in\{0,1\}.\]</span></p>
 <p>The minimum of <span class="math inline">\(H(\mathbf{x})\)</span> therefore corresponds to the partition of the graph with the maximum total edge weight crossing between the two groups.</p>
-<p>For this simple demonstration lets attempt to solve the max-cut problem for this weighted graph,</p>
+<p>For this simple demonstration let’s attempt to solve the max-cut problem for this weighted graph,</p>
 <p><span class="math display">\[(A,B)=4,\qquad (A,C)=2,\qquad (B,C)=1,\qquad (B,D)=5,\qquad (C,D)=3.\]</span></p>
 <div id="9112525b-9aa0-4954-a1a2-62ae1159940f" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>edges <span class="op">=</span> [(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="dv">4</span>), (<span class="st">"A"</span>, <span class="st">"C"</span>, <span class="dv">2</span>), (<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="dv">1</span>), (<span class="st">"B"</span>, <span class="st">"D"</span>, <span class="dv">5</span>), (<span class="st">"C"</span>, <span class="st">"D"</span>, <span class="dv">3</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>edges <span class="op">=</span> [(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="dv">4</span>), (<span class="st">"A"</span>, <span class="st">"C"</span>, <span class="dv">2</span>), (<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="dv">1</span>), (<span class="st">"B"</span>, <span class="st">"D"</span>, <span class="dv">5</span>), (<span class="st">"C"</span>, <span class="st">"D"</span>, <span class="dv">3</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="using-d-waves-quantum-annealer" class="level2">
@@ -355,63 +378,63 @@ A canonical example of a QUBO is the NP-hard <strong>Max-Cut problem</strong>. G
 <p><span class="math display">\[-w_{ij}\left(x_i+x_j-2x_ix_j\right)\]</span></p>
 <p>as follows.</p>
 <div id="a5b22310-13da-4ea3-bef4-f3da379c6d9b" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, j, weight <span class="kw">in</span> edges:</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -w_ij * x_i terms</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    Q[(i, i)] <span class="op">-=</span> weight</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -w_ij * x_j terms</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    Q[(j, j)] <span class="op">-=</span> weight</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># +2 * w_ij * x_i * x_j terms</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    Q[(i, j)] <span class="op">+=</span> <span class="dv">2</span> <span class="op">*</span> weight</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="bu">dict</span>(Q)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, j, weight <span class="kw">in</span> edges:</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -w_ij * x_i terms</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    Q[(i, i)] <span class="op">-=</span> weight</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -w_ij * x_j terms</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    Q[(j, j)] <span class="op">-=</span> weight</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># +2 * w_ij * x_i * x_j terms</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    Q[(i, j)] <span class="op">+=</span> <span class="dv">2</span> <span class="op">*</span> weight</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="bu">dict</span>(Q)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Recall that the qubits on a D-Wave QPU are not all directly connected to one another and as a result, the interaction graph of a QUBO may not map directly onto the actual connectivity of the QPU. In these cases, multiple physical qubits can be linked together in a chain to represent a single logical variable.</p>
 <p>The process of mapping the logical QUBO graph onto the physical topology of the QPU is called minor embedding. Finding a minor embedding is computationally difficult in general, so Ocean provides tools that handle this step automatically. D-Wave’s <code>EmbeddingComposite</code> uses a heuristic embedding algorithm to find a suitable mapping between the logical variables and the available physical qubits.</p>
 <div id="b80586d6-2027-4c6f-90e4-edcfad295d49" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dwave.system <span class="im">import</span> DWaveSampler, EmbeddingComposite</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to an available D-Wave QPU</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>qpu <span class="op">=</span> DWaveSampler()</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sampler <span class="op">=</span> EmbeddingComposite(qpu)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dwave.system <span class="im">import</span> DWaveSampler, EmbeddingComposite</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to an available D-Wave QPU</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>qpu <span class="op">=</span> DWaveSampler()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>sampler <span class="op">=</span> EmbeddingComposite(qpu)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Here, <code>DWaveSampler()</code> provides access to the physical D-Wave QPU, while <code>EmbeddingComposite</code> sits on top of the QPU sampler and automatically maps the logical QUBO onto the QPU’s hardware graph before the problem is submitted.</p>
 <p>The QUBO is submitted to the D-Wave QPU and sampled 1000 times with the <code>sample_qubo</code> function.</p>
 <div id="cffa1a66-31e8-4868-a542-baa896cd5db1" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sampleset <span class="op">=</span> sampler.sample_qubo(Q, num_reads<span class="op">=</span><span class="dv">1000</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>best <span class="op">=</span> sampleset.first <span class="co"># returns lowest energy sample in the SampleSet</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> <span class="bu">dict</span>(best.sample)  </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Solution:"</span>, solution)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Energy:"</span>, best.energy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sampleset <span class="op">=</span> sampler.sample_qubo(Q, num_reads<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>best <span class="op">=</span> sampleset.first <span class="co"># returns lowest energy sample in the SampleSet</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> <span class="bu">dict</span>(best.sample)  </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Solution:"</span>, solution)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Energy:"</span>, best.energy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Solution: {'D': np.int8(1), 'A': np.int8(1), 'B': np.int8(0), 'C': np.int8(0)}
 Energy: -14.0</code></pre>
 </div>
 </div>
-<p>Recall that <code>solution</code> is still in its binary representation, where each vertex has been assigned either <code>0</code> or <code>1</code>; so it follows to seperate the vertices into the two groups.</p>
+<p>Recall that <code>solution</code> is still in its binary representation, where each vertex has been assigned either <code>0</code> or <code>1</code>; so it follows to separate the vertices into the two groups.</p>
 <div id="1946d189-d368-48e9-a18d-535c5ccb7e61" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>group_0 <span class="op">=</span> [vertex <span class="cf">for</span> vertex, value <span class="kw">in</span> solution.items() <span class="cf">if</span> value <span class="op">==</span> <span class="dv">0</span>]</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>group_1 <span class="op">=</span> [vertex <span class="cf">for</span> vertex, value <span class="kw">in</span> solution.items() <span class="cf">if</span> value <span class="op">==</span> <span class="dv">1</span>]</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Group 0:"</span>, group_0)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Group 1:"</span>, group_1)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve for the max cut weight </span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>cut_weight <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, j, weight <span class="kw">in</span> edges:</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> solution[i] <span class="op">!=</span> solution[j]:</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        cut_weight <span class="op">+=</span> weight</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cut weight:"</span>, cut_weight)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>group_0 <span class="op">=</span> [vertex <span class="cf">for</span> vertex, value <span class="kw">in</span> solution.items() <span class="cf">if</span> value <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>group_1 <span class="op">=</span> [vertex <span class="cf">for</span> vertex, value <span class="kw">in</span> solution.items() <span class="cf">if</span> value <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Group 0:"</span>, group_0)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Group 1:"</span>, group_1)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve for the max cut weight </span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>cut_weight <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, j, weight <span class="kw">in</span> edges:</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> solution[i] <span class="op">!=</span> solution[j]:</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        cut_weight <span class="op">+=</span> weight</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cut weight:"</span>, cut_weight)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Group 0: ['B', 'C']
 Group 1: ['D', 'A']
@@ -421,18 +444,18 @@ Cut weight: 14</code></pre>
 </section>
 <section id="using-d-waves-hybrid-sampler" class="level2">
 <h2 class="anchored" data-anchor-id="using-d-waves-hybrid-sampler">Using D-Wave’s Hybrid Sampler</h2>
-<p>The same QUBO can also be solved directly using D-Wave’s hybrid solver instead of the QPU. Unlike direct QPU sampling, the hybrid solver combines classical and quantum resources internally and outputs a single sample (as compaired to a distribution like the QPU), so we do not need to manually define a minor embedding or define a sample size.</p>
+<p>The same QUBO can also be solved directly using D-Wave’s hybrid solver instead of the QPU. Unlike direct QPU sampling, the hybrid solver combines classical and quantum resources internally and outputs a single sample (as compared to a distribution like the QPU), so we do not need to manually define a minor embedding or define a sample size.</p>
 <div id="fab970b3-d78c-4838-a188-b4013990c069" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dwave.system <span class="im">import</span> LeapHybridSampler</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>sampler_hybrid <span class="op">=</span> LeapHybridSampler()</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>sampleset_hybrid <span class="op">=</span> sampler_hybrid.sample_qubo(Q, time_limit<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>best_hybrid <span class="op">=</span> sampleset_hybrid.first</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>solution_hybrid <span class="op">=</span> <span class="bu">dict</span>(best_hybrid.sample)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Solution:"</span>, solution_hybrid)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Energy:"</span>, best_hybrid.energy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dwave.system <span class="im">import</span> LeapHybridSampler</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>sampler_hybrid <span class="op">=</span> LeapHybridSampler()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>sampleset_hybrid <span class="op">=</span> sampler_hybrid.sample_qubo(Q, time_limit<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>best_hybrid <span class="op">=</span> sampleset_hybrid.first</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>solution_hybrid <span class="op">=</span> <span class="bu">dict</span>(best_hybrid.sample)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Solution:"</span>, solution_hybrid)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Energy:"</span>, best_hybrid.energy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Solution: {'A': np.int8(1), 'B': np.int8(0), 'C': np.int8(0), 'D': np.int8(1)}
 Energy: -14.0</code></pre>
@@ -443,41 +466,41 @@ Energy: -14.0</code></pre>
 <h2 class="anchored" data-anchor-id="problem-inspector">Problem Inspector:</h2>
 <p>D-Wave has created a way for users to look at both the logical QUBO graph submitted to the QPU and the QPU itself alongside the minor embedding. This is best demonstrated for the large graph max-cut problem given below.</p>
 <div id="5566c5ce-f838-4059-a228-b9b4f8d18784" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>many_edges <span class="op">=</span> [(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="dv">4</span>), (<span class="st">"A"</span>, <span class="st">"C"</span>, <span class="dv">7</span>), (<span class="st">"A"</span>, <span class="st">"E"</span>, <span class="dv">3</span>), (<span class="st">"A"</span>, <span class="st">"F"</span>, <span class="dv">8</span>), (<span class="st">"A"</span>, <span class="st">"H"</span>, <span class="dv">5</span>), (<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="dv">2</span>), (<span class="st">"B"</span>, <span class="st">"D"</span>, <span class="dv">6</span>), (<span class="st">"B"</span>, <span class="st">"G"</span>, <span class="dv">9</span>), (<span class="st">"B"</span>, <span class="st">"I"</span>, <span class="dv">4</span>), (<span class="st">"C"</span>, <span class="st">"D"</span>, <span class="dv">5</span>), (<span class="st">"C"</span>, <span class="st">"E"</span>, <span class="dv">8</span>), (<span class="st">"C"</span>, <span class="st">"H"</span>, <span class="dv">6</span>), (<span class="st">"C"</span>, <span class="st">"J"</span>, <span class="dv">3</span>), (<span class="st">"D"</span>, <span class="st">"F"</span>, <span class="dv">7</span>), (<span class="st">"D"</span>, <span class="st">"G"</span>, <span class="dv">4</span>), (<span class="st">"D"</span>, <span class="st">"J"</span>, <span class="dv">9</span>), (<span class="st">"D"</span>, <span class="st">"K"</span>, <span class="dv">2</span>), (<span class="st">"E"</span>, <span class="st">"F"</span>, <span class="dv">5</span>), (<span class="st">"E"</span>, <span class="st">"H"</span>, <span class="dv">7</span>), (<span class="st">"E"</span>, <span class="st">"L"</span>, <span class="dv">6</span>), (<span class="st">"F"</span>, <span class="st">"G"</span>, <span class="dv">3</span>), (<span class="st">"F"</span>, <span class="st">"I"</span>, <span class="dv">8</span>), (<span class="st">"F"</span>, <span class="st">"M"</span>, <span class="dv">4</span>), (<span class="st">"G"</span>, <span class="st">"H"</span>, <span class="dv">6</span>), (<span class="st">"G"</span>, <span class="st">"J"</span>, <span class="dv">5</span>), (<span class="st">"G"</span>, <span class="st">"N"</span>, <span class="dv">9</span>), (<span class="st">"H"</span>, <span class="st">"I"</span>, <span class="dv">2</span>), (<span class="st">"H"</span>, <span class="st">"K"</span>, <span class="dv">8</span>), (<span class="st">"H"</span>, <span class="st">"O"</span>, <span class="dv">4</span>), (<span class="st">"I"</span>, <span class="st">"J"</span>, <span class="dv">7</span>), (<span class="st">"I"</span>, <span class="st">"L"</span>, <span class="dv">5</span>), (<span class="st">"I"</span>, <span class="st">"P"</span>, <span class="dv">6</span>), (<span class="st">"J"</span>, <span class="st">"K"</span>, <span class="dv">3</span>), (<span class="st">"J"</span>, <span class="st">"M"</span>, <span class="dv">8</span>), (<span class="st">"J"</span>, <span class="st">"Q"</span>, <span class="dv">5</span>), (<span class="st">"K"</span>, <span class="st">"L"</span>, <span class="dv">7</span>), (<span class="st">"K"</span>, <span class="st">"N"</span>, <span class="dv">4</span>), (<span class="st">"K"</span>, <span class="st">"R"</span>, <span class="dv">9</span>), (<span class="st">"L"</span>, <span class="st">"M"</span>, <span class="dv">2</span>), (<span class="st">"L"</span>, <span class="st">"O"</span>, <span class="dv">6</span>), (<span class="st">"L"</span>, <span class="st">"S"</span>, <span class="dv">8</span>), (<span class="st">"M"</span>, <span class="st">"N"</span>, <span class="dv">5</span>), (<span class="st">"M"</span>, <span class="st">"P"</span>, <span class="dv">7</span>), (<span class="st">"M"</span>, <span class="st">"T"</span>, <span class="dv">3</span>), (<span class="st">"N"</span>, <span class="st">"O"</span>, <span class="dv">8</span>), (<span class="st">"N"</span>, <span class="st">"Q"</span>, <span class="dv">6</span>), (<span class="st">"O"</span>, <span class="st">"P"</span>, <span class="dv">4</span>), (<span class="st">"O"</span>, <span class="st">"R"</span>, <span class="dv">7</span>), (<span class="st">"P"</span>, <span class="st">"Q"</span>, <span class="dv">9</span>), (<span class="st">"P"</span>, <span class="st">"S"</span>, <span class="dv">5</span>), (<span class="st">"Q"</span>, <span class="st">"R"</span>, <span class="dv">3</span>), (<span class="st">"Q"</span>, <span class="st">"T"</span>, <span class="dv">8</span>), (<span class="st">"R"</span>, <span class="st">"S"</span>, <span class="dv">6</span>), (<span class="st">"S"</span>, <span class="st">"T"</span>, <span class="dv">7</span>)]</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>vertices <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(vertex <span class="cf">for</span> i, j, weight <span class="kw">in</span> many_edges <span class="cf">for</span> vertex <span class="kw">in</span> (i, j)))</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of vertices:"</span>, <span class="bu">len</span>(vertices))</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of edges:"</span>, <span class="bu">len</span>(edges))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>many_edges <span class="op">=</span> [(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="dv">4</span>), (<span class="st">"A"</span>, <span class="st">"C"</span>, <span class="dv">7</span>), (<span class="st">"A"</span>, <span class="st">"E"</span>, <span class="dv">3</span>), (<span class="st">"A"</span>, <span class="st">"F"</span>, <span class="dv">8</span>), (<span class="st">"A"</span>, <span class="st">"H"</span>, <span class="dv">5</span>), (<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="dv">2</span>), (<span class="st">"B"</span>, <span class="st">"D"</span>, <span class="dv">6</span>), (<span class="st">"B"</span>, <span class="st">"G"</span>, <span class="dv">9</span>), (<span class="st">"B"</span>, <span class="st">"I"</span>, <span class="dv">4</span>), (<span class="st">"C"</span>, <span class="st">"D"</span>, <span class="dv">5</span>), (<span class="st">"C"</span>, <span class="st">"E"</span>, <span class="dv">8</span>), (<span class="st">"C"</span>, <span class="st">"H"</span>, <span class="dv">6</span>), (<span class="st">"C"</span>, <span class="st">"J"</span>, <span class="dv">3</span>), (<span class="st">"D"</span>, <span class="st">"F"</span>, <span class="dv">7</span>), (<span class="st">"D"</span>, <span class="st">"G"</span>, <span class="dv">4</span>), (<span class="st">"D"</span>, <span class="st">"J"</span>, <span class="dv">9</span>), (<span class="st">"D"</span>, <span class="st">"K"</span>, <span class="dv">2</span>), (<span class="st">"E"</span>, <span class="st">"F"</span>, <span class="dv">5</span>), (<span class="st">"E"</span>, <span class="st">"H"</span>, <span class="dv">7</span>), (<span class="st">"E"</span>, <span class="st">"L"</span>, <span class="dv">6</span>), (<span class="st">"F"</span>, <span class="st">"G"</span>, <span class="dv">3</span>), (<span class="st">"F"</span>, <span class="st">"I"</span>, <span class="dv">8</span>), (<span class="st">"F"</span>, <span class="st">"M"</span>, <span class="dv">4</span>), (<span class="st">"G"</span>, <span class="st">"H"</span>, <span class="dv">6</span>), (<span class="st">"G"</span>, <span class="st">"J"</span>, <span class="dv">5</span>), (<span class="st">"G"</span>, <span class="st">"N"</span>, <span class="dv">9</span>), (<span class="st">"H"</span>, <span class="st">"I"</span>, <span class="dv">2</span>), (<span class="st">"H"</span>, <span class="st">"K"</span>, <span class="dv">8</span>), (<span class="st">"H"</span>, <span class="st">"O"</span>, <span class="dv">4</span>), (<span class="st">"I"</span>, <span class="st">"J"</span>, <span class="dv">7</span>), (<span class="st">"I"</span>, <span class="st">"L"</span>, <span class="dv">5</span>), (<span class="st">"I"</span>, <span class="st">"P"</span>, <span class="dv">6</span>), (<span class="st">"J"</span>, <span class="st">"K"</span>, <span class="dv">3</span>), (<span class="st">"J"</span>, <span class="st">"M"</span>, <span class="dv">8</span>), (<span class="st">"J"</span>, <span class="st">"Q"</span>, <span class="dv">5</span>), (<span class="st">"K"</span>, <span class="st">"L"</span>, <span class="dv">7</span>), (<span class="st">"K"</span>, <span class="st">"N"</span>, <span class="dv">4</span>), (<span class="st">"K"</span>, <span class="st">"R"</span>, <span class="dv">9</span>), (<span class="st">"L"</span>, <span class="st">"M"</span>, <span class="dv">2</span>), (<span class="st">"L"</span>, <span class="st">"O"</span>, <span class="dv">6</span>), (<span class="st">"L"</span>, <span class="st">"S"</span>, <span class="dv">8</span>), (<span class="st">"M"</span>, <span class="st">"N"</span>, <span class="dv">5</span>), (<span class="st">"M"</span>, <span class="st">"P"</span>, <span class="dv">7</span>), (<span class="st">"M"</span>, <span class="st">"T"</span>, <span class="dv">3</span>), (<span class="st">"N"</span>, <span class="st">"O"</span>, <span class="dv">8</span>), (<span class="st">"N"</span>, <span class="st">"Q"</span>, <span class="dv">6</span>), (<span class="st">"O"</span>, <span class="st">"P"</span>, <span class="dv">4</span>), (<span class="st">"O"</span>, <span class="st">"R"</span>, <span class="dv">7</span>), (<span class="st">"P"</span>, <span class="st">"Q"</span>, <span class="dv">9</span>), (<span class="st">"P"</span>, <span class="st">"S"</span>, <span class="dv">5</span>), (<span class="st">"Q"</span>, <span class="st">"R"</span>, <span class="dv">3</span>), (<span class="st">"Q"</span>, <span class="st">"T"</span>, <span class="dv">8</span>), (<span class="st">"R"</span>, <span class="st">"S"</span>, <span class="dv">6</span>), (<span class="st">"S"</span>, <span class="st">"T"</span>, <span class="dv">7</span>)]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>vertices <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(vertex <span class="cf">for</span> i, j, weight <span class="kw">in</span> many_edges <span class="cf">for</span> vertex <span class="kw">in</span> (i, j)))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of vertices:"</span>, <span class="bu">len</span>(vertices))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of edges:"</span>, <span class="bu">len</span>(edges))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of vertices: 20
 Number of edges: 5</code></pre>
 </div>
 </div>
 <div id="f2857944-fd50-4041-8a47-9c44a602d980" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dimod</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dwave.inspector </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>Q_many <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, j, weight <span class="kw">in</span> many_edges:</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -w_ij * x_i terms</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    Q_many[(i, i)] <span class="op">-=</span> weight</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -w_ij * x_j terms</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    Q_many[(j, j)] <span class="op">-=</span> weight</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># +2 * w_ij * x_i * x_j terms</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    Q_many[(i, j)] <span class="op">+=</span> <span class="dv">2</span> <span class="op">*</span> weight</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>bqm <span class="op">=</span> dimod.BinaryQuadraticModel.from_qubo(<span class="bu">dict</span>(Q_many))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dimod</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dwave.inspector </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>Q_many <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, j, weight <span class="kw">in</span> many_edges:</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -w_ij * x_i terms</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    Q_many[(i, i)] <span class="op">-=</span> weight</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -w_ij * x_j terms</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    Q_many[(j, j)] <span class="op">-=</span> weight</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># +2 * w_ij * x_i * x_j terms</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    Q_many[(i, j)] <span class="op">+=</span> <span class="dv">2</span> <span class="op">*</span> weight</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>bqm <span class="op">=</span> dimod.BinaryQuadraticModel.from_qubo(<span class="bu">dict</span>(Q_many))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="37f038d2" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sampler <span class="op">=</span> EmbeddingComposite(DWaveSampler())</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sampleset <span class="op">=</span> sampler.sample(bqm, num_reads<span class="op">=</span><span class="dv">1000</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>dwave.inspector.show(sampleset)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>sampler <span class="op">=</span> EmbeddingComposite(DWaveSampler())</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sampleset <span class="op">=</span> sampler.sample(bqm, num_reads<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>dwave.inspector.show(sampleset)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finished? Check out our other tutorials!</p>
 <p><a class="notebook-download" href="./downloads/quantum_annealing_notebook.txt" download="D-wave SDK Demonstration Quantum Annealing.ipynb"> Download notebook ↓ </a></p>
