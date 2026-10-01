@@ -1,152 +1,46 @@
 [
   {
-    "objectID": "Additional D-wave Topics.html",
-    "href": "Additional D-wave Topics.html",
-    "title": "Additional D-wave Topics",
+    "objectID": "max-cut-playground.html",
+    "href": "max-cut-playground.html",
+    "title": "Max-Cut Playground",
     "section": "",
-    "text": "Here additional topics not referenced in the tutorial will be covered.\nimport dwave-neal\nimport dimod\nimport dwave-ocean-sdk",
+    "text": "How large a cut can you find?Split the nodes into two groups. An edge counts toward your score only when its endpoints have different colors. Aim for the largest total weight of these cut edges—not simply the most edges.For example, cutting edges of weights 3 and 2 gives a score of 5. The groups do not need to be the same size.\n  \n    YOUR PARTITIONClick to change groups. Drag to rearrange.\n    Cut weight00 edges cut\n  \n  Group 0Group 1Cut edge\n  \n  GROUP 0GROUP 1\n  Reset groups\n  Moving nodes changes only the drawing, not your score. Crossing lines are not connected unless they share a node. Keyboard: Tab to a node, Enter/Space to change its group, arrow keys to move it.",
     "crumbs": [
-      "Background & Additional Topics",
-      "Additional D-Wave Topics"
+      "Main Tutorials",
+      "Max-Cut Playground"
     ]
   },
   {
-    "objectID": "Additional D-wave Topics.html#quantum-annealers",
-    "href": "Additional D-wave Topics.html#quantum-annealers",
-    "title": "Additional D-wave Topics",
-    "section": "Quantum Annealers",
-    "text": "Quantum Annealers\nThis section will explain in depth how Quantum Annealing works.",
-    "crumbs": [
-      "Background & Additional Topics",
-      "Additional D-Wave Topics"
-    ]
-  },
-  {
-    "objectID": "Additional D-wave Topics.html#additional-qubo-optimization-problems",
-    "href": "Additional D-wave Topics.html#additional-qubo-optimization-problems",
-    "title": "Additional D-wave Topics",
-    "section": "Additional QUBO Optimization Problems",
-    "text": "Additional QUBO Optimization Problems\n\nCommunity Detection\n\n\nMax-Cut\n\n\nTraveling Salesman Problem",
-    "crumbs": [
-      "Background & Additional Topics",
-      "Additional D-Wave Topics"
-    ]
-  },
-  {
-    "objectID": "Additional D-wave Topics.html#additional-d-wave-sdk-features",
-    "href": "Additional D-wave Topics.html#additional-d-wave-sdk-features",
-    "title": "Additional D-wave Topics",
-    "section": "Additional D-Wave SDK Features",
-    "text": "Additional D-Wave SDK Features\n Download notebook ↓",
-    "crumbs": [
-      "Background & Additional Topics",
-      "Additional D-Wave Topics"
-    ]
-  },
-  {
-    "objectID": "D-wave SDK Demonstration Simulated Annealing.html",
-    "href": "D-wave SDK Demonstration Simulated Annealing.html",
-    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
+    "objectID": "Quantum Annealing Explained.html",
+    "href": "Quantum Annealing Explained.html",
+    "title": "Introduction",
     "section": "",
-    "text": "This tutorial outlines how to use the D-Wave Ocean SDK to formulate and solve a QUBO optimization problem using simulated annealing. Simulated annealing runs entirely on the local machine, so no access to the D-Wave Leap quantum cloud service is required.\nIf you do have access to the Leap quantum cloud service then check out our tutorial on solving QUBO problems using a quantum annealer.",
+    "text": "This notebook will discuss an introduction to quantum mechanics and explain how quantum annealing works and how it is used in order to solve optimization problems. Many of these topics will be covered by the slides.",
     "crumbs": [
-      "Main Tutorials",
-      "D-Wave Simulated Annealing"
+      "Background & Additional Topics",
+      "Quantum Annealing Explained"
     ]
   },
   {
-    "objectID": "D-wave SDK Demonstration Simulated Annealing.html#installation-setup",
-    "href": "D-wave SDK Demonstration Simulated Annealing.html#installation-setup",
-    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
-    "section": "Installation & Setup",
-    "text": "Installation & Setup\nIn this section, we outline how to install the D-Wave Ocean SDK. It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system as virtual environments keep the packages used for this project isolated from other Python projects and avoid potential dependency conflicts.\nThe virtual environment can also be registered as a Jupyter kernel, allowing a Jupyter notebook to run directly inside the same environment in which the Ocean SDK is installed. To create a virtual environment and activate it in macOS or Linux run,\npython3 -m venv ocean\nsource ocean/bin/activate\nTo create and run a virtual environment in Windows’ command shell run,\npython -m venv ocean\nocean\\Scripts\\activate.bat\nOnce the environment is activated, any Python packages installed with pip will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run,\npython -m pip install --upgrade pip\n\npython -m pip install dwave-ocean-sdk\npython -m pip install yfinance \nSince this tutorial uses Jupyter notebooks we must register the environment with Jupyter,\npython -m pip install ipykernel\npython -m ipykernel install --user --name ocean --display-name \"Ocean Environment\"\nNote after opening the Jupyter Notebook make sure to select the “Ocean Environment” kernel.",
+    "objectID": "Quantum Annealing Explained.html#basic-quantum-mechanics",
+    "href": "Quantum Annealing Explained.html#basic-quantum-mechanics",
+    "title": "Introduction",
+    "section": "Basic Quantum Mechanics",
+    "text": "Basic Quantum Mechanics\nIn classical computation bits can be either in a state of \\(0\\) or \\(1\\), however in quantum computing a qubit is a vector that takes in values on \\(\\mathbb{C}^2\\):\n\\[|\\psi\\rangle = \\alpha|0\\rangle + \\beta|1\\rangle, \\qquad |0\\rangle = \\begin{pmatrix}1\\\\0\\end{pmatrix}, \\qquad |1\\rangle = \\begin{pmatrix}0\\\\1\\end{pmatrix}, \\qquad |\\alpha|^2 + |\\beta|^2 = 1\\]\nThe Born rule states for the wavefunction \\(\\ket{\\psi}\\) above, you get \\(0\\) with probability \\(|\\alpha|^2\\) and \\(1\\) with probability \\(|\\beta|^2\\), and measurement collapses the state into one of the two measurements.\nThe Hamiltonain, denoted \\(\\mathcal{H}\\) is a Hermetian matrix that encodes the energy of the system as its eigenvalues, while its eigenvectors are the states with those respective energies. The lowest eigenstate of the Hamiltonian is known as the ground state.",
     "crumbs": [
-      "Main Tutorials",
-      "D-Wave Simulated Annealing"
+      "Background & Additional Topics",
+      "Quantum Annealing Explained"
     ]
   },
   {
-    "objectID": "D-wave SDK Demonstration Simulated Annealing.html#review",
-    "href": "D-wave SDK Demonstration Simulated Annealing.html#review",
-    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
-    "section": "Review",
-    "text": "Review\nRecall that quantum annealers are designed to solve certain classes of optimization problems, one of the most common being Quadratic Unconstrained Binary Optimization (QUBO) problems. D-Wave’s Quantum Processing Unit (QPU) represents these problems using an Ising Hamiltonian of the form\n\\[H(\\mathbf{s}) = \\sum_i h_i s_i + \\sum_{i&lt;j} J_{ij}s_i s_j,\\qquad s_i\\in\\{-1,+1\\},\\]\nwhere the coefficients \\(h_i\\) represent individual biases and \\(J_{ij}\\) represent interactions between pairs of spins. Using a simple change of variables between Ising spins and binary variables, typically\n\\[s_i = 2x_i-1,\\]\nwe can rewrite the same problem as a QUBO,\n\\[Q(\\mathbf{x}) = \\sum_i a_i x_i + \\sum_{i&lt;j} b_{ij}x_i x_j, \\qquad x_i\\in\\{0,1\\}.\\]\nThis allows an optimization problem written as a QUBO to be mapped directly onto the Ising model implemented by the D-Wave hardware. The QPU uses a network of superconducting qubits whose interactions are programmed according to the coefficients of the problem. During quantum annealing, the system is driven toward low-energy configurations of the Ising Hamiltonian. After measurement, these spin configurations can be converted back into binary variables, with the lowest-energy solutions corresponding to minima of the original QUBO objective function. Learn more about the physics of quantum annealing in this notebook!",
+    "objectID": "Quantum Annealing Explained.html#quantum-annealing",
+    "href": "Quantum Annealing Explained.html#quantum-annealing",
+    "title": "Introduction",
+    "section": "Quantum Annealing",
+    "text": "Quantum Annealing",
     "crumbs": [
-      "Main Tutorials",
-      "D-Wave Simulated Annealing"
-    ]
-  },
-  {
-    "objectID": "D-wave SDK Demonstration Simulated Annealing.html#optimization-problem-statement-markowitz-portfolio-optimization",
-    "href": "D-wave SDK Demonstration Simulated Annealing.html#optimization-problem-statement-markowitz-portfolio-optimization",
-    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
-    "section": "Optimization Problem Statement: Markowitz Portfolio Optimization",
-    "text": "Optimization Problem Statement: Markowitz Portfolio Optimization\n\n\n\nA common financial optimization problem is known as the Markowitz mean variance portfolio optimization. It states that given a set of assets with known expected returns and correlations, the goal is to determine how much of a portfolio should be allocated to each asset.\nIt states that an optimal portfolio balances two competing objectives: maximizing expected return while minimizing financial risk. The set of portfolios that provide the best possible return for a given level of risk forms what is known as the efficient frontier.\n\n\n\n\n\n\nSay we have a collection of assets in a portfolio and the variable,\n\\[\\mathbf{w} = \\begin{pmatrix} w_1 \\\\ w_2 \\\\ \\vdots \\\\ w_N \\end{pmatrix}\\]\nrepresents the fraction of the portfolio allocated to each asset, where \\(\\mu_i\\) is the expected return of asset \\(i\\) and \\(\\Sigma\\) is the covariance matrix describing the risk and correlations between assets. The expected of the portfolio is given by the expression,\n\\[\\boldsymbol{\\mu}^{T}\\mathbf{w},\\]\nwhile the portfolio variance, which is used as a measure of risk, is given by the expression,\n\\[\\mathbf{w}^{T}\\Sigma\\mathbf{w}.\\]\nThe optimization problem can therefore be written as\n\\[\\min_{\\mathbf{w}} \\left[ \\lambda_1 \\mathbf{w}^{T}\\Sigma\\mathbf{w} - \\lambda_2 \\boldsymbol{\\mu}^{T}\\mathbf{w} \\right],\\]\nwhere the first term penalizes portfolio risk and the second term rewards expected return. In this optimization problem we also require the entire portfolio to be allocated, or simply put the weights must sum to \\(1\\).\n\\[\\sum_i w_i = 1\\]\nBecause a QUBO is an unconstrained optimization problem, this condition can be included using a quadratic penalty,\n\\[\\lambda_3 \\left( \\sum_i w_i - 1 \\right)^2.\\]\nTherefore complete objective function we seek to mimize becomes,\n\\[H(\\mathbf{w}) = \\lambda_1 \\mathbf{w}^{T}\\Sigma\\mathbf{w} - \\lambda_2 \\boldsymbol{\\mu}^{T}\\mathbf{w} + \\lambda_3 \\left( \\sum_i w_i - 1 \\right)^2.\\]\nHere, \\(\\lambda_1\\) controls the importance of expected return, \\(\\lambda_2\\) controls the penalty associated with portfolio risk and \\(\\lambda_3\\) controls the portfolio normalization constraint. Something worth noting is that the portfolio weights \\(w_i\\) are continuous variables, while a QUBO requires binary variables. So to represent each portfolio weight using several binary variables we look at its binary expansion\n\\[w_i = \\sum_{k=0}^{b-1} \\frac{2^k}{2^b -1}x_{ik}, \\quad x_{ik}\\in\\{0,1\\}.\\]\nSubstituting these binary representations into the objective converts the portfolio optimization problem into a quadratic function of binary variables,\n\\[H(\\mathbf{x})=\\mathbf{x}^{T}Q\\mathbf{x}.\\]",
-    "crumbs": [
-      "Main Tutorials",
-      "D-Wave Simulated Annealing"
-    ]
-  },
-  {
-    "objectID": "D-wave SDK Demonstration Simulated Annealing.html#yahoo-finiance-data",
-    "href": "D-wave SDK Demonstration Simulated Annealing.html#yahoo-finiance-data",
-    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
-    "section": "Yahoo Finiance Data",
-    "text": "Yahoo Finiance Data\nFor this demonstration we get the average returns from Yahoo Finiance from the yfinance library (ensure it is installed in this virtual environment). A full list of the assets accessable are given here.\n\nimport yfinance as yf\n\nassets = [\"AAPL\", \"MSFT\", \"NVDA\", \"CSCO\", \"ORCL\", \"QCOM\", \"IBM\"]\n\nstart=\"2025-04-04\"\nend=\"2026-04-04\"\n\ndata = yf.download(assets, start=start, end=end)\nclosing_prices = data[\"Close\"].pct_change().dropna()\n\n# The 252 represents the number of business days in a year\nreturns = closing_prices.mean() * 252 \ncovariance = closing_prices.cov() * 252\n\n[*********************100%***********************]  7 of 7 completed",
-    "crumbs": [
-      "Main Tutorials",
-      "D-Wave Simulated Annealing"
-    ]
-  },
-  {
-    "objectID": "D-wave SDK Demonstration Simulated Annealing.html#using-oceans-simulated-annealing-sampler",
-    "href": "D-wave SDK Demonstration Simulated Annealing.html#using-oceans-simulated-annealing-sampler",
-    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
-    "section": "Using Ocean’s Simulated Annealing Sampler",
-    "text": "Using Ocean’s Simulated Annealing Sampler\nThe\n\nfrom collections import defaultdict\n\nQ = defaultdict(float)\n\nlambda_1 = 1.0    # Portfolio risk \nlambda_2 = 100.0  # Budget constraint\nlambda_3 = 1.0    # Expected return\n\n\nbits_per_asset = 12\n\n# Binary coefficients used to represent each portfolio weight: ~ 1/2, ~ 1/4, ~1/8, ... \nbit_weights = [2**k / (2**bits_per_asset - 1) for k in range(bits_per_asset)]\n\nThis loop enumerates the binary variables of the encoding. For each asset \\(i \\in \\{1,\\dots,n\\}\\) and each bit index \\(k \\in \\{0,\\dots,b-1\\}\\), it registers the variable \\(x_{ik}\\) together with the asset it belongs to and its associated coefficient \\(c_k\\), where\n\\[w_i = \\sum_{k=0}^{b-1} c_k\\,x_{ik}, \\qquad c_k = \\frac{2^k}{2^b-1}.\\]\nThis yields a total of \\(nb\\) binary variables. Storing each variable alongside its asset index and coefficient allows the subsequent construction of the QUBO matrix to retrieve \\(\\mu_i\\), \\(\\sigma_{ij}\\) and \\(c_k\\) directly, without re-deriving them from the variable labels.\n\nvariables = []\n\nfor asset in assets:\n    for k in range(bits_per_asset):\n        variable = f\"{asset}_{k}\"\n        coefficient = bit_weights[k]\n\n        variables.append((variable, asset, coefficient))\n\nThis loop assigns the diagonal entries of the QUBO matrix. Since \\(x_{ik}^2 = x_{ik}\\) for binary variables, every squared term collapses to a linear one and lands on the diagonal:\n\\[Q[(ik,ik)] = \\lambda_3\\,\\sigma_{ii}c_k^2 \\;-\\; \\lambda_2\\,\\mu_i c_k \\;+\\; \\lambda_1\\left(c_k^2 - 2c_k\\right).\\]\nThe three contributions come from the risk term, the expected return, which is linear and so appears only here, and the budget penalty. The constant \\(\\lambda_1\\) left over from expanding the penalty carries no variables and is omitted, as it shifts every energy equally and does not change the minimizer.\n\nfor variable, asset, coefficient in variables:\n    mu_i = returns.loc[asset]\n    sigma_ii = covariance.loc[asset, asset]\n\n    Q[(variable, variable)] += (lambda_3 * sigma_ii * coefficient**2 - lambda_2 * mu_i * coefficient + lambda_1 * (coefficient**2 - 2 * coefficient))\n\nThis loop assigns the off-diagonal entries of the QUBO matrix. The inner index begins at \\(a+1\\) so that each unordered pair is visited exactly once, with the factor of \\(2\\) absorbing the symmetric counterpart:\n\\[Q[(ik,jl)] = 2\\,c_k c_l\\left(\\lambda_3\\,\\sigma_{ij} + \\lambda_1\\right).\\]\nThe two contributions come from the cross terms of \\(\\mathbf{w}^\\top\\Sigma\\mathbf{w}\\) and of the budget penalty; the expected return, being linear, contributes nothing here. Pairs with \\(i = j\\) are included, since \\(\\sigma_{ij}\\) then reduces to the variance \\(\\sigma_{ii}\\) and these terms form part of the risk of a single asset.\n\nfor a in range(len(variables)):\n    variable_i, asset_i, coefficient_i = variables[a]\n\n    for b in range(a + 1, len(variables)):\n\n        variable_j, asset_j, coefficient_j = variables[b]\n        sigma_ij = covariance.loc[asset_i, asset_j]\n\n        Q[(variable_i, variable_j)] += (2 * coefficient_i * coefficient_j * ( lambda_3 * sigma_ij + lambda_1 ))\n\n\nQ = dict(Q)\n\nBecause simulated annealing runs on a classical computer rather than on a QPU, there is no hardware graph to map the problem onto and no minor embedding step. Any QUBO can be passed to the sampler directly, regardless of how its variables are connected.\nSimulated annealing mimics the physical annealing process. Each run starts from a random configuration at a high effective temperature, where moves that increase the energy are often accepted, and the temperature is then lowered over a series of sweeps so that the search gradually settles into a low-energy configuration. Ocean provides this through SimulatedAnnealingSampler, which is part of the dwave-samplers package included in the Ocean SDK.\n\nfrom dwave.samplers import SimulatedAnnealingSampler\n\nsampler = SimulatedAnnealingSampler()\n\nsampleset = sampler.sample_qubo(Q, num_reads=1000)\n\nbest = sampleset.first # returns lowest energy sample in the SampleSet\nsolution = dict(best.sample)  \n\nprint(\"Solution (binary representation of weights):\")\n\n# Prints the binary output in a readable format \nfor asset in assets:\n    bits = \"\".join(str(solution[f\"{asset}_{k}\"]) for k in reversed(range(bits_per_asset)))\n    print(f\"  {asset:&lt;10} {bits}\")\n\nprint(\"Energy:\", best.energy)\n\nSolution (binary representation of weights):\n  AAPL       000011001111\n  MSFT       000100000000\n  NVDA       110001111111\n  CSCO       000101111111\n  ORCL       000000100011\n  QCOM       000000000000\n  IBM        000000010001\nEnergy: -100.50933091360253\n\n\nSolving for the weights gives the following graph.\n\nimport matplotlib.pyplot as plt\n\nportfolio = {}\n\nfor asset in assets:\n    portfolio[asset] = sum(bit_weights[k] * solution[f\"{asset}_{k}\"] for k in range(bits_per_asset))\n\nplt.figure(figsize=(7, 6))\nplt.bar(portfolio.keys(), portfolio.values())\n\nplt.title(\"Portfolio Asset Weights\")\nplt.xlabel(\"Assets\")\nplt.ylabel(\"Weight\")\nplt.xticks(rotation=90)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nFinished? Check out our other tutorials!\n Download notebook ↓",
-    "crumbs": [
-      "Main Tutorials",
-      "D-Wave Simulated Annealing"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Quantum Annealing with D-Wave",
-    "section": "",
-    "text": "This module introduces quantum annealing and the D-Wave Ocean SDK through a set of tutorials and demonstrations. The two main workshop notebooks provide hands-on examples using both D-Wave’s quantum hardware and a local simulated annealer.",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#main-tutorials",
-    "href": "index.html#main-tutorials",
-    "title": "Quantum Annealing with D-Wave",
-    "section": "Main Tutorials",
-    "text": "Main Tutorials\n\nD-Wave Quantum Annealing Demonstration\nLearn how optimization problems can be formulated as QUBOs and solved using D-Wave’s Ocean SDK and a D-Wave quantum processing unit through Leap Quantum Cloud.\nStart D-Wave Quantum Annealing Demonstration →\n\n\nLocal Simulated Annealing Demonstration\nWork through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.\nStart Local Simulated Annealing Demonstration →",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#background-and-additional-material",
-    "href": "index.html#background-and-additional-material",
-    "title": "Quantum Annealing with D-Wave",
-    "section": "Background and Additional Material",
-    "text": "Background and Additional Material\n\nQuantum Annealing Explained\nLearn more about how quantum annealing works, including the connection between optimization problems, Ising models, and the physical operation of a quantum annealer.\nLearn How Quantum Annealing Works →\n\n\nAdditional D-Wave Topics\nExplore additional D-Wave Ocean features, optimization problems, and examples beyond those covered in the main workshop.\nExplore Additional D-Wave Topics →",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#about",
-    "href": "index.html#about",
-    "title": "Quantum Annealing with D-Wave",
-    "section": "About",
-    "text": "About\nThese materials were developed for the Quantum Science, Technology, and Engineering Workshop at Purdue University.",
-    "crumbs": [
-      "Overview"
+      "Background & Additional Topics",
+      "Quantum Annealing Explained"
     ]
   },
   {
@@ -227,36 +121,153 @@
     ]
   },
   {
-    "objectID": "Quantum Annealing Explained.html",
-    "href": "Quantum Annealing Explained.html",
-    "title": "Introduction",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Quantum Annealing with D-Wave",
     "section": "",
-    "text": "This notebook will discuss an introduction to quantum mechanics and explain how quantum annealing works and how it is used in order to solve optimization problems. Many of these topics will be covered by the slides.",
+    "text": "This module introduces quantum annealing and the D-Wave Ocean SDK through a set of tutorials and demonstrations. The two main workshop notebooks provide hands-on examples using both D-Wave’s quantum hardware and a local simulated annealer.",
     "crumbs": [
-      "Background & Additional Topics",
-      "Quantum Annealing Explained"
+      "Overview"
     ]
   },
   {
-    "objectID": "Quantum Annealing Explained.html#basic-quantum-mechanics",
-    "href": "Quantum Annealing Explained.html#basic-quantum-mechanics",
-    "title": "Introduction",
-    "section": "Basic Quantum Mechanics",
-    "text": "Basic Quantum Mechanics\nIn classical computation bits can be either in a state of \\(0\\) or \\(1\\), however in quantum computing a qubit is a vector that takes in values on \\(\\mathbb{C}^2\\):\n\\[|\\psi\\rangle = \\alpha|0\\rangle + \\beta|1\\rangle, \\qquad |0\\rangle = \\begin{pmatrix}1\\\\0\\end{pmatrix}, \\qquad |1\\rangle = \\begin{pmatrix}0\\\\1\\end{pmatrix}, \\qquad |\\alpha|^2 + |\\beta|^2 = 1\\]\nThe Born rule states for the wavefunction \\(\\ket{\\psi}\\) above, you get \\(0\\) with probability \\(|\\alpha|^2\\) and \\(1\\) with probability \\(|\\beta|^2\\), and measurement collapses the state into one of the two measurements.\nThe Hamiltonain, denoted \\(\\mathcal{H}\\) is a Hermetian matrix that encodes the energy of the system as its eigenvalues, while its eigenvectors are the states with those respective energies. The lowest eigenstate of the Hamiltonian is known as the ground state.",
+    "objectID": "index.html#main-tutorials",
+    "href": "index.html#main-tutorials",
+    "title": "Quantum Annealing with D-Wave",
+    "section": "Main Tutorials",
+    "text": "Main Tutorials\n\nD-Wave Quantum Annealing Demonstration\nLearn how optimization problems can be formulated as QUBOs and solved using D-Wave’s Ocean SDK and a D-Wave quantum processing unit through Leap Quantum Cloud.\nStart D-Wave Quantum Annealing Demonstration →\n\n\nLocal Simulated Annealing Demonstration\nWork through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.\nStart Local Simulated Annealing Demonstration →",
     "crumbs": [
-      "Background & Additional Topics",
-      "Quantum Annealing Explained"
+      "Overview"
     ]
   },
   {
-    "objectID": "Quantum Annealing Explained.html#quantum-annealing",
-    "href": "Quantum Annealing Explained.html#quantum-annealing",
-    "title": "Introduction",
-    "section": "Quantum Annealing",
-    "text": "Quantum Annealing",
+    "objectID": "index.html#background-and-additional-material",
+    "href": "index.html#background-and-additional-material",
+    "title": "Quantum Annealing with D-Wave",
+    "section": "Background and Additional Material",
+    "text": "Background and Additional Material\n\nQuantum Annealing Explained\nLearn more about how quantum annealing works, including the connection between optimization problems, Ising models, and the physical operation of a quantum annealer.\nLearn How Quantum Annealing Works →\n\n\nAdditional D-Wave Topics\nExplore additional D-Wave Ocean features, optimization problems, and examples beyond those covered in the main workshop.\nExplore Additional D-Wave Topics →",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#about",
+    "href": "index.html#about",
+    "title": "Quantum Annealing with D-Wave",
+    "section": "About",
+    "text": "About\nThese materials were developed for the Quantum Science, Technology, and Engineering Workshop at Purdue University.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Simulated Annealing.html",
+    "href": "D-wave SDK Demonstration Simulated Annealing.html",
+    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
+    "section": "",
+    "text": "This tutorial outlines how to use the D-Wave Ocean SDK to formulate and solve a QUBO optimization problem using simulated annealing. Simulated annealing runs entirely on the local machine, so no access to the D-Wave Leap quantum cloud service is required.\nIf you do have access to the Leap quantum cloud service then check out our tutorial on solving QUBO problems using a quantum annealer.",
+    "crumbs": [
+      "Main Tutorials",
+      "D-Wave Simulated Annealing"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Simulated Annealing.html#installation-setup",
+    "href": "D-wave SDK Demonstration Simulated Annealing.html#installation-setup",
+    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
+    "section": "Installation & Setup",
+    "text": "Installation & Setup\nIn this section, we outline how to install the D-Wave Ocean SDK. It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system as virtual environments keep the packages used for this project isolated from other Python projects and avoid potential dependency conflicts.\nThe virtual environment can also be registered as a Jupyter kernel, allowing a Jupyter notebook to run directly inside the same environment in which the Ocean SDK is installed. To create a virtual environment and activate it in macOS or Linux run,\npython3 -m venv ocean\nsource ocean/bin/activate\nTo create and run a virtual environment in Windows’ command shell run,\npython -m venv ocean\nocean\\Scripts\\activate.bat\nOnce the environment is activated, any Python packages installed with pip will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run,\npython -m pip install --upgrade pip\n\npython -m pip install dwave-ocean-sdk\npython -m pip install yfinance \nSince this tutorial uses Jupyter notebooks we must register the environment with Jupyter,\npython -m pip install ipykernel\npython -m ipykernel install --user --name ocean --display-name \"Ocean Environment\"\nNote after opening the Jupyter Notebook make sure to select the “Ocean Environment” kernel.",
+    "crumbs": [
+      "Main Tutorials",
+      "D-Wave Simulated Annealing"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Simulated Annealing.html#review",
+    "href": "D-wave SDK Demonstration Simulated Annealing.html#review",
+    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
+    "section": "Review",
+    "text": "Review\nRecall that quantum annealers are designed to solve certain classes of optimization problems, one of the most common being Quadratic Unconstrained Binary Optimization (QUBO) problems. D-Wave’s Quantum Processing Unit (QPU) represents these problems using an Ising Hamiltonian of the form\n\\[H(\\mathbf{s}) = \\sum_i h_i s_i + \\sum_{i&lt;j} J_{ij}s_i s_j,\\qquad s_i\\in\\{-1,+1\\},\\]\nwhere the coefficients \\(h_i\\) represent individual biases and \\(J_{ij}\\) represent interactions between pairs of spins. Using a simple change of variables between Ising spins and binary variables, typically\n\\[s_i = 2x_i-1,\\]\nwe can rewrite the same problem as a QUBO,\n\\[Q(\\mathbf{x}) = \\sum_i a_i x_i + \\sum_{i&lt;j} b_{ij}x_i x_j, \\qquad x_i\\in\\{0,1\\}.\\]\nThis allows an optimization problem written as a QUBO to be mapped directly onto the Ising model implemented by the D-Wave hardware. The QPU uses a network of superconducting qubits whose interactions are programmed according to the coefficients of the problem. During quantum annealing, the system is driven toward low-energy configurations of the Ising Hamiltonian. After measurement, these spin configurations can be converted back into binary variables, with the lowest-energy solutions corresponding to minima of the original QUBO objective function. Learn more about the physics of quantum annealing in this notebook!",
+    "crumbs": [
+      "Main Tutorials",
+      "D-Wave Simulated Annealing"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Simulated Annealing.html#optimization-problem-statement-markowitz-portfolio-optimization",
+    "href": "D-wave SDK Demonstration Simulated Annealing.html#optimization-problem-statement-markowitz-portfolio-optimization",
+    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
+    "section": "Optimization Problem Statement: Markowitz Portfolio Optimization",
+    "text": "Optimization Problem Statement: Markowitz Portfolio Optimization\n\n\n\nA common financial optimization problem is known as the Markowitz mean variance portfolio optimization. It states that given a set of assets with known expected returns and correlations, the goal is to determine how much of a portfolio should be allocated to each asset.\nIt states that an optimal portfolio balances two competing objectives: maximizing expected return while minimizing financial risk. The set of portfolios that provide the best possible return for a given level of risk forms what is known as the efficient frontier.\n\n\n\n\n\n\nSay we have a collection of assets in a portfolio and the variable,\n\\[\\mathbf{w} = \\begin{pmatrix} w_1 \\\\ w_2 \\\\ \\vdots \\\\ w_N \\end{pmatrix}\\]\nrepresents the fraction of the portfolio allocated to each asset, where \\(\\mu_i\\) is the expected return of asset \\(i\\) and \\(\\Sigma\\) is the covariance matrix describing the risk and correlations between assets. The expected of the portfolio is given by the expression,\n\\[\\boldsymbol{\\mu}^{T}\\mathbf{w},\\]\nwhile the portfolio variance, which is used as a measure of risk, is given by the expression,\n\\[\\mathbf{w}^{T}\\Sigma\\mathbf{w}.\\]\nThe optimization problem can therefore be written as\n\\[\\min_{\\mathbf{w}} \\left[ \\lambda_1 \\mathbf{w}^{T}\\Sigma\\mathbf{w} - \\lambda_2 \\boldsymbol{\\mu}^{T}\\mathbf{w} \\right],\\]\nwhere the first term penalizes portfolio risk and the second term rewards expected return. In this optimization problem we also require the entire portfolio to be allocated, or simply put the weights must sum to \\(1\\).\n\\[\\sum_i w_i = 1\\]\nBecause a QUBO is an unconstrained optimization problem, this condition can be included using a quadratic penalty,\n\\[\\lambda_3 \\left( \\sum_i w_i - 1 \\right)^2.\\]\nTherefore complete objective function we seek to mimize becomes,\n\\[H(\\mathbf{w}) = \\lambda_1 \\mathbf{w}^{T}\\Sigma\\mathbf{w} - \\lambda_2 \\boldsymbol{\\mu}^{T}\\mathbf{w} + \\lambda_3 \\left( \\sum_i w_i - 1 \\right)^2.\\]\nHere, \\(\\lambda_1\\) controls the importance of expected return, \\(\\lambda_2\\) controls the penalty associated with portfolio risk and \\(\\lambda_3\\) controls the portfolio normalization constraint. Something worth noting is that the portfolio weights \\(w_i\\) are continuous variables, while a QUBO requires binary variables. So to represent each portfolio weight using several binary variables we look at its binary expansion\n\\[w_i = \\sum_{k=0}^{b-1} \\frac{2^k}{2^b -1}x_{ik}, \\quad x_{ik}\\in\\{0,1\\}.\\]\nSubstituting these binary representations into the objective converts the portfolio optimization problem into a quadratic function of binary variables,\n\\[H(\\mathbf{x})=\\mathbf{x}^{T}Q\\mathbf{x}.\\]",
+    "crumbs": [
+      "Main Tutorials",
+      "D-Wave Simulated Annealing"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Simulated Annealing.html#yahoo-finiance-data",
+    "href": "D-wave SDK Demonstration Simulated Annealing.html#yahoo-finiance-data",
+    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
+    "section": "Yahoo Finiance Data",
+    "text": "Yahoo Finiance Data\nFor this demonstration we get the average returns from Yahoo Finiance from the yfinance library (ensure it is installed in this virtual environment). A full list of the assets accessable are given here.\n\nimport yfinance as yf\n\nassets = [\"AAPL\", \"MSFT\", \"NVDA\", \"CSCO\", \"ORCL\", \"QCOM\", \"IBM\"]\n\nstart=\"2025-04-04\"\nend=\"2026-04-04\"\n\ndata = yf.download(assets, start=start, end=end)\nclosing_prices = data[\"Close\"].pct_change().dropna()\n\n# The 252 represents the number of business days in a year\nreturns = closing_prices.mean() * 252 \ncovariance = closing_prices.cov() * 252\n\n[*********************100%***********************]  7 of 7 completed",
+    "crumbs": [
+      "Main Tutorials",
+      "D-Wave Simulated Annealing"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Simulated Annealing.html#using-oceans-simulated-annealing-sampler",
+    "href": "D-wave SDK Demonstration Simulated Annealing.html#using-oceans-simulated-annealing-sampler",
+    "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
+    "section": "Using Ocean’s Simulated Annealing Sampler",
+    "text": "Using Ocean’s Simulated Annealing Sampler\nThe\n\nfrom collections import defaultdict\n\nQ = defaultdict(float)\n\nlambda_1 = 1.0    # Portfolio risk \nlambda_2 = 100.0  # Budget constraint\nlambda_3 = 1.0    # Expected return\n\n\nbits_per_asset = 12\n\n# Binary coefficients used to represent each portfolio weight: ~ 1/2, ~ 1/4, ~1/8, ... \nbit_weights = [2**k / (2**bits_per_asset - 1) for k in range(bits_per_asset)]\n\nThis loop enumerates the binary variables of the encoding. For each asset \\(i \\in \\{1,\\dots,n\\}\\) and each bit index \\(k \\in \\{0,\\dots,b-1\\}\\), it registers the variable \\(x_{ik}\\) together with the asset it belongs to and its associated coefficient \\(c_k\\), where\n\\[w_i = \\sum_{k=0}^{b-1} c_k\\,x_{ik}, \\qquad c_k = \\frac{2^k}{2^b-1}.\\]\nThis yields a total of \\(nb\\) binary variables. Storing each variable alongside its asset index and coefficient allows the subsequent construction of the QUBO matrix to retrieve \\(\\mu_i\\), \\(\\sigma_{ij}\\) and \\(c_k\\) directly, without re-deriving them from the variable labels.\n\nvariables = []\n\nfor asset in assets:\n    for k in range(bits_per_asset):\n        variable = f\"{asset}_{k}\"\n        coefficient = bit_weights[k]\n\n        variables.append((variable, asset, coefficient))\n\nThis loop assigns the diagonal entries of the QUBO matrix. Since \\(x_{ik}^2 = x_{ik}\\) for binary variables, every squared term collapses to a linear one and lands on the diagonal:\n\\[Q[(ik,ik)] = \\lambda_3\\,\\sigma_{ii}c_k^2 \\;-\\; \\lambda_2\\,\\mu_i c_k \\;+\\; \\lambda_1\\left(c_k^2 - 2c_k\\right).\\]\nThe three contributions come from the risk term, the expected return, which is linear and so appears only here, and the budget penalty. The constant \\(\\lambda_1\\) left over from expanding the penalty carries no variables and is omitted, as it shifts every energy equally and does not change the minimizer.\n\nfor variable, asset, coefficient in variables:\n    mu_i = returns.loc[asset]\n    sigma_ii = covariance.loc[asset, asset]\n\n    Q[(variable, variable)] += (lambda_3 * sigma_ii * coefficient**2 - lambda_2 * mu_i * coefficient + lambda_1 * (coefficient**2 - 2 * coefficient))\n\nThis loop assigns the off-diagonal entries of the QUBO matrix. The inner index begins at \\(a+1\\) so that each unordered pair is visited exactly once, with the factor of \\(2\\) absorbing the symmetric counterpart:\n\\[Q[(ik,jl)] = 2\\,c_k c_l\\left(\\lambda_3\\,\\sigma_{ij} + \\lambda_1\\right).\\]\nThe two contributions come from the cross terms of \\(\\mathbf{w}^\\top\\Sigma\\mathbf{w}\\) and of the budget penalty; the expected return, being linear, contributes nothing here. Pairs with \\(i = j\\) are included, since \\(\\sigma_{ij}\\) then reduces to the variance \\(\\sigma_{ii}\\) and these terms form part of the risk of a single asset.\n\nfor a in range(len(variables)):\n    variable_i, asset_i, coefficient_i = variables[a]\n\n    for b in range(a + 1, len(variables)):\n\n        variable_j, asset_j, coefficient_j = variables[b]\n        sigma_ij = covariance.loc[asset_i, asset_j]\n\n        Q[(variable_i, variable_j)] += (2 * coefficient_i * coefficient_j * ( lambda_3 * sigma_ij + lambda_1 ))\n\n\nQ = dict(Q)\n\nBecause simulated annealing runs on a classical computer rather than on a QPU, there is no hardware graph to map the problem onto and no minor embedding step. Any QUBO can be passed to the sampler directly, regardless of how its variables are connected.\nSimulated annealing mimics the physical annealing process. Each run starts from a random configuration at a high effective temperature, where moves that increase the energy are often accepted, and the temperature is then lowered over a series of sweeps so that the search gradually settles into a low-energy configuration. Ocean provides this through SimulatedAnnealingSampler, which is part of the dwave-samplers package included in the Ocean SDK.\n\nfrom dwave.samplers import SimulatedAnnealingSampler\n\nsampler = SimulatedAnnealingSampler()\n\nsampleset = sampler.sample_qubo(Q, num_reads=1000)\n\nbest = sampleset.first # returns lowest energy sample in the SampleSet\nsolution = dict(best.sample)  \n\nprint(\"Solution (binary representation of weights):\")\n\n# Prints the binary output in a readable format \nfor asset in assets:\n    bits = \"\".join(str(solution[f\"{asset}_{k}\"]) for k in reversed(range(bits_per_asset)))\n    print(f\"  {asset:&lt;10} {bits}\")\n\nprint(\"Energy:\", best.energy)\n\nSolution (binary representation of weights):\n  AAPL       000011001111\n  MSFT       000100000000\n  NVDA       110001111111\n  CSCO       000101111111\n  ORCL       000000100011\n  QCOM       000000000000\n  IBM        000000010001\nEnergy: -100.50933091360253\n\n\nSolving for the weights gives the following graph.\n\nimport matplotlib.pyplot as plt\n\nportfolio = {}\n\nfor asset in assets:\n    portfolio[asset] = sum(bit_weights[k] * solution[f\"{asset}_{k}\"] for k in range(bits_per_asset))\n\nplt.figure(figsize=(7, 6))\nplt.bar(portfolio.keys(), portfolio.values())\n\nplt.title(\"Portfolio Asset Weights\")\nplt.xlabel(\"Assets\")\nplt.ylabel(\"Weight\")\nplt.xticks(rotation=90)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nFinished? Check out our other tutorials!\n Download notebook ↓",
+    "crumbs": [
+      "Main Tutorials",
+      "D-Wave Simulated Annealing"
+    ]
+  },
+  {
+    "objectID": "Additional D-wave Topics.html",
+    "href": "Additional D-wave Topics.html",
+    "title": "Additional D-wave Topics",
+    "section": "",
+    "text": "Here additional topics not referenced in the tutorial will be covered.\nimport dwave-neal\nimport dimod\nimport dwave-ocean-sdk",
     "crumbs": [
       "Background & Additional Topics",
-      "Quantum Annealing Explained"
+      "Additional D-Wave Topics"
+    ]
+  },
+  {
+    "objectID": "Additional D-wave Topics.html#quantum-annealers",
+    "href": "Additional D-wave Topics.html#quantum-annealers",
+    "title": "Additional D-wave Topics",
+    "section": "Quantum Annealers",
+    "text": "Quantum Annealers\nThis section will explain in depth how Quantum Annealing works.",
+    "crumbs": [
+      "Background & Additional Topics",
+      "Additional D-Wave Topics"
+    ]
+  },
+  {
+    "objectID": "Additional D-wave Topics.html#additional-qubo-optimization-problems",
+    "href": "Additional D-wave Topics.html#additional-qubo-optimization-problems",
+    "title": "Additional D-wave Topics",
+    "section": "Additional QUBO Optimization Problems",
+    "text": "Additional QUBO Optimization Problems\n\nCommunity Detection\n\n\nMax-Cut\n\n\nTraveling Salesman Problem",
+    "crumbs": [
+      "Background & Additional Topics",
+      "Additional D-Wave Topics"
+    ]
+  },
+  {
+    "objectID": "Additional D-wave Topics.html#additional-d-wave-sdk-features",
+    "href": "Additional D-wave Topics.html#additional-d-wave-sdk-features",
+    "title": "Additional D-wave Topics",
+    "section": "Additional D-Wave SDK Features",
+    "text": "Additional D-Wave SDK Features\n Download notebook ↓",
+    "crumbs": [
+      "Background & Additional Topics",
+      "Additional D-Wave Topics"
     ]
   }
 ]
