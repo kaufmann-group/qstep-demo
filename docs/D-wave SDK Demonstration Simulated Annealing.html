@@ -177,7 +177,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./max-cut-playground.html">Main Tutorials</a></li><li class="breadcrumb-item"><a href="./D-wave SDK Demonstration Simulated Annealing.html">D-Wave Simulated Annealing</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./max-cut-game.html">Main Tutorials</a></li><li class="breadcrumb-item"><a href="./D-wave SDK Demonstration Simulated Annealing.html">Student Demonstration</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -206,20 +206,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./max-cut-playground.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Max-Cut Playground</span></a>
+  <a href="./max-cut-game.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Max-Cut Game</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./D-wave SDK Demonstration Quantum Annealing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">D-Wave Quantum Annealing</span></a>
+ <span class="menu-text">Instructor Demonstration</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./D-wave SDK Demonstration Simulated Annealing.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">D-Wave Simulated Annealing</span></a>
+ <span class="menu-text">Student Demonstration</span></a>
   </div>
 </li>
       </ul>
@@ -254,7 +254,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./max-cut-playground.html">Main Tutorials</a></li><li class="breadcrumb-item"><a href="./D-wave SDK Demonstration Simulated Annealing.html">D-Wave Simulated Annealing</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./max-cut-game.html">Main Tutorials</a></li><li class="breadcrumb-item"><a href="./D-wave SDK Demonstration Simulated Annealing.html">Student Demonstration</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">D-Wave Ocean SDK Framework with Simulated Annealing</h1>
 </div>
@@ -275,6 +275,7 @@ window.Quarto = {
 
 <p>This tutorial outlines how to use the D-Wave Ocean SDK to formulate and solve a QUBO optimization problem using simulated annealing. Simulated annealing runs entirely on the local machine, so no access to the D-Wave Leap quantum cloud service is required.</p>
 <p><strong>If you do have access to the Leap quantum cloud service then check out our tutorial on <a href="https://kaufmann-group.github.io/qstep-demo/D-wave%20SDK%20Demonstration%20Quantum%20Annealing.html">solving QUBO problems using a quantum annealer</a>.</strong></p>
+<p><a class="notebook-download" href="./downloads/quantum_annealing_notebook.txt" download="D-wave SDK Demonstration Quantum Annealing.ipynb"> Download notebook ↓ </a></p>
 <section id="installation-setup" class="level2">
 <h2 class="anchored" data-anchor-id="installation-setup">Installation &amp; Setup</h2>
 <p>In this section, we outline how to install the D-Wave Ocean SDK. <strong>All of these steps should be performed in a terminal opened in the directory where you downloaded or saved the notebook.</strong> It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system. Virtual environments keep the packages used for this project isolated from other Python projects and avoid potential dependency conflicts. <strong><a href="https://www.python.org/downloads/">Python</a> must already be installed on the machine running this demonstration.</strong></p>
@@ -548,7 +549,6 @@ A canonical example of a QUBO is the NP-hard <strong>Max-Cut problem</strong>. G
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Solve for the QUBO objective function here! </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><a class="notebook-download" href="./downloads/quantum_annealing_notebook.txt" download="D-wave SDK Demonstration Quantum Annealing.ipynb"> Download notebook ↓ </a></p>
 
 
 </section>

@@ -1,11 +1,11 @@
 ---
-title: "Max-Cut Playground"
+title: "Max-Cut Game"
 subtitle: "Split the nodes. Find a heavier cut."
 toc: false
 ---
 
 ```{=html}
-<section id="maxcut" aria-label="Interactive Max-Cut playground">
+<section id="maxcut" aria-label="Interactive Max-Cut game">
   <div class="mc-intro"><strong>How large a cut can you find?</strong><p>Split the nodes into two groups. An edge counts toward your score only when its endpoints have different colors. Aim for the <b>largest total weight</b> of these cut edges—not simply the most edges.</p><p>For example, cutting edges of weights 3 and 2 gives a score of 5. The groups do not need to be the same size. You’ll see a success message when you find the maximum cut.</p></div>
   <div class="mc-top">
     <div><span class="mc-kicker">YOUR PARTITION</span><p>Click to change groups. Drag to rearrange.</p></div>

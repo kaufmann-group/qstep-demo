@@ -1,13 +1,13 @@
 [
   {
-    "objectID": "max-cut-playground.html",
-    "href": "max-cut-playground.html",
-    "title": "Max-Cut Playground",
+    "objectID": "max-cut-game.html",
+    "href": "max-cut-game.html",
+    "title": "Max-Cut Game",
     "section": "",
     "text": "How large a cut can you find?Split the nodes into two groups. An edge counts toward your score only when its endpoints have different colors. Aim for the largest total weight of these cut edges—not simply the most edges.For example, cutting edges of weights 3 and 2 gives a score of 5. The groups do not need to be the same size. You’ll see a success message when you find the maximum cut.\n  \n    YOUR PARTITIONClick to change groups. Drag to rearrange.\n    Cut weight00 edges cut\n  \n  Group 0Group 1Cut edge\n  \n  \n  GROUP 0GROUP 1\n  Reset groups\n  Moving nodes changes only the drawing, not your score. Crossing lines are not connected unless they share a node. Keyboard: Tab to a node, Enter/Space to change its group, arrow keys to move it.",
     "crumbs": [
       "Main Tutorials",
-      "Max-Cut Playground"
+      "Max-Cut Game"
     ]
   },
   {
@@ -15,10 +15,10 @@
     "href": "D-wave SDK Demonstration Quantum Annealing.html",
     "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
     "section": "",
-    "text": "This tutorial outlines how to use the D-Wave Ocean SDK to formulate and solve a QUBO optimization problem using both a D-Wave quantum processing unit (QPU) and D-Wave’s hybrid solvers. Access to the D-Wave Leap quantum cloud service is required to run problems on these remote solvers.\nIf you do not have access to the Leap quantum cloud service then check out our tutorial on solving QUBO problems using simulated annealing.",
+    "text": "This tutorial outlines how to use the D-Wave Ocean SDK to formulate and solve a QUBO optimization problem using both a D-Wave quantum processing unit (QPU) and D-Wave’s hybrid solvers. Access to the D-Wave Leap quantum cloud service is required to run problems on these remote solvers.\nIf you do not have access to the Leap quantum cloud service then check out our tutorial on solving QUBO problems using simulated annealing.\nDownload notebook ↓",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Quantum Annealing"
+      "Instructor Demonstration"
     ]
   },
   {
@@ -29,7 +29,7 @@
     "text": "Installation & Setup\nIn this section, we outline how to install the D-Wave Ocean SDK. All of these steps should be performed in a terminal opened in the directory where you downloaded or saved the notebook. It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system. Virtual environments keep the packages used for this project isolated from other Python projects and avoid potential dependency conflicts. Python must already be installed on the machine running this demonstration.\n\nInstalling a Virtual Environment\nThe virtual environment can also be registered as a Jupyter kernel, allowing the notebook to run directly inside the same environment in which the Ocean SDK is installed.\n\nmacOS or Linux\nTo create and activate the virtual environment, run:\npython3 -m venv ocean\nsource ocean/bin/activate\n\n\nWindows Command Prompt\nTo create and activate the virtual environment, run:\npython -m venv ocean\nocean\\Scripts\\activate.bat\n\n\nWindows PowerShell\nTo create and activate the virtual environment, run:\npython -m venv ocean\n.\\ocean\\Scripts\\Activate.ps1\nIf PowerShell reports that “running scripts is disabled on this system,” run:\nSet-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser\nThen retry the activation command.\n\n\n\nInstalling Packages\nOnce the environment is activated, any Python packages installed with pip will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run the commands (for any operating system),\npython -m pip install --upgrade pip\n\npython -m pip install dwave-ocean-sdk\npython -m pip install jupyter notebook ipykernel\nSince this tutorial uses Jupyter notebooks we must register the environment with Jupyter,\npython -m ipykernel install --user --name ocean --display-name \"Ocean Environment\"\nNow you can open the Jupyter Notebook. To open Jupyter run,\njupyter notebook\nAfter migrating to this notebook within Jupyter make sure to select the “Ocean Environment” kernel.\n\n\nAuthenticating D-Wave\nThis section requires access to the D-Wave Leap quantum cloud service.\nOnce the virtual environment is activated, the user can connect Ocean to their D-Wave Leap account by running\ndwave setup --auth\nThis command authorizes Ocean to access the user’s Leap account, retrieves the required Solver API (SAPI) token, and creates the D-Wave configuration file used to access remote solvers. Depending on the system, the authentication process may open a browser window and prompt the user to sign in to their Leap account.\nTo confirm that the configuration was successful, the user can ping an available QPU:\ndwave ping --client qpu\nThis submits a small test problem to a D-Wave quantum processor and confirms that Ocean can communicate with the Leap service.\nThe solvers available to the user’s account can also be viewed with\ndwave solvers --list --all\nThis will list the QPU and hybrid solvers currently accessible through the user’s Leap account.",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Quantum Annealing"
+      "Instructor Demonstration"
     ]
   },
   {
@@ -40,7 +40,7 @@
     "text": "Review\nRecall that quantum annealers are designed to solve certain classes of optimization problems, one of the most common being Quadratic Unconstrained Binary Optimization (QUBO) problems. D-Wave’s Quantum Processing Unit (QPU) represents these problems using an Ising Hamiltonian of the form\n\\[H(\\mathbf{s}) = \\sum_i h_i s_i + \\sum_{i&lt;j} J_{ij}s_i s_j,\\qquad s_i\\in\\{-1,+1\\},\\]\nwhere the coefficients \\(h_i\\) represent individual biases and \\(J_{ij}\\) represent interactions between pairs of spins. Using a simple change of variables between Ising spins and binary variables, typically\n\\[s_i = 2x_i-1,\\]\nwe can rewrite the same problem as a QUBO,\n\\[Q(\\mathbf{x}) = \\sum_i a_i x_i + \\sum_{i&lt;j} b_{ij}x_i x_j, \\qquad x_i\\in\\{0,1\\}.\\]\nThis allows an optimization problem written as a QUBO to be mapped directly onto the Ising model implemented by the D-Wave hardware. The QPU uses a network of superconducting qubits whose interactions are programmed according to the coefficients of the problem. During quantum annealing, the system is driven toward low-energy configurations of the Ising Hamiltonian. After measurement, these spin configurations can be converted back into binary variables, with the lowest-energy solutions corresponding to minima of the original QUBO objective function. Learn more about the physics of quantum annealing in this notebook!",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Quantum Annealing"
+      "Instructor Demonstration"
     ]
   },
   {
@@ -51,7 +51,7 @@
     "text": "Optimization Problem Statement: Max-Cut\n\n\n\nA canonical example of a QUBO is the NP-hard Max-Cut problem. Given a graph consisting of vertices connected by edges, the goal is to divide the vertices into two groups such that the total weight of the edges crossing between the groups is as large as possible. In other words, we want to find a partition that maximizes the total weight of the edges crossing the cut. Max-Cut is a useful example because it has a simple mathematical formulation while still showing how a combinatorial optimization problem can be mapped onto a QUBO and solved using the D-Wave framework.\n\n\n\n\n\n\nWe assign each vertex a binary variable,\n\\[x_i = \\begin{cases} 0 & \\text{if vertex } i \\text{ is in group 0},\\\\ 1 & \\text{if vertex } i \\text{ is in group 1}. \\end{cases}\\]\nFor an edge connecting vertices \\(i\\) and \\(j\\), the expression\n\\[x_i+x_j-2x_ix_j\\]\nis equal to \\(1\\) when the two vertices are in different groups and \\(0\\) when they are in the same group. This can be seen directly from the truth table, which is identical to the XOR truth table:\n\\[\\begin{array}{c|c|c} x_i & x_j & x_i+x_j-2x_ix_j\\\\ \\hline 0 & 0 & 0\\\\ 0 & 1 & 1\\\\ 1 & 0 & 1\\\\ 1 & 1 & 0 \\end{array}\\]\nTherefore, this expression indicates whether a given edge crosses the cut. If each edge has a weight \\(w_{ij}\\), then the total weight of all edges crossing between the two groups is\n\\[\\sum_{(i,j)} w_{ij}\\left(x_i+x_j-2x_ix_j\\right).\\]\nThe goal of the Max-Cut problem is therefore to maximize this quantity,\n\\[\\max_{\\mathbf{x}} \\sum_{(i,j)} w_{ij} \\left(x_i+x_j-2x_ix_j\\right)\\]\nBecause the objective is quadratic in binary variables, it can be written directly as a QUBO. Since QUBOs are conventionally expressed as minimization problems, maximizing the cut weight is equivalent to minimizing its negative:\n\\[H(\\mathbf{x}) = -\\sum_{(i,j)} w_{ij} \\left(x_i+x_j-2x_ix_j\\right)\\]\nwith\n\\[x_i\\in\\{0,1\\}.\\]\nThe minimum of \\(H(\\mathbf{x})\\) therefore corresponds to the partition of the graph with the maximum total edge weight crossing between the two groups.\nFor this simple demonstration let’s attempt to solve the max-cut problem for this weighted graph,\n\\[(A,B)=4,\\qquad (A,C)=2,\\qquad (B,C)=1,\\qquad (B,D)=5,\\qquad (C,D)=3.\\]\n\nedges = [(\"A\", \"B\", 4), (\"A\", \"C\", 2), (\"B\", \"C\", 1), (\"B\", \"D\", 5), (\"C\", \"D\", 3)]",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Quantum Annealing"
+      "Instructor Demonstration"
     ]
   },
   {
@@ -62,7 +62,7 @@
     "text": "Using D-Wave’s Quantum Annealer\nThe input to the D-Wave system is a QUBO objective matrix in the form of a dictionary where each element represents the coefficient multiplying the \\(x_ix_j\\) term,\n\\[Q[(i,j)] = \\text{coefficient multiplying } x_i x_j.\\]\nUsing defaultdict we break down the expression,\n\\[-w_{ij}\\left(x_i+x_j-2x_ix_j\\right)\\]\nas follows.\n\nfrom collections import defaultdict\n\nQ = defaultdict(float)\n\nfor i, j, weight in edges:\n\n    # -w_ij * x_i terms\n    Q[(i, i)] -= weight\n\n    # -w_ij * x_j terms\n    Q[(j, j)] -= weight\n\n    # +2 * w_ij * x_i * x_j terms\n    Q[(i, j)] += 2 * weight\n\nQ = dict(Q)\n\nRecall that the qubits on a D-Wave QPU are not all directly connected to one another and as a result, the interaction graph of a QUBO may not map directly onto the actual connectivity of the QPU. In these cases, multiple physical qubits can be linked together in a chain to represent a single logical variable.\nThe process of mapping the logical QUBO graph onto the physical topology of the QPU is called minor embedding. Finding a minor embedding is computationally difficult in general, so Ocean provides tools that handle this step automatically. D-Wave’s EmbeddingComposite uses a heuristic embedding algorithm to find a suitable mapping between the logical variables and the available physical qubits.\n\nfrom dwave.system import DWaveSampler, EmbeddingComposite\n\n# Connect to an available D-Wave QPU\nqpu = DWaveSampler()\nsampler = EmbeddingComposite(qpu)\n\nHere, DWaveSampler() provides access to the physical D-Wave QPU, while EmbeddingComposite sits on top of the QPU sampler and automatically maps the logical QUBO onto the QPU’s hardware graph before the problem is submitted.\nThe QUBO is submitted to the D-Wave QPU and sampled 1000 times with the sample_qubo function.\n\nsampleset = sampler.sample_qubo(Q, num_reads=1000)\n\nbest = sampleset.first # returns lowest energy sample in the SampleSet\nsolution = dict(best.sample)  \n\nprint(\"Solution:\", solution)\nprint(\"Energy:\", best.energy)\n\nSolution: {'D': np.int8(1), 'A': np.int8(1), 'B': np.int8(0), 'C': np.int8(0)}\nEnergy: -14.0\n\n\nRecall that solution is still in its binary representation, where each vertex has been assigned either 0 or 1; so it follows to separate the vertices into the two groups.\n\ngroup_0 = [vertex for vertex, value in solution.items() if value == 0]\ngroup_1 = [vertex for vertex, value in solution.items() if value == 1]\n\nprint(\"Group 0:\", group_0)\nprint(\"Group 1:\", group_1)\n\n# Solve for the max cut weight \ncut_weight = 0\n\nfor i, j, weight in edges:\n    if solution[i] != solution[j]:\n        cut_weight += weight\n\nprint(\"Cut weight:\", cut_weight)\n\nGroup 0: ['B', 'C']\nGroup 1: ['D', 'A']\nCut weight: 14",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Quantum Annealing"
+      "Instructor Demonstration"
     ]
   },
   {
@@ -73,7 +73,7 @@
     "text": "Using D-Wave’s Hybrid Sampler\nThe same QUBO can also be solved directly using D-Wave’s hybrid solver instead of the QPU. Unlike direct QPU sampling, the hybrid solver combines classical and quantum resources internally and outputs a single sample (as compared to a distribution like the QPU), so we do not need to manually define a minor embedding or define a sample size.\n\nfrom dwave.system import LeapHybridSampler\n\nsampler_hybrid = LeapHybridSampler()\nsampleset_hybrid = sampler_hybrid.sample_qubo(Q, time_limit=10)\n\nbest_hybrid = sampleset_hybrid.first\nsolution_hybrid = dict(best_hybrid.sample)\n\nprint(\"Solution:\", solution_hybrid)\nprint(\"Energy:\", best_hybrid.energy)\n\nSolution: {'A': np.int8(1), 'B': np.int8(0), 'C': np.int8(0), 'D': np.int8(1)}\nEnergy: -14.0",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Quantum Annealing"
+      "Instructor Demonstration"
     ]
   },
   {
@@ -81,10 +81,10 @@
     "href": "D-wave SDK Demonstration Quantum Annealing.html#problem-inspector",
     "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
     "section": "Problem Inspector:",
-    "text": "Problem Inspector:\nD-Wave has created a way for users to look at both the logical QUBO graph submitted to the QPU and the QPU itself alongside the minor embedding. This is best demonstrated for the large graph max-cut problem given below.\n\nmany_edges = [(\"A\", \"B\", 4), (\"A\", \"C\", 7), (\"A\", \"E\", 3), (\"A\", \"F\", 8), (\"A\", \"H\", 5), (\"B\", \"C\", 2), (\"B\", \"D\", 6), (\"B\", \"G\", 9), (\"B\", \"I\", 4), (\"C\", \"D\", 5), (\"C\", \"E\", 8), (\"C\", \"H\", 6), (\"C\", \"J\", 3), (\"D\", \"F\", 7), (\"D\", \"G\", 4), (\"D\", \"J\", 9), (\"D\", \"K\", 2), (\"E\", \"F\", 5), (\"E\", \"H\", 7), (\"E\", \"L\", 6), (\"F\", \"G\", 3), (\"F\", \"I\", 8), (\"F\", \"M\", 4), (\"G\", \"H\", 6), (\"G\", \"J\", 5), (\"G\", \"N\", 9), (\"H\", \"I\", 2), (\"H\", \"K\", 8), (\"H\", \"O\", 4), (\"I\", \"J\", 7), (\"I\", \"L\", 5), (\"I\", \"P\", 6), (\"J\", \"K\", 3), (\"J\", \"M\", 8), (\"J\", \"Q\", 5), (\"K\", \"L\", 7), (\"K\", \"N\", 4), (\"K\", \"R\", 9), (\"L\", \"M\", 2), (\"L\", \"O\", 6), (\"L\", \"S\", 8), (\"M\", \"N\", 5), (\"M\", \"P\", 7), (\"M\", \"T\", 3), (\"N\", \"O\", 8), (\"N\", \"Q\", 6), (\"O\", \"P\", 4), (\"O\", \"R\", 7), (\"P\", \"Q\", 9), (\"P\", \"S\", 5), (\"Q\", \"R\", 3), (\"Q\", \"T\", 8), (\"R\", \"S\", 6), (\"S\", \"T\", 7)]\n\nvertices = sorted(set(vertex for i, j, weight in many_edges for vertex in (i, j)))\n\nprint(\"Number of vertices:\", len(vertices))\nprint(\"Number of edges:\", len(edges))\n\nNumber of vertices: 20\nNumber of edges: 5\n\n\n\nimport dimod\nimport dwave.inspector \n\nQ_many = defaultdict(float)\n\nfor i, j, weight in many_edges:\n\n    # -w_ij * x_i terms\n    Q_many[(i, i)] -= weight\n\n    # -w_ij * x_j terms\n    Q_many[(j, j)] -= weight\n\n    # +2 * w_ij * x_i * x_j terms\n    Q_many[(i, j)] += 2 * weight\n\nbqm = dimod.BinaryQuadraticModel.from_qubo(dict(Q_many))\n\n\nsampler = EmbeddingComposite(DWaveSampler())\nsampleset = sampler.sample(bqm, num_reads=1000)\n\ndwave.inspector.show(sampleset)\n\nFinished? Check out our other tutorials!\n Download notebook ↓",
+    "text": "Problem Inspector:\nD-Wave has created a way for users to look at both the logical QUBO graph submitted to the QPU and the QPU itself alongside the minor embedding. This is best demonstrated for the large graph max-cut problem given below.\n\nmany_edges = [(\"A\", \"B\", 4), (\"A\", \"C\", 7), (\"A\", \"E\", 3), (\"A\", \"F\", 8), (\"A\", \"H\", 5), (\"B\", \"C\", 2), (\"B\", \"D\", 6), (\"B\", \"G\", 9), (\"B\", \"I\", 4), (\"C\", \"D\", 5), (\"C\", \"E\", 8), (\"C\", \"H\", 6), (\"C\", \"J\", 3), (\"D\", \"F\", 7), (\"D\", \"G\", 4), (\"D\", \"J\", 9), (\"D\", \"K\", 2), (\"E\", \"F\", 5), (\"E\", \"H\", 7), (\"E\", \"L\", 6), (\"F\", \"G\", 3), (\"F\", \"I\", 8), (\"F\", \"M\", 4), (\"G\", \"H\", 6), (\"G\", \"J\", 5), (\"G\", \"N\", 9), (\"H\", \"I\", 2), (\"H\", \"K\", 8), (\"H\", \"O\", 4), (\"I\", \"J\", 7), (\"I\", \"L\", 5), (\"I\", \"P\", 6), (\"J\", \"K\", 3), (\"J\", \"M\", 8), (\"J\", \"Q\", 5), (\"K\", \"L\", 7), (\"K\", \"N\", 4), (\"K\", \"R\", 9), (\"L\", \"M\", 2), (\"L\", \"O\", 6), (\"L\", \"S\", 8), (\"M\", \"N\", 5), (\"M\", \"P\", 7), (\"M\", \"T\", 3), (\"N\", \"O\", 8), (\"N\", \"Q\", 6), (\"O\", \"P\", 4), (\"O\", \"R\", 7), (\"P\", \"Q\", 9), (\"P\", \"S\", 5), (\"Q\", \"R\", 3), (\"Q\", \"T\", 8), (\"R\", \"S\", 6), (\"S\", \"T\", 7)]\n\nvertices = sorted(set(vertex for i, j, weight in many_edges for vertex in (i, j)))\n\nprint(\"Number of vertices:\", len(vertices))\nprint(\"Number of edges:\", len(edges))\n\nNumber of vertices: 20\nNumber of edges: 5\n\n\n\nimport dimod\nimport dwave.inspector \n\nQ_many = defaultdict(float)\n\nfor i, j, weight in many_edges:\n\n    # -w_ij * x_i terms\n    Q_many[(i, i)] -= weight\n\n    # -w_ij * x_j terms\n    Q_many[(j, j)] -= weight\n\n    # +2 * w_ij * x_i * x_j terms\n    Q_many[(i, j)] += 2 * weight\n\nbqm = dimod.BinaryQuadraticModel.from_qubo(dict(Q_many))\n\n\nsampler = EmbeddingComposite(DWaveSampler())\nsampleset = sampler.sample(bqm, num_reads=1000)\n\ndwave.inspector.show(sampleset)\n\nFinished? Check out our other tutorials!",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Quantum Annealing"
+      "Instructor Demonstration"
     ]
   },
   {
@@ -102,7 +102,7 @@
     "href": "index.html#main-tutorials",
     "title": "Quantum Annealing with D-Wave",
     "section": "Main Tutorials",
-    "text": "Main Tutorials\n\nMax-Cut Playground\nTry your hand at the Max-Cut problem: click nodes to divide them into two groups and aim for the highest score. Your score is the sum of the weights of edges connecting nodes in different groups.\nOpen Max-Cut Playground →\n\n\nD-Wave Quantum Annealing Demonstration\nLearn how optimization problems can be formulated as QUBOs and solved using D-Wave’s Ocean SDK and a D-Wave quantum processing unit through Leap Quantum Cloud.\nStart D-Wave Quantum Annealing Demonstration →\n\n\nLocal Simulated Annealing Demonstration\nWork through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.\nStart Local Simulated Annealing Demonstration →",
+    "text": "Main Tutorials\n\nMax-Cut Game\nTry your hand at the Max-Cut problem: click nodes to divide them into two groups and aim for the highest score. Your score is the sum of the weights of edges connecting nodes in different groups.\nOpen Max-Cut Game →\n\n\nD-Wave Quantum Annealing Demonstration\nLearn how optimization problems can be formulated as QUBOs and solved using D-Wave’s Ocean SDK and a D-Wave quantum processing unit through Leap Quantum Cloud.\nStart D-Wave Quantum Annealing Demonstration →\n\n\nLocal Simulated Annealing Demonstration\nWork through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.\nStart Local Simulated Annealing Demonstration →",
     "crumbs": [
       "Overview"
     ]
@@ -122,10 +122,10 @@
     "href": "D-wave SDK Demonstration Simulated Annealing.html",
     "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
     "section": "",
-    "text": "This tutorial outlines how to use the D-Wave Ocean SDK to formulate and solve a QUBO optimization problem using simulated annealing. Simulated annealing runs entirely on the local machine, so no access to the D-Wave Leap quantum cloud service is required.\nIf you do have access to the Leap quantum cloud service then check out our tutorial on solving QUBO problems using a quantum annealer.",
+    "text": "This tutorial outlines how to use the D-Wave Ocean SDK to formulate and solve a QUBO optimization problem using simulated annealing. Simulated annealing runs entirely on the local machine, so no access to the D-Wave Leap quantum cloud service is required.\nIf you do have access to the Leap quantum cloud service then check out our tutorial on solving QUBO problems using a quantum annealer.\nDownload notebook ↓",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Simulated Annealing"
+      "Student Demonstration"
     ]
   },
   {
@@ -136,7 +136,7 @@
     "text": "Installation & Setup\nIn this section, we outline how to install the D-Wave Ocean SDK. All of these steps should be performed in a terminal opened in the directory where you downloaded or saved the notebook. It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system. Virtual environments keep the packages used for this project isolated from other Python projects and avoid potential dependency conflicts. Python must already be installed on the machine running this demonstration.\n\nInstalling a Virtual Environment\nThe virtual environment can also be registered as a Jupyter kernel, allowing the notebook to run directly inside the same environment in which the Ocean SDK is installed.\n\nmacOS or Linux\nTo create and activate the virtual environment, run:\npython3 -m venv ocean\nsource ocean/bin/activate\n\n\nWindows Command Prompt\nTo create and activate the virtual environment, run:\npython -m venv ocean\nocean\\Scripts\\activate.bat\n\n\nWindows PowerShell\nTo create and activate the virtual environment, run:\npython -m venv ocean\n.\\ocean\\Scripts\\Activate.ps1\nIf PowerShell reports that “running scripts is disabled on this system,” run:\nSet-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser\nThen retry the activation command.\n\n\n\nInstalling Packages\nOnce the environment is activated, any Python packages installed with pip will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run the commands (for any operating system),\npython -m pip install --upgrade pip\n\npython -m pip install dwave-ocean-sdk\npython -m pip install jupyter notebook ipykernel\nSince this tutorial uses Jupyter notebooks we must register the environment with Jupyter,\npython -m ipykernel install --user --name ocean --display-name \"Ocean Environment\"\nNow you can open the Jupyter Notebook. To open Jupyter run,\njupyter notebook\nAfter migrating to this notebook within Jupyter make sure to select the “Ocean Environment” kernel.",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Simulated Annealing"
+      "Student Demonstration"
     ]
   },
   {
@@ -147,7 +147,7 @@
     "text": "Review\nRecall that quantum annealers are designed to solve certain classes of optimization problems, one of the most common being Quadratic Unconstrained Binary Optimization (QUBO) problems. D-Wave’s Quantum Processing Unit (QPU) represents these problems using an Ising Hamiltonian of the form\n\\[H(\\mathbf{s}) = \\sum_i h_i s_i + \\sum_{i&lt;j} J_{ij}s_i s_j,\\qquad s_i\\in\\{-1,+1\\},\\]\nwhere the coefficients \\(h_i\\) represent individual biases and \\(J_{ij}\\) represent interactions between pairs of spins. Using a simple change of variables between Ising spins and binary variables, typically\n\\[s_i = 2x_i-1,\\]\nwe can rewrite the same problem as a QUBO,\n\\[Q(\\mathbf{x}) = \\sum_i a_i x_i + \\sum_{i&lt;j} b_{ij}x_i x_j, \\qquad x_i\\in\\{0,1\\}.\\]\nThis allows an optimization problem written as a QUBO to be mapped directly onto the Ising model implemented by the D-Wave hardware. The QPU uses a network of superconducting qubits whose interactions are programmed according to the coefficients of the problem. During quantum annealing, the system is driven toward low-energy configurations of the Ising Hamiltonian. After measurement, these spin configurations can be converted back into binary variables, with the lowest-energy solutions corresponding to minima of the original QUBO objective function. Learn more about the physics of quantum annealing in this notebook!",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Simulated Annealing"
+      "Student Demonstration"
     ]
   },
   {
@@ -158,7 +158,7 @@
     "text": "Optimization Problem Statement: Max-Cut\n\n\n\nA canonical example of a QUBO is the NP-hard Max-Cut problem. Given a graph consisting of vertices connected by edges, the goal is to divide the vertices into two groups such that the total weight of the edges crossing between the groups is as large as possible. In other words, we want to find a partition that maximizes the total weight of the edges crossing the cut. Max-Cut is a useful example because it has a simple mathematical formulation while still showing how a combinatorial optimization problem can be mapped onto a QUBO and solved using the D-Wave framework.\n\n\n\n\n\n\nWe assign each vertex a binary variable,\n\\[x_i = \\begin{cases} 0 & \\text{if vertex } i \\text{ is in group 0},\\\\ 1 & \\text{if vertex } i \\text{ is in group 1}. \\end{cases}\\]\nFor an edge connecting vertices \\(i\\) and \\(j\\), the expression\n\\[x_i+x_j-2x_ix_j\\]\nis equal to \\(1\\) when the two vertices are in different groups and \\(0\\) when they are in the same group. This can be seen directly from the truth table, which is identical to the XOR truth table:\n\\[\\begin{array}{c|c|c} x_i & x_j & x_i+x_j-2x_ix_j\\\\ \\hline 0 & 0 & 0\\\\ 0 & 1 & 1\\\\ 1 & 0 & 1\\\\ 1 & 1 & 0 \\end{array}\\]\nTherefore, this expression indicates whether a given edge crosses the cut. If each edge has a weight \\(w_{ij}\\), then the total weight of all edges crossing between the two groups is\n\\[\\sum_{(i,j)} w_{ij}\\left(x_i+x_j-2x_ix_j\\right).\\]\nThe goal of the Max-Cut problem is therefore to maximize this quantity,\n\\[\\max_{\\mathbf{x}} \\sum_{(i,j)} w_{ij} \\left(x_i+x_j-2x_ix_j\\right)\\]\nBecause the objective is quadratic in binary variables, it can be written directly as a QUBO. Since QUBOs are conventionally expressed as minimization problems, maximizing the cut weight is equivalent to minimizing its negative:\n\\[H(\\mathbf{x}) = -\\sum_{(i,j)} w_{ij} \\left(x_i+x_j-2x_ix_j\\right)\\]\nwith\n\\[x_i\\in\\{0,1\\}.\\]\nThe minimum of \\(H(\\mathbf{x})\\) therefore corresponds to the partition of the graph with the maximum total edge weight crossing between the two groups.\nFor this simple demonstration let’s attempt to solve the max-cut problem for this weighted graph,\n\\[(A,B)=4,\\qquad (A,C)=2,\\qquad (B,C)=1,\\qquad (B,D)=5,\\qquad (C,D)=3.\\]\n\nedges = [(\"A\", \"B\", 4), (\"A\", \"C\", 2), (\"B\", \"C\", 1), (\"B\", \"D\", 5), (\"C\", \"D\", 3)]",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Simulated Annealing"
+      "Student Demonstration"
     ]
   },
   {
@@ -169,7 +169,7 @@
     "text": "Using D-Wave’s Quantum Annealer\nThe input to the D-Wave system is a QUBO objective matrix in the form of a dictionary where each element represents the coefficient multiplying the \\(x_ix_j\\) term,\n\\[Q[(i,j)] = \\text{coefficient multiplying } x_i x_j.\\]\nUsing defaultdict we break down the expression,\n\\[-w_{ij}\\left(x_i+x_j-2x_ix_j\\right)\\]\nas follows.\n\nfrom collections import defaultdict\n\nQ = defaultdict(float)\n\nfor i, j, weight in edges:\n\n    # -w_ij * x_i terms\n    Q[(i, i)] -= weight\n\n    # -w_ij * x_j terms\n    Q[(j, j)] -= weight\n\n    # +2 * w_ij * x_i * x_j terms\n    Q[(i, j)] += 2 * weight\n\nQ = dict(Q)\n\nUnlike D-Wave’s quantum annealer, simulated annealing runs locally and does not require access to the Leap quantum cloud service. We can create a simulated annealing sampler using SimulatedAnnealingSampler.\n\nfrom dwave.samplers import SimulatedAnnealingSampler\n\nsampler = SimulatedAnnealingSampler()\n\nNext the QUBO is directly passed into the sampler. The num_reads parameter specifies how many times the simulated annealing process is run, with the lowest-energy solution returned as the best solution found and is exactally analogous to the quantum annealer.\n\nsampleset = sampler.sample_qubo(Q, num_reads=1000)\n\nbest = sampleset.first # returns lowest energy sample in the SampleSet\nsolution = dict(best.sample)  \n\nprint(\"Solution:\", solution)\nprint(\"Energy:\", best.energy)\n\nRecall that solution is still in its binary representation, where each vertex has been assigned either 0 or 1; so it follows to separate the vertices into the two groups.\n\ngroup_0 = [vertex for vertex, value in solution.items() if value == 0]\ngroup_1 = [vertex for vertex, value in solution.items() if value == 1]\n\nprint(\"Group 0:\", group_0)\nprint(\"Group 1:\", group_1)\n\n# Solve for the max cut weight \ncut_weight = 0\n\nfor i, j, weight in edges:\n    if solution[i] != solution[j]:\n        cut_weight += weight\n\nprint(\"Cut weight:\", cut_weight)",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Simulated Annealing"
+      "Student Demonstration"
     ]
   },
   {
@@ -180,7 +180,7 @@
     "text": "Problem 1: Number Partitioning\nSuppose we are given the numbers\n\\[[3,5,6,7,11,12,14,23,26]\\]\nWe want to divide these numbers into two groups such that the difference between the sums of the two groups is as small as possible.\nDefine\n\\[ x_i = \\begin{cases} 0 & \\text{if number } a_i \\text{ is placed in Group 0},\\\\ 1 & \\text{if number } a_i \\text{ is placed in Group 1}. \\end{cases} \\]\nOne way to represent the difference between the two group sums is\n\\[\\sum_i a_i(2x_i-1).\\]\nSince we want this difference to be as close to zero as possible, construct an objective function that minimizes its magnitude.\n\nnumbers = [3, 5, 6, 7, 11, 12, 14, 23, 26]\n\n\nQ_number_partitioning = defaultdict(float)\n\n## Solve for the QUBO objective function here!",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Simulated Annealing"
+      "Student Demonstration"
     ]
   },
   {
@@ -191,7 +191,7 @@
     "text": "Problem 2: Minimum Vertex Cover\nConsider the graph \\(V=\\{0,1,2,3\\}\\) with the edges,\n\\[E=\\{(0,1),(1,2),(2,3),(3,0)\\}.\\]\nA vertex cover is a set of vertices such that every edge has at least one endpoint included in the set. Say we define\n\\[ x_i = \\begin{cases} 1 & \\text{if vertex } i \\text{ is selected},\\\\ 0 & \\text{otherwise}. \\end{cases} \\]\nWe want to select as few vertices as possible while still covering every edge. The number of selected vertices is\n\\[\\sum_i x_i.\\]\nFor an edge \\((i,j)\\), the edge is left uncovered only when\n\\[x_i=0 \\qquad\\text{and}\\qquad x_j=0.\\]\nA penalty for leaving an edge uncovered can therefore be written using\n\\[\n(1-x_i)(1-x_j).\n\\]\nConstruct an objective of the form\n\\[\n\\text{number of selected vertices}\n+\n\\lambda\n\\left(\\text{penalty for uncovered edges}\\right),\n\\]\nwhere \\(\\lambda&gt;0\\) is chosen large enough that covering every edge is preferred.\n\nE = [(0,1), (1,2), (2,3), (3,0)]\n\n\nQ_minimum_vertex_cover = defaultdict(float)\n\n## Solve for the QUBO objective function here!",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Simulated Annealing"
+      "Student Demonstration"
     ]
   },
   {
@@ -199,10 +199,10 @@
     "href": "D-wave SDK Demonstration Simulated Annealing.html#problem-3-knapsack",
     "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
     "section": "Problem 3: Knapsack",
-    "text": "Problem 3: Knapsack\nSuppose we have four items with the following values and weights:\n\n\n\nItem\nValue \\(v_i\\)\nWeight \\(w_i\\)\n\n\n\n\n0\n8\n4\n\n\n1\n3\n2\n\n\n2\n6\n3\n\n\n3\n2\n1\n\n\n\nThe maximum allowed weight is \\(W = 5\\). Say we define\n\\[ x_i = \\begin{cases} 1 & \\text{if item } i \\text{ is selected},\\\\ 0 & \\text{otherwise}. \\end{cases} \\]\nThe total value of the selected items is\n\\[\\sum_i v_i x_i,\\]\nwhile the total weight is\n\\[\n\\sum_i w_i x_i.\n\\]\nBecause QUBOs are usually written as minimization problems, maximizing value can be represented by minimizing\n\\[\n-\\sum_i v_i x_i.\n\\]\nThe weight constraint must also be enforced using an additional penalty term. For this exercise, introduce binary slack variables if necessary so that the inequality\n\\[\n\\sum_i w_i x_i \\leq W\n\\]\ncan be converted into an equality. The goal here is to construct an objective of the form\n\\[\n\\text{objective}\n+\n\\lambda(\\text{constraint violation})^2,\n\\]\nthen expand it and determine the full QUBO matrix \\(Q\\).\n\nitems = [(8,4), (3,2), (6,3), (2,1)] # (Value, Weight)\n\n\nQ_knapsack = defaultdict(float)\n\n## Solve for the QUBO objective function here! \n\n Download notebook ↓",
+    "text": "Problem 3: Knapsack\nSuppose we have four items with the following values and weights:\n\n\n\nItem\nValue \\(v_i\\)\nWeight \\(w_i\\)\n\n\n\n\n0\n8\n4\n\n\n1\n3\n2\n\n\n2\n6\n3\n\n\n3\n2\n1\n\n\n\nThe maximum allowed weight is \\(W = 5\\). Say we define\n\\[ x_i = \\begin{cases} 1 & \\text{if item } i \\text{ is selected},\\\\ 0 & \\text{otherwise}. \\end{cases} \\]\nThe total value of the selected items is\n\\[\\sum_i v_i x_i,\\]\nwhile the total weight is\n\\[\n\\sum_i w_i x_i.\n\\]\nBecause QUBOs are usually written as minimization problems, maximizing value can be represented by minimizing\n\\[\n-\\sum_i v_i x_i.\n\\]\nThe weight constraint must also be enforced using an additional penalty term. For this exercise, introduce binary slack variables if necessary so that the inequality\n\\[\n\\sum_i w_i x_i \\leq W\n\\]\ncan be converted into an equality. The goal here is to construct an objective of the form\n\\[\n\\text{objective}\n+\n\\lambda(\\text{constraint violation})^2,\n\\]\nthen expand it and determine the full QUBO matrix \\(Q\\).\n\nitems = [(8,4), (3,2), (6,3), (2,1)] # (Value, Weight)\n\n\nQ_knapsack = defaultdict(float)\n\n## Solve for the QUBO objective function here!",
     "crumbs": [
       "Main Tutorials",
-      "D-Wave Simulated Annealing"
+      "Student Demonstration"
     ]
   }
 ]

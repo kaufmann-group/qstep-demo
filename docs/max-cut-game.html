@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Max-Cut Playground – QSTEP</title>
+<title>Max-Cut Game – QSTEP</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -113,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./max-cut-playground.html">Main Tutorials</a></li><li class="breadcrumb-item"><a href="./max-cut-playground.html">Max-Cut Playground</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./max-cut-game.html">Main Tutorials</a></li><li class="breadcrumb-item"><a href="./max-cut-game.html">Max-Cut Game</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -142,20 +142,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./max-cut-playground.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Max-Cut Playground</span></a>
+  <a href="./max-cut-game.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Max-Cut Game</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./D-wave SDK Demonstration Quantum Annealing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">D-Wave Quantum Annealing</span></a>
+ <span class="menu-text">Instructor Demonstration</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./D-wave SDK Demonstration Simulated Annealing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">D-Wave Simulated Annealing</span></a>
+ <span class="menu-text">Student Demonstration</span></a>
   </div>
 </li>
       </ul>
@@ -169,9 +169,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./max-cut-playground.html">Main Tutorials</a></li><li class="breadcrumb-item"><a href="./max-cut-playground.html">Max-Cut Playground</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./max-cut-game.html">Main Tutorials</a></li><li class="breadcrumb-item"><a href="./max-cut-game.html">Max-Cut Game</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Max-Cut Playground</h1>
+<h1 class="title">Max-Cut Game</h1>
 <p class="subtitle lead">Split the nodes. Find a heavier cut.</p>
 </div>
 
@@ -189,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="maxcut" aria-label="Interactive Max-Cut playground">
+<section id="maxcut" aria-label="Interactive Max-Cut game">
   <div class="mc-intro"><strong>How large a cut can you find?</strong><p>Split the nodes into two groups. An edge counts toward your score only when its endpoints have different colors. Aim for the <b>largest total weight</b> of these cut edges—not simply the most edges.</p><p>For example, cutting edges of weights 3 and 2 gives a score of 5. The groups do not need to be the same size. You’ll see a success message when you find the maximum cut.</p></div>
   <div class="mc-top">
     <div><span class="mc-kicker">YOUR PARTITION</span><p>Click to change groups. Drag to rearrange.</p></div>

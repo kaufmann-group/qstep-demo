@@ -20,6 +20,18 @@
   },
   {
    "cell_type": "markdown",
+   "id": "6c232ae5",
+   "metadata": {},
+   "source": [
+    "<a class=\"notebook-download\"\n",
+    "   href=\"./downloads/quantum_annealing_notebook.txt\"\n",
+    "   download=\"D-wave SDK Demonstration Quantum Annealing.ipynb\">\n",
+    "  Download notebook ↓\n",
+    "</a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
    "id": "85cbc0e8",
    "metadata": {},
    "source": [
@@ -523,18 +535,6 @@
     "Q_knapsack = defaultdict(float)\n",
     "\n",
     "## Solve for the QUBO objective function here! "
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "f0bb6cbd-4d5c-4772-b5e6-12525e9e7a0f",
-   "metadata": {},
-   "source": [
-    "<a class=\"notebook-download\"\n",
-    "   href=\"./downloads/quantum_annealing_notebook.txt\"\n",
-    "   download=\"D-wave SDK Demonstration Quantum Annealing.ipynb\">\n",
-    "  Download notebook ↓\n",
-    "</a>"
    ]
   },
   {

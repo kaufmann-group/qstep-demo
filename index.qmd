@@ -6,11 +6,11 @@ This module introduces quantum annealing and the D-Wave Ocean SDK through a set 
 
 ## Main Tutorials
 
-### Max-Cut Playground
+### Max-Cut Game
 
 Try your hand at the Max-Cut problem: click nodes to divide them into two groups and aim for the highest score. Your score is the sum of the weights of edges connecting nodes in different groups.
 
-[Open Max-Cut Playground →](max-cut-playground.qmd)
+[Open Max-Cut Game →](max-cut-game.qmd)
 
 ### D-Wave Quantum Annealing Demonstration
 

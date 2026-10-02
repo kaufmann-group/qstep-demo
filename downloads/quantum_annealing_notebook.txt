@@ -15,7 +15,19 @@
    "source": [
     "This tutorial outlines how to use the D-Wave Ocean SDK to formulate and solve a QUBO optimization problem using both a D-Wave quantum processing unit (QPU) and D-Wave's hybrid solvers. Access to the D-Wave Leap quantum cloud service is required to run problems on these remote solvers. \n",
     "\n",
-    "**If you do not have access to the Leap quantum cloud service then check out our tutorial on [solving QUBO problems using simulated annealing]().**"
+    "**If you do not have access to the Leap quantum cloud service then check out our tutorial on [solving QUBO problems using simulated annealing](https://kaufmann-group.github.io/qstep-demo/D-wave%20SDK%20Demonstration%20Simulated%20Annealing.html).**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3986a6a2",
+   "metadata": {},
+   "source": [
+    "<a class=\"notebook-download\"\n",
+    "   href=\"./downloads/quantum_annealing_notebook.txt\"\n",
+    "   download=\"D-wave SDK Demonstration Quantum Annealing.ipynb\">\n",
+    "  Download notebook ↓\n",
+    "</a>"
    ]
   },
   {
@@ -496,18 +508,6 @@
    "metadata": {},
    "source": [
     "Finished? Check out our other tutorials! "
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "f0bb6cbd-4d5c-4772-b5e6-12525e9e7a0f",
-   "metadata": {},
-   "source": [
-    "<a class=\"notebook-download\"\n",
-    "   href=\"./downloads/quantum_annealing_notebook.txt\"\n",
-    "   download=\"D-wave SDK Demonstration Quantum Annealing.ipynb\">\n",
-    "  Download notebook ↓\n",
-    "</a>"
    ]
   },
   {
