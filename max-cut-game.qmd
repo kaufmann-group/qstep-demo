@@ -51,8 +51,8 @@ toc: false
   const $ = id => root.querySelector('#easy-mc-' + id);
   const NS = 'http://www.w3.org/2000/svg';
   const graph = {
-    nodes: ['A','B','C','D'],
-    edges: [['A','B',4],['A','C',2],['B','C',1],['B','D',5],['C','D',3]].map(([a,b,weight])=>({a,b,weight}))
+    nodes: ['A','B','C','D','E'],
+    edges: [['A','B',4],['A','C',2],['B','C',1],['B','D',5],['C','D',3],['B','E',2],['C','E',4],['D','E',3]].map(([a,b,weight])=>({a,b,weight}))
   };
   // Exhaustive scoring is intended only for small workshop graphs.
   if(graph.nodes.length<2 || graph.nodes.length>16) throw new Error('Use 2–16 nodes for the exact success check.');
@@ -92,7 +92,7 @@ toc: false
     return {x:a.x+t*dx,y:a.y+t*dy,t};
   }
   function layout() {
-    return new Map(Object.entries({A:{x:500,y:100},B:{x:200,y:360},C:{x:800,y:360},D:{x:500,y:620}}));
+    return new Map(Object.entries({A:{x:500,y:80},B:{x:200,y:290},C:{x:800,y:290},D:{x:500,y:640},E:{x:500,y:420}}));
   }
   const curve=(p,c,q,t)=>({x:(1-t)**2*p.x+2*(1-t)*t*c.x+t*t*q.x,y:(1-t)**2*p.y+2*(1-t)*t*c.y+t*t*q.y});
   function geometry() {

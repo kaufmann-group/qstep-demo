@@ -258,7 +258,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review">Review</a></li>
   <li><a href="#optimization-problem-statement-max-cut" id="toc-optimization-problem-statement-max-cut" class="nav-link" data-scroll-target="#optimization-problem-statement-max-cut">Optimization Problem Statement: Max-Cut</a></li>
-  <li><a href="#using-d-waves-quantum-annealer" id="toc-using-d-waves-quantum-annealer" class="nav-link" data-scroll-target="#using-d-waves-quantum-annealer">Using D-Wave’s Quantum Annealer</a></li>
+  <li><a href="#using-d-waves-simulated-annealer" id="toc-using-d-waves-simulated-annealer" class="nav-link" data-scroll-target="#using-d-waves-simulated-annealer">Using D-Wave’s Simulated Annealer</a></li>
   <li><a href="#qubo-formulation-practice" id="toc-qubo-formulation-practice" class="nav-link" data-scroll-target="#qubo-formulation-practice">QUBO Formulation Practice</a>
   <ul class="collapse">
   <li><a href="#problem-1-number-partitioning" id="toc-problem-1-number-partitioning" class="nav-link" data-scroll-target="#problem-1-number-partitioning">Problem 1: Number Partitioning</a></li>
@@ -372,20 +372,35 @@ A canonical example of a QUBO is the NP-hard <strong>Max-Cut problem</strong>. G
 <p>with</p>
 <p><span class="math display">\[x_i\in\{0,1\}.\]</span></p>
 <p>The minimum of <span class="math inline">\(H(\mathbf{x})\)</span> therefore corresponds to the partition of the graph with the maximum total edge weight crossing between the two groups.</p>
-<p>For this simple demonstration let’s attempt to solve the max-cut problem for this weighted graph,</p>
-<p><span class="math display">\[(A,B)=4,\qquad (A,C)=2,\qquad (B,C)=1,\qquad (B,D)=5,\qquad (C,D)=3.\]</span></p>
-<div id="9112525b-9aa0-4954-a1a2-62ae1159940f" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>edges <span class="op">=</span> [(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="dv">4</span>), (<span class="st">"A"</span>, <span class="st">"C"</span>, <span class="dv">2</span>), (<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="dv">1</span>), (<span class="st">"B"</span>, <span class="st">"D"</span>, <span class="dv">5</span>), (<span class="st">"C"</span>, <span class="st">"D"</span>, <span class="dv">3</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+<div style="flex: 2; min-width: 260px;">
+<p>
+For this demonstration, let’s solve the Max-Cut problem for the weighted graph shown on the right, with edge weights
+</p>
+<p><span class="math display">\[
+\begin{aligned}
+(A,B)&amp;=4, &amp; (A,C)&amp;=2, &amp; (B,C)&amp;=1,\\
+(B,D)&amp;=5, &amp; (C,D)&amp;=3, &amp; (B,E)&amp;=2,\\
+(C,E)&amp;=4, &amp; (D,E)&amp;=3.
+\end{aligned}
+\]</span></p>
+</div>
+<div style="flex: 1; min-width: 220px; text-align: center;">
+<p><img src="https://raw.githubusercontent.com/kaufmann-group/qstep-demo/main/images/easy_graph.png" style="width: 100%; max-width: 320px; height: auto;"></p>
+</div>
+</div>
+<div id="9112525b-9aa0-4954-a1a2-62ae1159940f" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>edges <span class="op">=</span> [(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="dv">4</span>), (<span class="st">"A"</span>, <span class="st">"C"</span>, <span class="dv">2</span>), (<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="dv">1</span>), (<span class="st">"B"</span>, <span class="st">"D"</span>, <span class="dv">5</span>), (<span class="st">"C"</span>, <span class="st">"D"</span>, <span class="dv">3</span>), (<span class="st">"B"</span>, <span class="st">"E"</span>, <span class="dv">2</span>), (<span class="st">"C"</span>, <span class="st">"E"</span>, <span class="dv">4</span>), (<span class="st">"D"</span>, <span class="st">"E"</span>, <span class="dv">3</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="using-d-waves-quantum-annealer" class="level2">
-<h2 class="anchored" data-anchor-id="using-d-waves-quantum-annealer">Using D-Wave’s Quantum Annealer</h2>
+<section id="using-d-waves-simulated-annealer" class="level2">
+<h2 class="anchored" data-anchor-id="using-d-waves-simulated-annealer">Using D-Wave’s Simulated Annealer</h2>
 <p>The input to the D-Wave system is a QUBO objective matrix in the form of a dictionary where each element represents the coefficient multiplying the <span class="math inline">\(x_ix_j\)</span> term,</p>
 <p><span class="math display">\[Q[(i,j)] = \text{coefficient multiplying } x_i x_j.\]</span></p>
 <p>Using <code>defaultdict</code> we break down the expression,</p>
 <p><span class="math display">\[-w_{ij}\left(x_i+x_j-2x_ix_j\right)\]</span></p>
 <p>as follows.</p>
-<div id="a5b22310-13da-4ea3-bef4-f3da379c6d9b" class="cell">
+<div id="a5b22310-13da-4ea3-bef4-f3da379c6d9b" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
@@ -404,13 +419,13 @@ A canonical example of a QUBO is the NP-hard <strong>Max-Cut problem</strong>. G
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="bu">dict</span>(Q)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Unlike D-Wave’s quantum annealer, simulated annealing runs locally and does not require access to the Leap quantum cloud service. We can create a simulated annealing sampler using <code>SimulatedAnnealingSampler</code>.</p>
-<div id="b80586d6-2027-4c6f-90e4-edcfad295d49" class="cell">
+<div id="b80586d6-2027-4c6f-90e4-edcfad295d49" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dwave.samplers <span class="im">import</span> SimulatedAnnealingSampler</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sampler <span class="op">=</span> SimulatedAnnealingSampler()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Next the QUBO is directly passed into the sampler. The <code>num_reads</code> parameter specifies how many times the simulated annealing process is run, with the lowest-energy solution returned as the best solution found and is exactally analogous to the quantum annealer.</p>
-<div id="cffa1a66-31e8-4868-a542-baa896cd5db1" class="cell">
+<p>Next the QUBO is directly passed into the sampler. The <code>num_reads</code> parameter specifies how many times the simulated annealing process is run, with the lowest-energy solution returned as the best solution found and is exactaly analogous to the quantum annealer.</p>
+<div id="cffa1a66-31e8-4868-a542-baa896cd5db1" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sampleset <span class="op">=</span> sampler.sample_qubo(Q, num_reads<span class="op">=</span><span class="dv">1000</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>best <span class="op">=</span> sampleset.first <span class="co"># returns lowest energy sample in the SampleSet</span></span>
@@ -418,23 +433,32 @@ A canonical example of a QUBO is the NP-hard <strong>Max-Cut problem</strong>. G
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Solution:"</span>, solution)</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Energy:"</span>, best.energy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Solution: {'A': np.int8(0), 'B': np.int8(1), 'C': np.int8(1), 'D': np.int8(0), 'E': np.int8(0)}
+Energy: -20.0</code></pre>
+</div>
 </div>
 <p>Recall that <code>solution</code> is still in its binary representation, where each vertex has been assigned either <code>0</code> or <code>1</code>; so it follows to separate the vertices into the two groups.</p>
-<div id="1946d189-d368-48e9-a18d-535c5ccb7e61" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>group_0 <span class="op">=</span> [vertex <span class="cf">for</span> vertex, value <span class="kw">in</span> solution.items() <span class="cf">if</span> value <span class="op">==</span> <span class="dv">0</span>]</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>group_1 <span class="op">=</span> [vertex <span class="cf">for</span> vertex, value <span class="kw">in</span> solution.items() <span class="cf">if</span> value <span class="op">==</span> <span class="dv">1</span>]</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Group 0:"</span>, group_0)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Group 1:"</span>, group_1)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve for the max cut weight </span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>cut_weight <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, j, weight <span class="kw">in</span> edges:</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> solution[i] <span class="op">!=</span> solution[j]:</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        cut_weight <span class="op">+=</span> weight</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cut weight:"</span>, cut_weight)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1946d189-d368-48e9-a18d-535c5ccb7e61" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>group_0 <span class="op">=</span> [vertex <span class="cf">for</span> vertex, value <span class="kw">in</span> solution.items() <span class="cf">if</span> value <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>group_1 <span class="op">=</span> [vertex <span class="cf">for</span> vertex, value <span class="kw">in</span> solution.items() <span class="cf">if</span> value <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Group 0:"</span>, group_0)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Group 1:"</span>, group_1)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve for the max cut weight </span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>cut_weight <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, j, weight <span class="kw">in</span> edges:</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> solution[i] <span class="op">!=</span> solution[j]:</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        cut_weight <span class="op">+=</span> weight</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cut weight:"</span>, cut_weight)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Group 0: ['A', 'D', 'E']
+Group 1: ['B', 'C']
+Cut weight: 20</code></pre>
+</div>
 </div>
 </section>
 <section id="qubo-formulation-practice" class="level1">
@@ -462,12 +486,12 @@ A canonical example of a QUBO is the NP-hard <strong>Max-Cut problem</strong>. G
 <p><span class="math display">\[\sum_i a_i(2x_i-1).\]</span></p>
 <p>Since we want this difference to be as close to zero as possible, construct an objective function that minimizes its magnitude.</p>
 <div id="57dcde47-b716-46f5-8d57-70bec55ecc6d" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">23</span>, <span class="dv">26</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">23</span>, <span class="dv">26</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="dab1f462-8e71-4e3e-86e8-b7ab5cf457af" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Q_number_partitioning <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Solve for the QUBO objective function here! </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Q_number_partitioning <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Solve for the QUBO objective function here! </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="problem-2-minimum-vertex-cover" class="level2">
@@ -493,12 +517,12 @@ A canonical example of a QUBO is the NP-hard <strong>Max-Cut problem</strong>. G
 \]</span></p>
 <p>where <span class="math inline">\(\lambda&gt;0\)</span> is chosen large enough that covering every edge is preferred.</p>
 <div id="527351db-39ac-4588-9ed5-488624e8d682" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">1</span>), (<span class="dv">1</span>,<span class="dv">2</span>), (<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">3</span>,<span class="dv">0</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">1</span>), (<span class="dv">1</span>,<span class="dv">2</span>), (<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">3</span>,<span class="dv">0</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="c0be3f8a-1e00-44da-a87a-5157a19d045a" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Q_minimum_vertex_cover <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Solve for the QUBO objective function here! </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Q_minimum_vertex_cover <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Solve for the QUBO objective function here! </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="problem-3-knapsack" class="level2">
@@ -559,12 +583,12 @@ A canonical example of a QUBO is the NP-hard <strong>Max-Cut problem</strong>. G
 \]</span></p>
 <p>then expand it and determine the full QUBO matrix <span class="math inline">\(Q\)</span>.</p>
 <div id="bd4210c9-9f68-4afe-b99d-8beec5d1b283" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>items <span class="op">=</span> [(<span class="dv">8</span>,<span class="dv">4</span>), (<span class="dv">3</span>,<span class="dv">2</span>), (<span class="dv">6</span>,<span class="dv">3</span>), (<span class="dv">2</span>,<span class="dv">1</span>)] <span class="co"># (Value, Weight)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>items <span class="op">=</span> [(<span class="dv">8</span>,<span class="dv">4</span>), (<span class="dv">3</span>,<span class="dv">2</span>), (<span class="dv">6</span>,<span class="dv">3</span>), (<span class="dv">2</span>,<span class="dv">1</span>)] <span class="co"># (Value, Weight)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="03301f0e-3a40-4a54-96e9-ca87df79a76e" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Q_knapsack <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Solve for the QUBO objective function here! </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Q_knapsack <span class="op">=</span> defaultdict(<span class="bu">float</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Solve for the QUBO objective function here! </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
