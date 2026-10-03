@@ -25,7 +25,7 @@
    "source": [
     "<a class=\"notebook-download\"\n",
     "   href=\"./downloads/simulated_annealing_notebook.txt\"\n",
-    "   download=\"D-wave SDK Demonstration Quantum Annealing.ipynb\">\n",
+    "   download=\"D-wave SDK Demonstration Simulated Annealing.ipynb\">\n",
     "  Download notebook ↓\n",
     "</a>"
    ]
