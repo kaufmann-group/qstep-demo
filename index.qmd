@@ -24,6 +24,12 @@ Work through the same general optimization workflow locally using simulated anne
 
 [Start Local Simulated Annealing Demonstration →](<D-wave SDK Demonstration Simulated Annealing.ipynb>)
 
+## Additional Topics
+
+Spare time? Check out some of the research students within the QSTEP team are doing! 
+
+[Investigating Frustrated Magnets via Simulated Annealing →](<Frustrated Magnets via Annealing.ipynb>)
+
 ## About
 
 These materials were developed for the Quantum Science, Technology, and Engineering Workshop at Purdue University.

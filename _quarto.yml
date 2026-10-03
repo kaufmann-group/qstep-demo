@@ -5,6 +5,7 @@ project:
     - index.qmd
     - "D-wave SDK Demonstration Quantum Annealing.ipynb"
     - "D-wave SDK Demonstration Simulated Annealing.ipynb"
+    - "Frustrated Magnets via Annealing.ipynb"
     - max-cut-game.qmd
 
   resources:
@@ -12,6 +13,7 @@ project:
     - assets.txt
     - "D-wave SDK Demonstration Quantum Annealing.ipynb"
     - "D-wave SDK Demonstration Simulated Annealing.ipynb"
+    - "Frustrated Magnets via Annealing.ipynb"
 
 website:
   title: "QSTEP"
@@ -37,6 +39,10 @@ website:
             text: Instructor Demonstration
           - href: "D-wave SDK Demonstration Simulated Annealing.ipynb"
             text: Student Demonstration
+      - section: "Additional Topics"
+        contents:
+          - href: "Frustrated Magnets via Annealing.ipynb"
+            text: Frustrated Magnets
 
 format:
   html:

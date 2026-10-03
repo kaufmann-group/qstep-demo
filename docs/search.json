@@ -11,113 +11,6 @@
     ]
   },
   {
-    "objectID": "D-wave SDK Demonstration Quantum Annealing.html",
-    "href": "D-wave SDK Demonstration Quantum Annealing.html",
-    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
-    "section": "",
-    "text": "This tutorial outlines how to use the D-Wave Ocean SDK to formulate and solve a QUBO optimization problem using both a D-Wave quantum processing unit (QPU) and D-Wave’s hybrid solvers. Access to the D-Wave Leap quantum cloud service is required to run problems on these remote solvers.\nIf you do not have access to the Leap quantum cloud service then check out our tutorial on solving QUBO problems using simulated annealing.\nDownload notebook ↓",
-    "crumbs": [
-      "Main Tutorials",
-      "Instructor Demonstration"
-    ]
-  },
-  {
-    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#installation-setup",
-    "href": "D-wave SDK Demonstration Quantum Annealing.html#installation-setup",
-    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
-    "section": "Installation & Setup",
-    "text": "Installation & Setup\nIn this section, we outline how to install the D-Wave Ocean SDK. All of these steps should be performed in a terminal opened in the directory where you downloaded or saved the notebook. It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system. Virtual environments keep the packages used for this project isolated from other Python projects and avoid potential dependency conflicts. Python must already be installed on the machine running this demonstration.\n\nInstalling a Virtual Environment\nThe virtual environment can also be registered as a Jupyter kernel, allowing the notebook to run directly inside the same environment in which the Ocean SDK is installed.\n\nmacOS or Linux\nTo create and activate the virtual environment, run:\npython3 -m venv ocean\nsource ocean/bin/activate\n\n\nWindows Command Prompt\nTo create and activate the virtual environment, run:\npython -m venv ocean\nocean\\Scripts\\activate.bat\n\n\nWindows PowerShell\nTo create and activate the virtual environment, run:\npython -m venv ocean\n.\\ocean\\Scripts\\Activate.ps1\nIf PowerShell reports that “running scripts is disabled on this system,” run:\nSet-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser\nThen retry the activation command.\n\n\n\nInstalling Packages\nOnce the environment is activated, any Python packages installed with pip will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run the commands (for any operating system),\npython -m pip install --upgrade pip\n\npython -m pip install dwave-ocean-sdk\npython -m pip install jupyter notebook ipykernel\nSince this tutorial uses Jupyter notebooks we must register the environment with Jupyter,\npython -m ipykernel install --user --name ocean --display-name \"Ocean Environment\"\nNow you can open the Jupyter Notebook. To open Jupyter run,\njupyter notebook\nAfter migrating to this notebook within Jupyter make sure to select the “Ocean Environment” kernel.\n\n\nAuthenticating D-Wave\nThis section requires access to the D-Wave Leap quantum cloud service.\nOnce the virtual environment is activated, the user can connect Ocean to their D-Wave Leap account by running\ndwave setup --auth\nThis command authorizes Ocean to access the user’s Leap account, retrieves the required Solver API (SAPI) token, and creates the D-Wave configuration file used to access remote solvers. Depending on the system, the authentication process may open a browser window and prompt the user to sign in to their Leap account.\nTo confirm that the configuration was successful, the user can ping an available QPU:\ndwave ping --client qpu\nThis submits a small test problem to a D-Wave quantum processor and confirms that Ocean can communicate with the Leap service.\nThe solvers available to the user’s account can also be viewed with\ndwave solvers --list --all\nThis will list the QPU and hybrid solvers currently accessible through the user’s Leap account.",
-    "crumbs": [
-      "Main Tutorials",
-      "Instructor Demonstration"
-    ]
-  },
-  {
-    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#review",
-    "href": "D-wave SDK Demonstration Quantum Annealing.html#review",
-    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
-    "section": "Review",
-    "text": "Review\nRecall that quantum annealers are designed to solve certain classes of optimization problems, one of the most common being Quadratic Unconstrained Binary Optimization (QUBO) problems. D-Wave’s Quantum Processing Unit (QPU) represents these problems using an Ising Hamiltonian of the form\n\\[H(\\mathbf{s}) = \\sum_i h_i s_i + \\sum_{i&lt;j} J_{ij}s_i s_j,\\qquad s_i\\in\\{-1,+1\\},\\]\nwhere the coefficients \\(h_i\\) represent individual biases and \\(J_{ij}\\) represent interactions between pairs of spins. Using a simple change of variables between Ising spins and binary variables, typically\n\\[s_i = 2x_i-1,\\]\nwe can rewrite the same problem as a QUBO,\n\\[Q(\\mathbf{x}) = \\sum_i a_i x_i + \\sum_{i&lt;j} b_{ij}x_i x_j, \\qquad x_i\\in\\{0,1\\}.\\]\nThis allows an optimization problem written as a QUBO to be mapped directly onto the Ising model implemented by the D-Wave hardware. The QPU uses a network of superconducting qubits whose interactions are programmed according to the coefficients of the problem. During quantum annealing, the system is driven toward low-energy configurations of the Ising Hamiltonian. After measurement, these spin configurations can be converted back into binary variables, with the lowest-energy solutions corresponding to minima of the original QUBO objective function. Learn more about the physics of quantum annealing in this notebook!",
-    "crumbs": [
-      "Main Tutorials",
-      "Instructor Demonstration"
-    ]
-  },
-  {
-    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#optimization-problem-statement-max-cut",
-    "href": "D-wave SDK Demonstration Quantum Annealing.html#optimization-problem-statement-max-cut",
-    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
-    "section": "Optimization Problem Statement: Max-Cut",
-    "text": "Optimization Problem Statement: Max-Cut\n\n\n\nA canonical example of a QUBO is the NP-hard Max-Cut problem. Given a graph consisting of vertices connected by edges, the goal is to divide the vertices into two groups such that the total weight of the edges crossing between the groups is as large as possible. In other words, we want to find a partition that maximizes the total weight of the edges crossing the cut. Max-Cut is a useful example because it has a simple mathematical formulation while still showing how a combinatorial optimization problem can be mapped onto a QUBO and solved using the D-Wave framework.\n\n\n\n\n\n\nWe assign each vertex a binary variable,\n\\[x_i = \\begin{cases} 0 & \\text{if vertex } i \\text{ is in group 0},\\\\ 1 & \\text{if vertex } i \\text{ is in group 1}. \\end{cases}\\]\nFor an edge connecting vertices \\(i\\) and \\(j\\), the expression\n\\[x_i+x_j-2x_ix_j\\]\nis equal to \\(1\\) when the two vertices are in different groups and \\(0\\) when they are in the same group. This can be seen directly from the truth table, which is identical to the XOR truth table:\n\\[\\begin{array}{c|c|c} x_i & x_j & x_i+x_j-2x_ix_j\\\\ \\hline 0 & 0 & 0\\\\ 0 & 1 & 1\\\\ 1 & 0 & 1\\\\ 1 & 1 & 0 \\end{array}\\]\nTherefore, this expression indicates whether a given edge crosses the cut. If each edge has a weight \\(w_{ij}\\), then the total weight of all edges crossing between the two groups is\n\\[\\sum_{(i,j)} w_{ij}\\left(x_i+x_j-2x_ix_j\\right).\\]\nThe goal of the Max-Cut problem is therefore to maximize this quantity,\n\\[\\max_{\\mathbf{x}} \\sum_{(i,j)} w_{ij} \\left(x_i+x_j-2x_ix_j\\right)\\]\nBecause the objective is quadratic in binary variables, it can be written directly as a QUBO. Since QUBOs are conventionally expressed as minimization problems, maximizing the cut weight is equivalent to minimizing its negative:\n\\[H(\\mathbf{x}) = -\\sum_{(i,j)} w_{ij} \\left(x_i+x_j-2x_ix_j\\right)\\]\nwith\n\\[x_i\\in\\{0,1\\}.\\]\nThe minimum of \\(H(\\mathbf{x})\\) therefore corresponds to the partition of the graph with the maximum total edge weight crossing between the two groups.\nFor this simple demonstration let’s attempt to solve the max-cut problem for this weighted graph,\n\\[(A,B)=4,\\qquad (A,C)=2,\\qquad (B,C)=1,\\qquad (B,D)=5,\\qquad (C,D)=3.\\]\n\nedges = [(\"A\", \"B\", 4), (\"A\", \"C\", 2), (\"B\", \"C\", 1), (\"B\", \"D\", 5), (\"C\", \"D\", 3)]",
-    "crumbs": [
-      "Main Tutorials",
-      "Instructor Demonstration"
-    ]
-  },
-  {
-    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#using-d-waves-quantum-annealer",
-    "href": "D-wave SDK Demonstration Quantum Annealing.html#using-d-waves-quantum-annealer",
-    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
-    "section": "Using D-Wave’s Quantum Annealer",
-    "text": "Using D-Wave’s Quantum Annealer\nThe input to the D-Wave system is a QUBO objective matrix in the form of a dictionary where each element represents the coefficient multiplying the \\(x_ix_j\\) term,\n\\[Q[(i,j)] = \\text{coefficient multiplying } x_i x_j.\\]\nUsing defaultdict we break down the expression,\n\\[-w_{ij}\\left(x_i+x_j-2x_ix_j\\right)\\]\nas follows.\n\nfrom collections import defaultdict\n\nQ = defaultdict(float)\n\nfor i, j, weight in edges:\n\n    # -w_ij * x_i terms\n    Q[(i, i)] -= weight\n\n    # -w_ij * x_j terms\n    Q[(j, j)] -= weight\n\n    # +2 * w_ij * x_i * x_j terms\n    Q[(i, j)] += 2 * weight\n\nQ = dict(Q)\n\nRecall that the qubits on a D-Wave QPU are not all directly connected to one another and as a result, the interaction graph of a QUBO may not map directly onto the actual connectivity of the QPU. In these cases, multiple physical qubits can be linked together in a chain to represent a single logical variable.\nThe process of mapping the logical QUBO graph onto the physical topology of the QPU is called minor embedding. Finding a minor embedding is computationally difficult in general, so Ocean provides tools that handle this step automatically. D-Wave’s EmbeddingComposite uses a heuristic embedding algorithm to find a suitable mapping between the logical variables and the available physical qubits.\n\nfrom dwave.system import DWaveSampler, EmbeddingComposite\n\n# Connect to an available D-Wave QPU\nqpu = DWaveSampler()\nsampler = EmbeddingComposite(qpu)\n\nHere, DWaveSampler() provides access to the physical D-Wave QPU, while EmbeddingComposite sits on top of the QPU sampler and automatically maps the logical QUBO onto the QPU’s hardware graph before the problem is submitted.\nThe QUBO is submitted to the D-Wave QPU and sampled 1000 times with the sample_qubo function.\n\nsampleset = sampler.sample_qubo(Q, num_reads=1000)\n\nbest = sampleset.first # returns lowest energy sample in the SampleSet\nsolution = dict(best.sample)  \n\nprint(\"Solution:\", solution)\nprint(\"Energy:\", best.energy)\n\nSolution: {'D': np.int8(1), 'A': np.int8(1), 'B': np.int8(0), 'C': np.int8(0)}\nEnergy: -14.0\n\n\nRecall that solution is still in its binary representation, where each vertex has been assigned either 0 or 1; so it follows to separate the vertices into the two groups.\n\ngroup_0 = [vertex for vertex, value in solution.items() if value == 0]\ngroup_1 = [vertex for vertex, value in solution.items() if value == 1]\n\nprint(\"Group 0:\", group_0)\nprint(\"Group 1:\", group_1)\n\n# Solve for the max cut weight \ncut_weight = 0\n\nfor i, j, weight in edges:\n    if solution[i] != solution[j]:\n        cut_weight += weight\n\nprint(\"Cut weight:\", cut_weight)\n\nGroup 0: ['B', 'C']\nGroup 1: ['D', 'A']\nCut weight: 14",
-    "crumbs": [
-      "Main Tutorials",
-      "Instructor Demonstration"
-    ]
-  },
-  {
-    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#using-d-waves-hybrid-sampler",
-    "href": "D-wave SDK Demonstration Quantum Annealing.html#using-d-waves-hybrid-sampler",
-    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
-    "section": "Using D-Wave’s Hybrid Sampler",
-    "text": "Using D-Wave’s Hybrid Sampler\nThe same QUBO can also be solved directly using D-Wave’s hybrid solver instead of the QPU. Unlike direct QPU sampling, the hybrid solver combines classical and quantum resources internally and outputs a single sample (as compared to a distribution like the QPU), so we do not need to manually define a minor embedding or define a sample size.\n\nfrom dwave.system import LeapHybridSampler\n\nsampler_hybrid = LeapHybridSampler()\nsampleset_hybrid = sampler_hybrid.sample_qubo(Q, time_limit=10)\n\nbest_hybrid = sampleset_hybrid.first\nsolution_hybrid = dict(best_hybrid.sample)\n\nprint(\"Solution:\", solution_hybrid)\nprint(\"Energy:\", best_hybrid.energy)\n\nSolution: {'A': np.int8(1), 'B': np.int8(0), 'C': np.int8(0), 'D': np.int8(1)}\nEnergy: -14.0",
-    "crumbs": [
-      "Main Tutorials",
-      "Instructor Demonstration"
-    ]
-  },
-  {
-    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#problem-inspector",
-    "href": "D-wave SDK Demonstration Quantum Annealing.html#problem-inspector",
-    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
-    "section": "Problem Inspector:",
-    "text": "Problem Inspector:\nD-Wave has created a way for users to look at both the logical QUBO graph submitted to the QPU and the QPU itself alongside the minor embedding. This is best demonstrated for the large graph max-cut problem given below.\n\nmany_edges = [(\"A\", \"B\", 4), (\"A\", \"C\", 7), (\"A\", \"E\", 3), (\"A\", \"F\", 8), (\"A\", \"H\", 5), (\"B\", \"C\", 2), (\"B\", \"D\", 6), (\"B\", \"G\", 9), (\"B\", \"I\", 4), (\"C\", \"D\", 5), (\"C\", \"E\", 8), (\"C\", \"H\", 6), (\"C\", \"J\", 3), (\"D\", \"F\", 7), (\"D\", \"G\", 4), (\"D\", \"J\", 9), (\"D\", \"K\", 2), (\"E\", \"F\", 5), (\"E\", \"H\", 7), (\"E\", \"L\", 6), (\"F\", \"G\", 3), (\"F\", \"I\", 8), (\"F\", \"M\", 4), (\"G\", \"H\", 6), (\"G\", \"J\", 5), (\"G\", \"N\", 9), (\"H\", \"I\", 2), (\"H\", \"K\", 8), (\"H\", \"O\", 4), (\"I\", \"J\", 7), (\"I\", \"L\", 5), (\"I\", \"P\", 6), (\"J\", \"K\", 3), (\"J\", \"M\", 8), (\"J\", \"Q\", 5), (\"K\", \"L\", 7), (\"K\", \"N\", 4), (\"K\", \"R\", 9), (\"L\", \"M\", 2), (\"L\", \"O\", 6), (\"L\", \"S\", 8), (\"M\", \"N\", 5), (\"M\", \"P\", 7), (\"M\", \"T\", 3), (\"N\", \"O\", 8), (\"N\", \"Q\", 6), (\"O\", \"P\", 4), (\"O\", \"R\", 7), (\"P\", \"Q\", 9), (\"P\", \"S\", 5), (\"Q\", \"R\", 3), (\"Q\", \"T\", 8), (\"R\", \"S\", 6), (\"S\", \"T\", 7)]\n\nvertices = sorted(set(vertex for i, j, weight in many_edges for vertex in (i, j)))\n\nprint(\"Number of vertices:\", len(vertices))\nprint(\"Number of edges:\", len(edges))\n\nNumber of vertices: 20\nNumber of edges: 5\n\n\n\nimport dimod\nimport dwave.inspector \n\nQ_many = defaultdict(float)\n\nfor i, j, weight in many_edges:\n\n    # -w_ij * x_i terms\n    Q_many[(i, i)] -= weight\n\n    # -w_ij * x_j terms\n    Q_many[(j, j)] -= weight\n\n    # +2 * w_ij * x_i * x_j terms\n    Q_many[(i, j)] += 2 * weight\n\nbqm = dimod.BinaryQuadraticModel.from_qubo(dict(Q_many))\n\n\nsampler = EmbeddingComposite(DWaveSampler())\nsampleset = sampler.sample(bqm, num_reads=1000)\n\ndwave.inspector.show(sampleset)\n\nFinished? Check out our other tutorials!",
-    "crumbs": [
-      "Main Tutorials",
-      "Instructor Demonstration"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Quantum Annealing with D-Wave",
-    "section": "",
-    "text": "This module introduces quantum annealing and the D-Wave Ocean SDK through a set of tutorials and demonstrations. The two main workshop notebooks provide hands-on examples using both D-Wave’s quantum hardware and a local simulated annealer.",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#main-tutorials",
-    "href": "index.html#main-tutorials",
-    "title": "Quantum Annealing with D-Wave",
-    "section": "Main Tutorials",
-    "text": "Main Tutorials\n\nMax-Cut Game\nTry your hand at the Max-Cut problem: click nodes to divide them into two groups and aim for the highest score. Your score is the sum of the weights of edges connecting nodes in different groups.\nOpen Max-Cut Game →\n\n\nD-Wave Quantum Annealing Demonstration\nLearn how optimization problems can be formulated as QUBOs and solved using D-Wave’s Ocean SDK and a D-Wave quantum processing unit through Leap Quantum Cloud.\nStart D-Wave Quantum Annealing Demonstration →\n\n\nLocal Simulated Annealing Demonstration\nWork through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.\nStart Local Simulated Annealing Demonstration →",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#about",
-    "href": "index.html#about",
-    "title": "Quantum Annealing with D-Wave",
-    "section": "About",
-    "text": "About\nThese materials were developed for the Quantum Science, Technology, and Engineering Workshop at Purdue University.",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
     "objectID": "D-wave SDK Demonstration Simulated Annealing.html",
     "href": "D-wave SDK Demonstration Simulated Annealing.html",
     "title": "D-Wave Ocean SDK Framework with Simulated Annealing",
@@ -203,6 +96,211 @@
     "crumbs": [
       "Main Tutorials",
       "Student Demonstration"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Quantum Annealing with D-Wave",
+    "section": "",
+    "text": "This module introduces quantum annealing and the D-Wave Ocean SDK through a set of tutorials and demonstrations. The two main workshop notebooks provide hands-on examples using both D-Wave’s quantum hardware and a local simulated annealer.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#main-tutorials",
+    "href": "index.html#main-tutorials",
+    "title": "Quantum Annealing with D-Wave",
+    "section": "Main Tutorials",
+    "text": "Main Tutorials\n\nMax-Cut Game\nTry your hand at the Max-Cut problem: click nodes to divide them into two groups and aim for the highest score. Your score is the sum of the weights of edges connecting nodes in different groups.\nOpen Max-Cut Game →\n\n\nD-Wave Quantum Annealing Demonstration\nLearn how optimization problems can be formulated as QUBOs and solved using D-Wave’s Ocean SDK and a D-Wave quantum processing unit through Leap Quantum Cloud.\nStart D-Wave Quantum Annealing Demonstration →\n\n\nLocal Simulated Annealing Demonstration\nWork through the same general optimization workflow locally using simulated annealing. This notebook does not require access to D-Wave Leap and will allow you to experiment with the examples on your own computer.\nStart Local Simulated Annealing Demonstration →",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#additional-topics",
+    "href": "index.html#additional-topics",
+    "title": "Quantum Annealing with D-Wave",
+    "section": "Additional Topics",
+    "text": "Additional Topics\nSpare time? Check out some of the research students within the QSTEP team are doing!\nInvestigating Frustrated Magnets via Simulated Annealing →",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#about",
+    "href": "index.html#about",
+    "title": "Quantum Annealing with D-Wave",
+    "section": "About",
+    "text": "About\nThese materials were developed for the Quantum Science, Technology, and Engineering Workshop at Purdue University.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Quantum Annealing.html",
+    "href": "D-wave SDK Demonstration Quantum Annealing.html",
+    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
+    "section": "",
+    "text": "This tutorial outlines how to use the D-Wave Ocean SDK to formulate and solve a QUBO optimization problem using both a D-Wave quantum processing unit (QPU) and D-Wave’s hybrid solvers. Access to the D-Wave Leap quantum cloud service is required to run problems on these remote solvers.\nIf you do not have access to the Leap quantum cloud service then check out our tutorial on solving QUBO problems using simulated annealing.\nDownload notebook ↓",
+    "crumbs": [
+      "Main Tutorials",
+      "Instructor Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#installation-setup",
+    "href": "D-wave SDK Demonstration Quantum Annealing.html#installation-setup",
+    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
+    "section": "Installation & Setup",
+    "text": "Installation & Setup\nIn this section, we outline how to install the D-Wave Ocean SDK. All of these steps should be performed in a terminal opened in the directory where you downloaded or saved the notebook. It is recommended that the Ocean SDK be installed inside a Python virtual environment rather than directly into the system. Virtual environments keep the packages used for this project isolated from other Python projects and avoid potential dependency conflicts. Python must already be installed on the machine running this demonstration.\n\nInstalling a Virtual Environment\nThe virtual environment can also be registered as a Jupyter kernel, allowing the notebook to run directly inside the same environment in which the Ocean SDK is installed.\n\nmacOS or Linux\nTo create and activate the virtual environment, run:\npython3 -m venv ocean\nsource ocean/bin/activate\n\n\nWindows Command Prompt\nTo create and activate the virtual environment, run:\npython -m venv ocean\nocean\\Scripts\\activate.bat\n\n\nWindows PowerShell\nTo create and activate the virtual environment, run:\npython -m venv ocean\n.\\ocean\\Scripts\\Activate.ps1\nIf PowerShell reports that “running scripts is disabled on this system,” run:\nSet-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser\nThen retry the activation command.\n\n\n\nInstalling Packages\nOnce the environment is activated, any Python packages installed with pip will be installed inside the ocean environment rather than globally. To install the Ocean SDK and other libraries that will be used run the commands (for any operating system),\npython -m pip install --upgrade pip\n\npython -m pip install dwave-ocean-sdk\npython -m pip install jupyter notebook ipykernel\nSince this tutorial uses Jupyter notebooks we must register the environment with Jupyter,\npython -m ipykernel install --user --name ocean --display-name \"Ocean Environment\"\nNow you can open the Jupyter Notebook. To open Jupyter run,\njupyter notebook\nAfter migrating to this notebook within Jupyter make sure to select the “Ocean Environment” kernel.\n\n\nAuthenticating D-Wave\nThis section requires access to the D-Wave Leap quantum cloud service.\nOnce the virtual environment is activated, the user can connect Ocean to their D-Wave Leap account by running\ndwave setup --auth\nThis command authorizes Ocean to access the user’s Leap account, retrieves the required Solver API (SAPI) token, and creates the D-Wave configuration file used to access remote solvers. Depending on the system, the authentication process may open a browser window and prompt the user to sign in to their Leap account.\nTo confirm that the configuration was successful, the user can ping an available QPU:\ndwave ping --client qpu\nThis submits a small test problem to a D-Wave quantum processor and confirms that Ocean can communicate with the Leap service.\nThe solvers available to the user’s account can also be viewed with\ndwave solvers --list --all\nThis will list the QPU and hybrid solvers currently accessible through the user’s Leap account.",
+    "crumbs": [
+      "Main Tutorials",
+      "Instructor Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#review",
+    "href": "D-wave SDK Demonstration Quantum Annealing.html#review",
+    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
+    "section": "Review",
+    "text": "Review\nRecall that quantum annealers are designed to solve certain classes of optimization problems, one of the most common being Quadratic Unconstrained Binary Optimization (QUBO) problems. D-Wave’s Quantum Processing Unit (QPU) represents these problems using an Ising Hamiltonian of the form\n\\[H(\\mathbf{s}) = \\sum_i h_i s_i + \\sum_{i&lt;j} J_{ij}s_i s_j,\\qquad s_i\\in\\{-1,+1\\},\\]\nwhere the coefficients \\(h_i\\) represent individual biases and \\(J_{ij}\\) represent interactions between pairs of spins. Using a simple change of variables between Ising spins and binary variables, typically\n\\[s_i = 2x_i-1,\\]\nwe can rewrite the same problem as a QUBO,\n\\[Q(\\mathbf{x}) = \\sum_i a_i x_i + \\sum_{i&lt;j} b_{ij}x_i x_j, \\qquad x_i\\in\\{0,1\\}.\\]\nThis allows an optimization problem written as a QUBO to be mapped directly onto the Ising model implemented by the D-Wave hardware. The QPU uses a network of superconducting qubits whose interactions are programmed according to the coefficients of the problem. During quantum annealing, the system is driven toward low-energy configurations of the Ising Hamiltonian. After measurement, these spin configurations can be converted back into binary variables, with the lowest-energy solutions corresponding to minima of the original QUBO objective function. Learn more about the physics of quantum annealing in this notebook!",
+    "crumbs": [
+      "Main Tutorials",
+      "Instructor Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#optimization-problem-statement-max-cut",
+    "href": "D-wave SDK Demonstration Quantum Annealing.html#optimization-problem-statement-max-cut",
+    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
+    "section": "Optimization Problem Statement: Max-Cut",
+    "text": "Optimization Problem Statement: Max-Cut\n\n\n\nA canonical example of a QUBO is the NP-hard Max-Cut problem. Given a graph consisting of vertices connected by edges, the goal is to divide the vertices into two groups such that the total weight of the edges crossing between the groups is as large as possible. In other words, we want to find a partition that maximizes the total weight of the edges crossing the cut. Max-Cut is a useful example because it has a simple mathematical formulation while still showing how a combinatorial optimization problem can be mapped onto a QUBO and solved using the D-Wave framework.\n\n\n\n\n\n\nWe assign each vertex a binary variable,\n\\[x_i = \\begin{cases} 0 & \\text{if vertex } i \\text{ is in group 0},\\\\ 1 & \\text{if vertex } i \\text{ is in group 1}. \\end{cases}\\]\nFor an edge connecting vertices \\(i\\) and \\(j\\), the expression\n\\[x_i+x_j-2x_ix_j\\]\nis equal to \\(1\\) when the two vertices are in different groups and \\(0\\) when they are in the same group. This can be seen directly from the truth table, which is identical to the XOR truth table:\n\\[\\begin{array}{c|c|c} x_i & x_j & x_i+x_j-2x_ix_j\\\\ \\hline 0 & 0 & 0\\\\ 0 & 1 & 1\\\\ 1 & 0 & 1\\\\ 1 & 1 & 0 \\end{array}\\]\nTherefore, this expression indicates whether a given edge crosses the cut. If each edge has a weight \\(w_{ij}\\), then the total weight of all edges crossing between the two groups is\n\\[\\sum_{(i,j)} w_{ij}\\left(x_i+x_j-2x_ix_j\\right).\\]\nThe goal of the Max-Cut problem is therefore to maximize this quantity,\n\\[\\max_{\\mathbf{x}} \\sum_{(i,j)} w_{ij} \\left(x_i+x_j-2x_ix_j\\right)\\]\nBecause the objective is quadratic in binary variables, it can be written directly as a QUBO. Since QUBOs are conventionally expressed as minimization problems, maximizing the cut weight is equivalent to minimizing its negative:\n\\[H(\\mathbf{x}) = -\\sum_{(i,j)} w_{ij} \\left(x_i+x_j-2x_ix_j\\right)\\]\nwith\n\\[x_i\\in\\{0,1\\}.\\]\nThe minimum of \\(H(\\mathbf{x})\\) therefore corresponds to the partition of the graph with the maximum total edge weight crossing between the two groups.\nFor this simple demonstration let’s attempt to solve the max-cut problem for this weighted graph,\n\\[(A,B)=4,\\qquad (A,C)=2,\\qquad (B,C)=1,\\qquad (B,D)=5,\\qquad (C,D)=3.\\]\n\nedges = [(\"A\", \"B\", 4), (\"A\", \"C\", 2), (\"B\", \"C\", 1), (\"B\", \"D\", 5), (\"C\", \"D\", 3)]",
+    "crumbs": [
+      "Main Tutorials",
+      "Instructor Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#using-d-waves-quantum-annealer",
+    "href": "D-wave SDK Demonstration Quantum Annealing.html#using-d-waves-quantum-annealer",
+    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
+    "section": "Using D-Wave’s Quantum Annealer",
+    "text": "Using D-Wave’s Quantum Annealer\nThe input to the D-Wave system is a QUBO objective matrix in the form of a dictionary where each element represents the coefficient multiplying the \\(x_ix_j\\) term,\n\\[Q[(i,j)] = \\text{coefficient multiplying } x_i x_j.\\]\nUsing defaultdict we break down the expression,\n\\[-w_{ij}\\left(x_i+x_j-2x_ix_j\\right)\\]\nas follows.\n\nfrom collections import defaultdict\n\nQ = defaultdict(float)\n\nfor i, j, weight in edges:\n\n    # -w_ij * x_i terms\n    Q[(i, i)] -= weight\n\n    # -w_ij * x_j terms\n    Q[(j, j)] -= weight\n\n    # +2 * w_ij * x_i * x_j terms\n    Q[(i, j)] += 2 * weight\n\nQ = dict(Q)\n\nRecall that the qubits on a D-Wave QPU are not all directly connected to one another and as a result, the interaction graph of a QUBO may not map directly onto the actual connectivity of the QPU. In these cases, multiple physical qubits can be linked together in a chain to represent a single logical variable.\nThe process of mapping the logical QUBO graph onto the physical topology of the QPU is called minor embedding. Finding a minor embedding is computationally difficult in general, so Ocean provides tools that handle this step automatically. D-Wave’s EmbeddingComposite uses a heuristic embedding algorithm to find a suitable mapping between the logical variables and the available physical qubits.\n\nfrom dwave.system import DWaveSampler, EmbeddingComposite\n\n# Connect to an available D-Wave QPU\nqpu = DWaveSampler()\nsampler = EmbeddingComposite(qpu)\n\nHere, DWaveSampler() provides access to the physical D-Wave QPU, while EmbeddingComposite sits on top of the QPU sampler and automatically maps the logical QUBO onto the QPU’s hardware graph before the problem is submitted.\nThe QUBO is submitted to the D-Wave QPU and sampled 1000 times with the sample_qubo function.\n\nsampleset = sampler.sample_qubo(Q, num_reads=1000)\n\nbest = sampleset.first # returns lowest energy sample in the SampleSet\nsolution = dict(best.sample)  \n\nprint(\"Solution:\", solution)\nprint(\"Energy:\", best.energy)\n\nSolution: {'D': np.int8(1), 'A': np.int8(1), 'B': np.int8(0), 'C': np.int8(0)}\nEnergy: -14.0\n\n\nRecall that solution is still in its binary representation, where each vertex has been assigned either 0 or 1; so it follows to separate the vertices into the two groups.\n\ngroup_0 = [vertex for vertex, value in solution.items() if value == 0]\ngroup_1 = [vertex for vertex, value in solution.items() if value == 1]\n\nprint(\"Group 0:\", group_0)\nprint(\"Group 1:\", group_1)\n\n# Solve for the max cut weight \ncut_weight = 0\n\nfor i, j, weight in edges:\n    if solution[i] != solution[j]:\n        cut_weight += weight\n\nprint(\"Cut weight:\", cut_weight)\n\nGroup 0: ['B', 'C']\nGroup 1: ['D', 'A']\nCut weight: 14",
+    "crumbs": [
+      "Main Tutorials",
+      "Instructor Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#using-d-waves-hybrid-sampler",
+    "href": "D-wave SDK Demonstration Quantum Annealing.html#using-d-waves-hybrid-sampler",
+    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
+    "section": "Using D-Wave’s Hybrid Sampler",
+    "text": "Using D-Wave’s Hybrid Sampler\nThe same QUBO can also be solved directly using D-Wave’s hybrid solver instead of the QPU. Unlike direct QPU sampling, the hybrid solver combines classical and quantum resources internally and outputs a single sample (as compared to a distribution like the QPU), so we do not need to manually define a minor embedding or define a sample size.\n\nfrom dwave.system import LeapHybridSampler\n\nsampler_hybrid = LeapHybridSampler()\nsampleset_hybrid = sampler_hybrid.sample_qubo(Q, time_limit=10)\n\nbest_hybrid = sampleset_hybrid.first\nsolution_hybrid = dict(best_hybrid.sample)\n\nprint(\"Solution:\", solution_hybrid)\nprint(\"Energy:\", best_hybrid.energy)\n\nSolution: {'A': np.int8(1), 'B': np.int8(0), 'C': np.int8(0), 'D': np.int8(1)}\nEnergy: -14.0",
+    "crumbs": [
+      "Main Tutorials",
+      "Instructor Demonstration"
+    ]
+  },
+  {
+    "objectID": "D-wave SDK Demonstration Quantum Annealing.html#problem-inspector",
+    "href": "D-wave SDK Demonstration Quantum Annealing.html#problem-inspector",
+    "title": "D-Wave Ocean SDK Framework with Quantum Annealing",
+    "section": "Problem Inspector:",
+    "text": "Problem Inspector:\nD-Wave has created a way for users to look at both the logical QUBO graph submitted to the QPU and the QPU itself alongside the minor embedding. This is best demonstrated for the large graph max-cut problem given below.\n\nmany_edges = [(\"A\", \"B\", 4), (\"A\", \"C\", 7), (\"A\", \"E\", 3), (\"A\", \"F\", 8), (\"A\", \"H\", 5), (\"B\", \"C\", 2), (\"B\", \"D\", 6), (\"B\", \"G\", 9), (\"B\", \"I\", 4), (\"C\", \"D\", 5), (\"C\", \"E\", 8), (\"C\", \"H\", 6), (\"C\", \"J\", 3), (\"D\", \"F\", 7), (\"D\", \"G\", 4), (\"D\", \"J\", 9), (\"D\", \"K\", 2), (\"E\", \"F\", 5), (\"E\", \"H\", 7), (\"E\", \"L\", 6), (\"F\", \"G\", 3), (\"F\", \"I\", 8), (\"F\", \"M\", 4), (\"G\", \"H\", 6), (\"G\", \"J\", 5), (\"G\", \"N\", 9), (\"H\", \"I\", 2), (\"H\", \"K\", 8), (\"H\", \"O\", 4), (\"I\", \"J\", 7), (\"I\", \"L\", 5), (\"I\", \"P\", 6), (\"J\", \"K\", 3), (\"J\", \"M\", 8), (\"J\", \"Q\", 5), (\"K\", \"L\", 7), (\"K\", \"N\", 4), (\"K\", \"R\", 9), (\"L\", \"M\", 2), (\"L\", \"O\", 6), (\"L\", \"S\", 8), (\"M\", \"N\", 5), (\"M\", \"P\", 7), (\"M\", \"T\", 3), (\"N\", \"O\", 8), (\"N\", \"Q\", 6), (\"O\", \"P\", 4), (\"O\", \"R\", 7), (\"P\", \"Q\", 9), (\"P\", \"S\", 5), (\"Q\", \"R\", 3), (\"Q\", \"T\", 8), (\"R\", \"S\", 6), (\"S\", \"T\", 7)]\n\nvertices = sorted(set(vertex for i, j, weight in many_edges for vertex in (i, j)))\n\nprint(\"Number of vertices:\", len(vertices))\nprint(\"Number of edges:\", len(edges))\n\nNumber of vertices: 20\nNumber of edges: 5\n\n\n\nimport dimod\nimport dwave.inspector \n\nQ_many = defaultdict(float)\n\nfor i, j, weight in many_edges:\n\n    # -w_ij * x_i terms\n    Q_many[(i, i)] -= weight\n\n    # -w_ij * x_j terms\n    Q_many[(j, j)] -= weight\n\n    # +2 * w_ij * x_i * x_j terms\n    Q_many[(i, j)] += 2 * weight\n\nbqm = dimod.BinaryQuadraticModel.from_qubo(dict(Q_many))\n\n\nsampler = EmbeddingComposite(DWaveSampler())\nsampleset = sampler.sample(bqm, num_reads=1000)\n\ndwave.inspector.show(sampleset)\n\nFinished? Check out our other tutorials!",
+    "crumbs": [
+      "Main Tutorials",
+      "Instructor Demonstration"
+    ]
+  },
+  {
+    "objectID": "Frustrated Magnets via Annealing.html",
+    "href": "Frustrated Magnets via Annealing.html",
+    "title": "Frustrated Magnets on a Quantum Annealer",
+    "section": "",
+    "text": "Aritro Chatterjee · Purdue University · Quantum Spin Lab\nBased on work with Hanjing Xu, Kevin Zhang, Yuxin Sun, Ammar Ali · Mentors: Arnab Banerjee, Erica Carlson\n\nEarlier today you used the annealer to solve optimization problems. Here we use the same tool for physics: finding the lowest-energy arrangement of magnetic spins in a real material’s lattice.\nWhat we’ll do (~15 min): 1. See what frustration means with just three spins 2. Build the Shastry–Sutherland lattice (the lattice of the real material SrCu₂(BO₃)₂) 3. Hand it to the annealer and look at the ground state 4. Turn up a magnetic field and watch magnetization plateaus appear 5. Break the lattice with defects and see the plateaus smear out\nEverything runs locally with simulated annealing — no API key needed.\n Download notebook ↓ \n\n# If needed, install first:  %pip install dwave-ocean-sdk matplotlib\nimport itertools\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport dimod\n\ntry:                                    # Ocean SDK's simulated annealer\n    from dwave.samplers import SimulatedAnnealingSampler\nexcept ImportError:                     # older installs ship it as \"neal\"\n    from neal import SimulatedAnnealingSampler\n\nsampler = SimulatedAnnealingSampler()\nplt.rcParams.update({\"figure.dpi\": 110, \"font.size\": 11})\nprint(\"Ready!\")\n\nReady!",
+    "crumbs": [
+      "Additional Topics",
+      "Frustrated Magnets"
+    ]
+  },
+  {
+    "objectID": "Frustrated Magnets via Annealing.html#what-is-frustration",
+    "href": "Frustrated Magnets via Annealing.html#what-is-frustration",
+    "title": "Frustrated Magnets on a Quantum Annealer",
+    "section": "1. What is frustration?",
+    "text": "1. What is frustration?\nEach magnetic atom carries a tiny magnet — a spin — that points up (+1) or down (−1). In an antiferromagnet, neighbouring spins want to point opposite each other. The energy is\n\\[E = J\\sum_{\\langle i,j\\rangle} s_i s_j \\qquad (J&gt;0)\\]\nso each pair pays +J if aligned and gains −J if opposite.\nOn a square that’s easy: just alternate up, down, up, down. But put three spins on a triangle: if spin 1 is up and spin 2 is down, spin 3 can’t disagree with both. Someone is always unhappy. That’s frustration. Let’s check every possibility:\n\nJ = 1.0\nbonds = [(0, 1), (1, 2), (0, 2)]              # the three edges of a triangle\n\nstates = list(itertools.product([+1, -1], repeat=3))  \nenergy = lambda s: sum(J * s[i] * s[j] for i, j in bonds)\n\nfor s in states:\n    print(s, \" energy =\", energy(s))\n\nE_min = min(energy(s) for s in states)\nprint(f\"\\nLowest energy = {E_min}, reached by {sum(energy(s)==E_min for s in states)} of 8 states\")\n\n(1, 1, 1)  energy = 3.0\n(1, 1, -1)  energy = -1.0\n(1, -1, 1)  energy = -1.0\n(1, -1, -1)  energy = -1.0\n(-1, 1, 1)  energy = -1.0\n(-1, 1, -1)  energy = -1.0\n(-1, -1, 1)  energy = -1.0\n(-1, -1, -1)  energy = 3.0\n\nLowest energy = -1.0, reached by 6 of 8 states\n\n\n6 of 8 states tie for the ground state. No single “best” answer — the system is degenerate. Frustration is why these magnets are hard: huge numbers of near-equal configurations compete, and that competition produces exotic phases like spin liquids and magnetization plateaus. It’s also exactly the kind of rugged energy landscape annealers are built to explore.\n\nfig, axes = plt.subplots(1, 8, figsize=(13, 2.1))\npos = np.array([[0, 0], [1, 0], [0.5, 0.87]])\nfor ax, s in zip(axes, sorted(states, key=energy)):\n    for i, j in bonds:\n        unhappy = s[i] == s[j]                         \n        ax.plot(*pos[[i, j]].T, color=\"crimson\" if unhappy else \"grey\", lw=3 if unhappy else 1.5)\n    for p, spin in zip(pos, s):\n        ax.annotate(\"\", xy=p + [0, 0.22 * spin], xytext=p - [0, 0.22 * spin],\n                    arrowprops=dict(arrowstyle=\"-|&gt;\", color=\"royalblue\" if spin &gt; 0 else \"darkorange\", lw=2))\n    ax.set_title(f\"E = {energy(s):+.0f}\", fontsize=10)\n    ax.set_xlim(-0.4, 1.4); ax.set_ylim(-0.4, 1.3); ax.axis(\"off\")\nfig.suptitle(\"All 8 triangle states — red bonds are 'unhappy' (aligned). Ground states always have exactly one.\", fontsize=11)\nplt.tight_layout(); plt.show()",
+    "crumbs": [
+      "Additional Topics",
+      "Frustrated Magnets"
+    ]
+  },
+  {
+    "objectID": "Frustrated Magnets via Annealing.html#the-shastrysutherland-lattice",
+    "href": "Frustrated Magnets via Annealing.html#the-shastrysutherland-lattice",
+    "title": "Frustrated Magnets on a Quantum Annealer",
+    "section": "2. The Shastry–Sutherland lattice",
+    "text": "2. The Shastry–Sutherland lattice\nThe real material SrCu₂(BO₃)₂ arranges its magnetic copper atoms in a Shastry–Sutherland lattice:\n\na square grid of bonds with strength J₁, plus\nextra diagonal “dimer” bonds with strength J₂, placed on every other square and alternating direction.\n\nSquares + diagonals = triangles everywhere → frustration built into the lattice.\n\ndef shastry_sutherland(L):\n    # Bonds of an L x L Shastry-Sutherland lattice with periodic (wrap-around) edges.\n    site = lambda x, y: (x % L) * L + (y % L)          \n    J1_bonds, J2_bonds = [], []\n    for x in range(L):\n        for y in range(L):\n            J1_bonds += [(site(x, y), site(x + 1, y)), (site(x, y), site(x, y + 1))]  # square grid\n            if x % 2 == 0 and y % 2 == 0:              # \"/\" dimer on even squares\n                J2_bonds.append((site(x, y), site(x + 1, y + 1)))\n            if x % 2 == 1 and y % 2 == 1:              # \"\\\" dimer on odd squares\n                J2_bonds.append((site(x + 1, y), site(x, y + 1)))\n    return J1_bonds, J2_bonds\n\nL = 12\nJ1_bonds, J2_bonds = shastry_sutherland(L)\nprint(f\"{L}x{L} lattice: {L*L} spins, {len(J1_bonds)} square bonds (J1), {len(J2_bonds)} dimer bonds (J2)\")\n\n12x12 lattice: 144 spins, 288 square bonds (J1), 72 dimer bonds (J2)\n\n\n\ndef draw_lattice(L, J1_bonds, J2_bonds, ax, spins=None):\n    xy = lambda i: np.array(divmod(i, L))\n    short = lambda a, b: np.abs(xy(a) - xy(b)).max() == 1   # skip wrap-around bonds when drawing\n    for a, b in J1_bonds:\n        if short(a, b): ax.plot(*np.array([xy(a), xy(b)]).T, color=\"lightgrey\", lw=1, zorder=1)\n    for a, b in J2_bonds:\n        if short(a, b): ax.plot(*np.array([xy(a), xy(b)]).T, color=\"black\", lw=2.2, ls=\"--\", zorder=2)\n    pts = np.array([xy(i) for i in range(L * L)])\n    colors = \"dimgrey\" if spins is None else [\"royalblue\" if s &gt; 0 else \"darkorange\" for s in spins]\n    ax.scatter(*pts.T, c=colors, s=55, zorder=3, edgecolor=\"white\")\n    ax.set_aspect(\"equal\"); ax.axis(\"off\")\n\nfig, ax = plt.subplots(figsize=(4.6, 4.6))\ndraw_lattice(6, *shastry_sutherland(6), ax)\nax.set_title(\"Shastry–Sutherland lattice (6×6)\\ngrey: J₁ square bonds · dashed: J₂ dimers\")\nplt.show()",
+    "crumbs": [
+      "Additional Topics",
+      "Frustrated Magnets"
+    ]
+  },
+  {
+    "objectID": "Frustrated Magnets via Annealing.html#handing-the-lattice-to-the-annealer",
+    "href": "Frustrated Magnets via Annealing.html#handing-the-lattice-to-the-annealer",
+    "title": "Frustrated Magnets on a Quantum Annealer",
+    "section": "3. Handing the lattice to the annealer",
+    "text": "3. Handing the lattice to the annealer\nThe annealer minimizes an Ising energy, which is exactly the magnet’s energy. We add a magnetic field h that rewards spins for pointing up:\n\\[E(s) = J_1\\!\\sum_{\\text{squares}} s_i s_j \\;+\\; J_2\\!\\sum_{\\text{dimers}} s_i s_j \\;-\\; h\\sum_i s_i\\]\nIn Ocean this is a Binary Quadratic Model (BQM): the field goes on each spin (linear terms), the bonds go on pairs (quadratic terms). Same object you built for optimization problems earlier!\n\nJ1, J2 = 1.0, 1.5            # dimer bonds stronger than square bonds\n\ndef build_bqm(h, J1_bonds, J2_bonds, sites):\n    linear = {i: -h for i in sites}                       \n    quadratic = {b: J1 for b in J1_bonds}                 # square bonds\n    quadratic.update({b: J2 for b in J2_bonds})           # dimer bonds\n    return dimod.BinaryQuadraticModel(linear, quadratic, 0.0, \"SPIN\")\n\ndef ground_state(h, J1_bonds, J2_bonds, sites, reads=20, sweeps=2000):\n    bqm = build_bqm(h, J1_bonds, J2_bonds, sites)\n    best = sampler.sample(bqm, num_reads=reads, num_sweeps=sweeps, seed=7).first\n    return best.sample, best.energy                       # lowest-energy sample found\n\nsites = range(L * L)\nspins, E = ground_state(0.0, J1_bonds, J2_bonds, sites)\nprint(f\"Ground state at h = 0: energy = {E:.1f}, magnetization m = {np.mean(list(spins.values())):+.3f}\")\n\nGround state at h = 0: energy = -180.0, magnetization m = +0.000\n\n\n\nOn the real quantum annealer the only change is the sampler:\nfrom dwave.system import DWaveSampler, EmbeddingComposite\nsampler = EmbeddingComposite(DWaveSampler())   # needs a Leap API token\nEverything else — the BQM, reading .first, the analysis — is identical.\n\nLet’s look at the answer. Blue = up, orange = down:\n\nfrom matplotlib.colors import ListedColormap\nSPIN_CMAP = ListedColormap([\"darkorange\", \"white\", \"royalblue\"])   # down / missing / up\n\ndef spin_image(spins, L):\n    return np.array([spins[i] for i in range(L * L)], float).reshape(L, L)\n\nfig, axes = plt.subplots(1, 2, figsize=(9, 4.4))\ndraw_lattice(L, J1_bonds, J2_bonds, axes[0], spins=[spins[i] for i in sites])\naxes[0].set_title(\"h = 0 ground state on the lattice\")\naxes[1].imshow(spin_image(spins, L).T, cmap=SPIN_CMAP, origin=\"lower\", vmin=-1, vmax=1)\naxes[1].set_title(\"same state as an image\"); axes[1].axis(\"off\")\nplt.tight_layout(); plt.show()\n\n\n\n\n\n\n\n\nA perfect checkerboard: every square bond (J₁) is happy. But look at the dashed dimers — both ends are always the same colour, so every dimer bond is frustrated. The lattice can’t satisfy both kinds of bond at once, and with J₂ = 1.5 the square bonds win. (Try J2 = 3.0 later: then the dimers win instead.) Net magnetization: zero. Now let’s push on it with a field.",
+    "crumbs": [
+      "Additional Topics",
+      "Frustrated Magnets"
+    ]
+  },
+  {
+    "objectID": "Frustrated Magnets via Annealing.html#turning-up-the-field-magnetization-plateaus",
+    "href": "Frustrated Magnets via Annealing.html#turning-up-the-field-magnetization-plateaus",
+    "title": "Frustrated Magnets on a Quantum Annealer",
+    "section": "4. Turning up the field → magnetization plateaus",
+    "text": "4. Turning up the field → magnetization plateaus\nA normal magnet’s magnetization rises smoothly as you increase the field. A frustrated magnet can lock into special patterns that stay stable over a whole range of fields — so the magnetization stalls on flat steps: plateaus. SrCu₂(BO₃)₂ is famous for them experimentally.\nFor each field value we ask the annealer for the ground state and record the average spin:\n\nfields = np.linspace(-6, 6, 49)\n\ndef magnetization_curve(J1_bonds, J2_bonds, sites):\n    return [np.mean(list(ground_state(h, J1_bonds, J2_bonds, sites)[0].values())) for h in fields]\n\nm_clean = magnetization_curve(J1_bonds, J2_bonds, sites)\n\nplt.figure(figsize=(7.5, 4.3))\nplt.plot(fields, m_clean, \"o-\", color=\"royalblue\", ms=4)\nfor level in (-1/3, 1/3):\n    plt.axhline(level, color=\"grey\", ls=\":\", lw=1)\nplt.text(-5.9, 1/3 + 0.04, \"m = 1/3\", color=\"grey\"); plt.text(4.3, -1/3 - 0.1, \"m = −1/3\", color=\"grey\")\nplt.xlabel(\"magnetic field  h\"); plt.ylabel(\"magnetization  m\")\nplt.title(\"Clean 12×12 Shastry–Sutherland lattice\")\nplt.grid(alpha=0.3); plt.show()\n\n\n\n\n\n\n\n\nClear staircase: a plateau at m = 0, a wide plateau at m = 1/3, then saturation at m = 1 (everything up). The 1/3 plateau means exactly 1 in 3 spins effectively points down in a stable, repeating pattern. Let’s see what that pattern looks like:\n\nspins_13, _ = ground_state(3.0, J1_bonds, J2_bonds, sites)\nprint(f\"h = 3.0  -&gt;  m = {np.mean(list(spins_13.values())):.3f}\")\n\nfig, axes = plt.subplots(1, 2, figsize=(9, 4.4))\ndraw_lattice(L, J1_bonds, J2_bonds, axes[0], spins=[spins_13[i] for i in sites])\naxes[0].set_title(\"1/3-plateau state\")\naxes[1].imshow(spin_image(spins_13, L).T, cmap=SPIN_CMAP, origin=\"lower\", vmin=-1, vmax=1)\naxes[1].set_title(\"as an image: a regular stripe pattern\"); axes[1].axis(\"off\")\nplt.tight_layout(); plt.show()\n\nh = 3.0  -&gt;  m = 0.333",
+    "crumbs": [
+      "Additional Topics",
+      "Frustrated Magnets"
+    ]
+  },
+  {
+    "objectID": "Frustrated Magnets via Annealing.html#real-materials-have-defects",
+    "href": "Frustrated Magnets via Annealing.html#real-materials-have-defects",
+    "title": "Frustrated Magnets on a Quantum Annealer",
+    "section": "5. Real materials have defects",
+    "text": "5. Real materials have defects\nReal crystals are never perfect. Two kinds of damage:\n\nSite defects — a magnetic atom is missing (a vacancy)\nBond defects — a coupling between two atoms is broken\n\nFrustrated systems are very sensitive to this, because so many states are nearly tied — a small defect can tip the balance. Let’s randomly delete sites and bonds and redo the sweep:\n\ndef add_defects(site_frac, bond_frac, seed=0):\n    rng = np.random.default_rng(seed)\n    removed = set(rng.choice(L * L, int(site_frac * L * L), replace=False))\n    keep_site = [i for i in range(L * L) if i not in removed]\n    ok = lambda b: b[0] not in removed and b[1] not in removed and rng.random() &gt; bond_frac\n    return [b for b in J1_bonds if ok(b)], [b for b in J2_bonds if ok(b)], keep_site\n\ncases = [(0.00, 0.00), (0.05, 0.05), (0.10, 0.15), (0.20, 0.30)]\nplt.figure(figsize=(8, 4.8))\nfor (fs, fb), color in zip(cases, [\"royalblue\", \"seagreen\", \"darkorange\", \"crimson\"]):\n    m = magnetization_curve(*add_defects(fs, fb))\n    plt.plot(fields, m, \"o-\", ms=3, color=color, label=f\"sites {fs:.0%}, bonds {fb:.0%} removed\")\nplt.axhline(1/3, color=\"grey\", ls=\":\", lw=1)\nplt.xlabel(\"magnetic field  h\"); plt.ylabel(\"magnetization  m\")\nplt.title(\"Defects smear out the plateaus\"); plt.legend(fontsize=9); plt.grid(alpha=0.3); plt.show()\n\n\n\n\n\n\n\n\nAs the defect concentration grows, the sharp steps titlt and shift With heavy damage the clean plateau structure is essentially gone. That’s a hint that the type of critical behaviour itself is changing.\n\nfig, axes = plt.subplots(1, len(cases), figsize=(13, 3.4))\nfor ax, (fs, fb) in zip(axes, cases):\n    b1, b2, keep = add_defects(fs, fb)\n    s, _ = ground_state(3.0, b1, b2, keep)\n    img = np.zeros((L, L))                                # 0 = missing atom (white)\n    for i in keep: img[divmod(i, L)] = s[i]\n    ax.imshow(img.T, cmap=SPIN_CMAP, origin=\"lower\", vmin=-1, vmax=1)\n    ax.set_title(f\"sites {fs:.0%}, bonds {fb:.0%}\", fontsize=10); ax.axis(\"off\")\nfig.suptitle(\"Spin patterns at h = 3 (white = missing atom): order breaks up as defects grow\")\nplt.tight_layout(); plt.show()",
+    "crumbs": [
+      "Additional Topics",
+      "Frustrated Magnets"
+    ]
+  },
+  {
+    "objectID": "Frustrated Magnets via Annealing.html#where-this-is-going-letting-machine-learning-read-the-pictures",
+    "href": "Frustrated Magnets via Annealing.html#where-this-is-going-letting-machine-learning-read-the-pictures",
+    "title": "Frustrated Magnets on a Quantum Annealer",
+    "section": "6. Where this is going: letting machine learning read the pictures",
+    "text": "6. Where this is going: letting machine learning read the pictures\nPhysicists sort phase transitions into universality classes — families that behave the same way near the transition regardless of microscopic details. Our question: do enough defects create a new one?\nThose spin-pattern images above are exactly what a machine-learning classifier can learn from. The plan (ongoing work):\n\nGenerate many such images with the annealer and with DMRG (a precise classical method) for clean and defected lattices\nLabel them by class: clean 2D Ising, random-field Ising, or defect-dominated\nTrain a classifier to recognise the class directly from the spin patterns\nMove to the D-Wave Advantage 2 QPU to generate data a classical computer struggles with",
+    "crumbs": [
+      "Additional Topics",
+      "Frustrated Magnets"
+    ]
+  },
+  {
+    "objectID": "Frustrated Magnets via Annealing.html#try-it-yourself",
+    "href": "Frustrated Magnets via Annealing.html#try-it-yourself",
+    "title": "Frustrated Magnets on a Quantum Annealer",
+    "section": "Try it yourself",
+    "text": "Try it yourself\n\nChange J2 (try 1.0, 2.0, 3.0) — do the plateaus move or disappear?\nTry different defect fractions or seeds in cases\nSwap in the QPU sampler above if you have a Leap account\n\n\nReferences\n\nP. Kairys et al., Simulating the Shastry–Sutherland Ising model using quantum annealing, PRX Quantum 1, 020320 (2020)\nB. S. Shastry & B. Sutherland, Exact ground state of a quantum mechanical antiferromagnet, Physica B+C 108, 1069 (1981)\nS. Basak et al., Deep learning Hamiltonians from disordered image data in quantum materials, Phys. Rev. B 107, 205121 (2023)\nM. W. Johnson et al., Quantum annealing with manufactured spins, Nature 473, 194 (2011)",
+    "crumbs": [
+      "Additional Topics",
+      "Frustrated Magnets"
     ]
   }
 ]

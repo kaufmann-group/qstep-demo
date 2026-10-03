@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Frustrated Magnets on a Quantum Annealer – QSTEP</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./purdue.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9d6eaac639fa2e3953f5999e4f8e0492.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">QSTEP</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kaufmann-group/qstep-demo"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Frustrated Magnets via Annealing.html">Additional Topics</a></li><li class="breadcrumb-item"><a href="./Frustrated Magnets via Annealing.html">Frustrated Magnets</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Main Tutorials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./max-cut-game.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Max-Cut Game</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./D-wave SDK Demonstration Quantum Annealing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Instructor Demonstration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./D-wave SDK Demonstration Simulated Annealing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Student Demonstration</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Additional Topics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Frustrated Magnets via Annealing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Frustrated Magnets</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-shastrysutherland-lattice-magnetization-plateaus-and-defects" id="toc-the-shastrysutherland-lattice-magnetization-plateaus-and-defects" class="nav-link active" data-scroll-target="#the-shastrysutherland-lattice-magnetization-plateaus-and-defects">The Shastry–Sutherland lattice, magnetization plateaus, and defects</a></li>
+  <li><a href="#what-is-frustration" id="toc-what-is-frustration" class="nav-link" data-scroll-target="#what-is-frustration">1. What is frustration?</a></li>
+  <li><a href="#the-shastrysutherland-lattice" id="toc-the-shastrysutherland-lattice" class="nav-link" data-scroll-target="#the-shastrysutherland-lattice">2. The Shastry–Sutherland lattice</a></li>
+  <li><a href="#handing-the-lattice-to-the-annealer" id="toc-handing-the-lattice-to-the-annealer" class="nav-link" data-scroll-target="#handing-the-lattice-to-the-annealer">3. Handing the lattice to the annealer</a></li>
+  <li><a href="#turning-up-the-field-magnetization-plateaus" id="toc-turning-up-the-field-magnetization-plateaus" class="nav-link" data-scroll-target="#turning-up-the-field-magnetization-plateaus">4. Turning up the field → magnetization plateaus</a></li>
+  <li><a href="#real-materials-have-defects" id="toc-real-materials-have-defects" class="nav-link" data-scroll-target="#real-materials-have-defects">5. Real materials have defects</a></li>
+  <li><a href="#where-this-is-going-letting-machine-learning-read-the-pictures" id="toc-where-this-is-going-letting-machine-learning-read-the-pictures" class="nav-link" data-scroll-target="#where-this-is-going-letting-machine-learning-read-the-pictures">6. Where this is going: letting machine learning read the pictures</a></li>
+  <li><a href="#try-it-yourself" id="toc-try-it-yourself" class="nav-link" data-scroll-target="#try-it-yourself">Try it yourself</a>
+  <ul class="collapse">
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Frustrated Magnets via Annealing.html">Additional Topics</a></li><li class="breadcrumb-item"><a href="./Frustrated Magnets via Annealing.html">Frustrated Magnets</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Frustrated Magnets on a Quantum Annealer</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-shastrysutherland-lattice-magnetization-plateaus-and-defects" class="level3">
+<h3 class="anchored" data-anchor-id="the-shastrysutherland-lattice-magnetization-plateaus-and-defects">The Shastry–Sutherland lattice, magnetization plateaus, and defects</h3>
+<p><strong>Aritro Chatterjee</strong> · Purdue University · Quantum Spin Lab</p>
+<p><em>Based on work with Hanjing Xu, Kevin Zhang, Yuxin Sun, Ammar Ali · Mentors: Arnab Banerjee, Erica Carlson</em></p>
+<hr>
+<p>Earlier today you used the annealer to solve optimization problems. Here we use the same tool for physics: finding the lowest-energy arrangement of magnetic spins in a real material’s lattice.</p>
+<p>What we’ll do (~15 min): 1. See what <strong>frustration</strong> means with just three spins 2. Build the <strong>Shastry–Sutherland lattice</strong> (the lattice of the real material SrCu₂(BO₃)₂) 3. Hand it to the annealer and look at the <strong>ground state</strong> 4. Turn up a magnetic field and watch <strong>magnetization plateaus</strong> appear 5. Break the lattice with <strong>defects</strong> and see the plateaus smear out</p>
+<p>Everything runs locally with <strong>simulated annealing</strong> — no API key needed.</p>
+<p><a class="notebook-download" href="./downloads/frustrated_magnets_notebook.txt" download="Frustrated Magnets via Annealing.ipynb"> Download notebook ↓ </a></p>
+<div id="1ddcd5dc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T01:01:36.410243Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T01:01:36.409997Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T01:01:36.959719Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T01:01:36.958455Z&quot;}}" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If needed, install first:  %pip install dwave-ocean-sdk matplotlib</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dimod</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:                                    <span class="co"># Ocean SDK's simulated annealer</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> dwave.samplers <span class="im">import</span> SimulatedAnnealingSampler</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ImportError</span>:                     <span class="co"># older installs ship it as "neal"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> neal <span class="im">import</span> SimulatedAnnealingSampler</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>sampler <span class="op">=</span> SimulatedAnnealingSampler()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({<span class="st">"figure.dpi"</span>: <span class="dv">110</span>, <span class="st">"font.size"</span>: <span class="dv">11</span>})</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Ready!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ready!</code></pre>
+</div>
+</div>
+</section>
+<section id="what-is-frustration" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-frustration">1. What is frustration?</h2>
+<p>Each magnetic atom carries a tiny magnet — a spin — that points up (<strong>+1</strong>) or down (<strong>−1</strong>). In an antiferromagnet, neighbouring spins want to point opposite each other. The energy is</p>
+<p><span class="math display">\[E = J\sum_{\langle i,j\rangle} s_i s_j \qquad (J&gt;0)\]</span></p>
+<p>so each pair pays <strong>+J</strong> if aligned and gains <strong>−J</strong> if opposite.</p>
+<p>On a square that’s easy: just alternate up, down, up, down. But put three spins on a triangle: if spin 1 is up and spin 2 is down, spin 3 can’t disagree with <em>both</em>. Someone is always unhappy. That’s <strong>frustration</strong>. Let’s check every possibility:</p>
+<div id="69d6cc7a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T01:01:36.962399Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T01:01:36.961910Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T01:01:36.969695Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T01:01:36.968162Z&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>J <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>bonds <span class="op">=</span> [(<span class="dv">0</span>, <span class="dv">1</span>), (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">0</span>, <span class="dv">2</span>)]              <span class="co"># the three edges of a triangle</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>states <span class="op">=</span> <span class="bu">list</span>(itertools.product([<span class="op">+</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>], repeat<span class="op">=</span><span class="dv">3</span>))  </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>energy <span class="op">=</span> <span class="kw">lambda</span> s: <span class="bu">sum</span>(J <span class="op">*</span> s[i] <span class="op">*</span> s[j] <span class="cf">for</span> i, j <span class="kw">in</span> bonds)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> s <span class="kw">in</span> states:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(s, <span class="st">" energy ="</span>, energy(s))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>E_min <span class="op">=</span> <span class="bu">min</span>(energy(s) <span class="cf">for</span> s <span class="kw">in</span> states)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Lowest energy = </span><span class="sc">{</span>E_min<span class="sc">}</span><span class="ss">, reached by </span><span class="sc">{</span><span class="bu">sum</span>(energy(s)<span class="op">==</span>E_min <span class="cf">for</span> s <span class="kw">in</span> states)<span class="sc">}</span><span class="ss"> of 8 states"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(1, 1, 1)  energy = 3.0
+(1, 1, -1)  energy = -1.0
+(1, -1, 1)  energy = -1.0
+(1, -1, -1)  energy = -1.0
+(-1, 1, 1)  energy = -1.0
+(-1, 1, -1)  energy = -1.0
+(-1, -1, 1)  energy = -1.0
+(-1, -1, -1)  energy = 3.0
+
+Lowest energy = -1.0, reached by 6 of 8 states</code></pre>
+</div>
+</div>
+<p>6 of 8 states tie for the ground state. No single “best” answer — the system is degenerate. Frustration is why these magnets are hard: huge numbers of near-equal configurations compete, and that competition produces exotic phases like spin liquids and magnetization plateaus. It’s also exactly the kind of rugged energy landscape annealers are built to explore.</p>
+<div id="a5141909" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T01:01:36.972142Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T01:01:36.971739Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T01:01:37.432709Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T01:01:37.431995Z&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">8</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="fl">2.1</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">1</span>, <span class="dv">0</span>], [<span class="fl">0.5</span>, <span class="fl">0.87</span>]])</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, s <span class="kw">in</span> <span class="bu">zip</span>(axes, <span class="bu">sorted</span>(states, key<span class="op">=</span>energy)):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j <span class="kw">in</span> bonds:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        unhappy <span class="op">=</span> s[i] <span class="op">==</span> s[j]                         </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        ax.plot(<span class="op">*</span>pos[[i, j]].T, color<span class="op">=</span><span class="st">"crimson"</span> <span class="cf">if</span> unhappy <span class="cf">else</span> <span class="st">"grey"</span>, lw<span class="op">=</span><span class="dv">3</span> <span class="cf">if</span> unhappy <span class="cf">else</span> <span class="fl">1.5</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> p, spin <span class="kw">in</span> <span class="bu">zip</span>(pos, s):</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        ax.annotate(<span class="st">""</span>, xy<span class="op">=</span>p <span class="op">+</span> [<span class="dv">0</span>, <span class="fl">0.22</span> <span class="op">*</span> spin], xytext<span class="op">=</span>p <span class="op">-</span> [<span class="dv">0</span>, <span class="fl">0.22</span> <span class="op">*</span> spin],</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                    arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-|&gt;"</span>, color<span class="op">=</span><span class="st">"royalblue"</span> <span class="cf">if</span> spin <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">"darkorange"</span>, lw<span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"E = </span><span class="sc">{</span>energy(s)<span class="sc">:+.0f}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(<span class="op">-</span><span class="fl">0.4</span>, <span class="fl">1.4</span>)<span class="op">;</span> ax.set_ylim(<span class="op">-</span><span class="fl">0.4</span>, <span class="fl">1.3</span>)<span class="op">;</span> ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"All 8 triangle states — red bonds are 'unhappy' (aligned). Ground states always have exactly one."</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()<span class="op">;</span> plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Frustrated Magnets via Annealing_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-shastrysutherland-lattice" class="level2">
+<h2 class="anchored" data-anchor-id="the-shastrysutherland-lattice">2. The Shastry–Sutherland lattice</h2>
+<p>The real material <strong>SrCu₂(BO₃)₂</strong> arranges its magnetic copper atoms in a <strong>Shastry–Sutherland lattice</strong>:</p>
+<ul>
+<li>a square grid of bonds with strength <strong>J₁</strong>, plus</li>
+<li>extra diagonal “dimer” bonds with strength <strong>J₂</strong>, placed on every other square and alternating direction.</li>
+</ul>
+<p>Squares + diagonals = triangles everywhere → frustration built into the lattice.</p>
+<div id="fe422157" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T01:01:37.435249Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T01:01:37.434968Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T01:01:37.442806Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T01:01:37.441675Z&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shastry_sutherland(L):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Bonds of an L x L Shastry-Sutherland lattice with periodic (wrap-around) edges.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    site <span class="op">=</span> <span class="kw">lambda</span> x, y: (x <span class="op">%</span> L) <span class="op">*</span> L <span class="op">+</span> (y <span class="op">%</span> L)          </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    J1_bonds, J2_bonds <span class="op">=</span> [], []</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(L):</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(L):</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            J1_bonds <span class="op">+=</span> [(site(x, y), site(x <span class="op">+</span> <span class="dv">1</span>, y)), (site(x, y), site(x, y <span class="op">+</span> <span class="dv">1</span>))]  <span class="co"># square grid</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> x <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> y <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:              <span class="co"># "/" dimer on even squares</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                J2_bonds.append((site(x, y), site(x <span class="op">+</span> <span class="dv">1</span>, y <span class="op">+</span> <span class="dv">1</span>)))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> x <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span> <span class="kw">and</span> y <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:              <span class="co"># "\" dimer on odd squares</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                J2_bonds.append((site(x <span class="op">+</span> <span class="dv">1</span>, y), site(x, y <span class="op">+</span> <span class="dv">1</span>)))</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> J1_bonds, J2_bonds</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="dv">12</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>J1_bonds, J2_bonds <span class="op">=</span> shastry_sutherland(L)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>L<span class="sc">}</span><span class="ss">x</span><span class="sc">{</span>L<span class="sc">}</span><span class="ss"> lattice: </span><span class="sc">{</span>L<span class="op">*</span>L<span class="sc">}</span><span class="ss"> spins, </span><span class="sc">{</span><span class="bu">len</span>(J1_bonds)<span class="sc">}</span><span class="ss"> square bonds (J1), </span><span class="sc">{</span><span class="bu">len</span>(J2_bonds)<span class="sc">}</span><span class="ss"> dimer bonds (J2)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>12x12 lattice: 144 spins, 288 square bonds (J1), 72 dimer bonds (J2)</code></pre>
+</div>
+</div>
+<div id="6ccda93c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T01:01:37.445673Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T01:01:37.445377Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T01:01:37.575757Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T01:01:37.574406Z&quot;}}" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> draw_lattice(L, J1_bonds, J2_bonds, ax, spins<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    xy <span class="op">=</span> <span class="kw">lambda</span> i: np.array(<span class="bu">divmod</span>(i, L))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    short <span class="op">=</span> <span class="kw">lambda</span> a, b: np.<span class="bu">abs</span>(xy(a) <span class="op">-</span> xy(b)).<span class="bu">max</span>() <span class="op">==</span> <span class="dv">1</span>   <span class="co"># skip wrap-around bonds when drawing</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> a, b <span class="kw">in</span> J1_bonds:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> short(a, b): ax.plot(<span class="op">*</span>np.array([xy(a), xy(b)]).T, color<span class="op">=</span><span class="st">"lightgrey"</span>, lw<span class="op">=</span><span class="dv">1</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> a, b <span class="kw">in</span> J2_bonds:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> short(a, b): ax.plot(<span class="op">*</span>np.array([xy(a), xy(b)]).T, color<span class="op">=</span><span class="st">"black"</span>, lw<span class="op">=</span><span class="fl">2.2</span>, ls<span class="op">=</span><span class="st">"--"</span>, zorder<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    pts <span class="op">=</span> np.array([xy(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(L <span class="op">*</span> L)])</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> <span class="st">"dimgrey"</span> <span class="cf">if</span> spins <span class="kw">is</span> <span class="va">None</span> <span class="cf">else</span> [<span class="st">"royalblue"</span> <span class="cf">if</span> s <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">"darkorange"</span> <span class="cf">for</span> s <span class="kw">in</span> spins]</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    ax.scatter(<span class="op">*</span>pts.T, c<span class="op">=</span>colors, s<span class="op">=</span><span class="dv">55</span>, zorder<span class="op">=</span><span class="dv">3</span>, edgecolor<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    ax.set_aspect(<span class="st">"equal"</span>)<span class="op">;</span> ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="fl">4.6</span>, <span class="fl">4.6</span>))</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>draw_lattice(<span class="dv">6</span>, <span class="op">*</span>shastry_sutherland(<span class="dv">6</span>), ax)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Shastry–Sutherland lattice (6×6)</span><span class="ch">\n</span><span class="st">grey: J₁ square bonds · dashed: J₂ dimers"</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Frustrated Magnets via Annealing_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="handing-the-lattice-to-the-annealer" class="level2">
+<h2 class="anchored" data-anchor-id="handing-the-lattice-to-the-annealer">3. Handing the lattice to the annealer</h2>
+<p>The annealer minimizes an Ising energy, which is exactly the magnet’s energy. We add a <strong>magnetic field h</strong> that rewards spins for pointing up:</p>
+<p><span class="math display">\[E(s) = J_1\!\sum_{\text{squares}} s_i s_j \;+\; J_2\!\sum_{\text{dimers}} s_i s_j \;-\; h\sum_i s_i\]</span></p>
+<p>In Ocean this is a Binary Quadratic Model (BQM): the field goes on each spin (<em>linear</em> terms), the bonds go on pairs (<em>quadratic</em> terms). Same object you built for optimization problems earlier!</p>
+<div id="ac4a5b36" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T01:01:37.579360Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T01:01:37.578998Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T01:01:37.710114Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T01:01:37.708903Z&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>J1, J2 <span class="op">=</span> <span class="fl">1.0</span>, <span class="fl">1.5</span>            <span class="co"># dimer bonds stronger than square bonds</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_bqm(h, J1_bonds, J2_bonds, sites):</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    linear <span class="op">=</span> {i: <span class="op">-</span>h <span class="cf">for</span> i <span class="kw">in</span> sites}                       </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    quadratic <span class="op">=</span> {b: J1 <span class="cf">for</span> b <span class="kw">in</span> J1_bonds}                 <span class="co"># square bonds</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    quadratic.update({b: J2 <span class="cf">for</span> b <span class="kw">in</span> J2_bonds})           <span class="co"># dimer bonds</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dimod.BinaryQuadraticModel(linear, quadratic, <span class="fl">0.0</span>, <span class="st">"SPIN"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ground_state(h, J1_bonds, J2_bonds, sites, reads<span class="op">=</span><span class="dv">20</span>, sweeps<span class="op">=</span><span class="dv">2000</span>):</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    bqm <span class="op">=</span> build_bqm(h, J1_bonds, J2_bonds, sites)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    best <span class="op">=</span> sampler.sample(bqm, num_reads<span class="op">=</span>reads, num_sweeps<span class="op">=</span>sweeps, seed<span class="op">=</span><span class="dv">7</span>).first</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best.sample, best.energy                       <span class="co"># lowest-energy sample found</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>sites <span class="op">=</span> <span class="bu">range</span>(L <span class="op">*</span> L)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>spins, E <span class="op">=</span> ground_state(<span class="fl">0.0</span>, J1_bonds, J2_bonds, sites)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Ground state at h = 0: energy = </span><span class="sc">{</span>E<span class="sc">:.1f}</span><span class="ss">, magnetization m = </span><span class="sc">{</span>np<span class="sc">.</span>mean(<span class="bu">list</span>(spins.values()))<span class="sc">:+.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ground state at h = 0: energy = -180.0, magnetization m = +0.000</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>On the real quantum annealer</strong> the only change is the sampler:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dwave.system <span class="im">import</span> DWaveSampler, EmbeddingComposite</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sampler <span class="op">=</span> EmbeddingComposite(DWaveSampler())   <span class="co"># needs a Leap API token</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Everything else — the BQM, reading <code>.first</code>, the analysis — is identical.</p>
+</blockquote>
+<p>Let’s look at the answer. Blue = up, orange = down:</p>
+<div id="a4a2fa0e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T01:01:37.712512Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T01:01:37.712310Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T01:01:38.108394Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T01:01:38.107131Z&quot;}}" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> ListedColormap</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>SPIN_CMAP <span class="op">=</span> ListedColormap([<span class="st">"darkorange"</span>, <span class="st">"white"</span>, <span class="st">"royalblue"</span>])   <span class="co"># down / missing / up</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> spin_image(spins, L):</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array([spins[i] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(L <span class="op">*</span> L)], <span class="bu">float</span>).reshape(L, L)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">4.4</span>))</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>draw_lattice(L, J1_bonds, J2_bonds, axes[<span class="dv">0</span>], spins<span class="op">=</span>[spins[i] <span class="cf">for</span> i <span class="kw">in</span> sites])</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"h = 0 ground state on the lattice"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].imshow(spin_image(spins, L).T, cmap<span class="op">=</span>SPIN_CMAP, origin<span class="op">=</span><span class="st">"lower"</span>, vmin<span class="op">=-</span><span class="dv">1</span>, vmax<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"same state as an image"</span>)<span class="op">;</span> axes[<span class="dv">1</span>].axis(<span class="st">"off"</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()<span class="op">;</span> plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Frustrated Magnets via Annealing_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A perfect checkerboard: every square bond (J₁) is happy. But look at the dashed dimers — both ends are always the <em>same</em> colour, so every dimer bond is frustrated. The lattice can’t satisfy both kinds of bond at once, and with J₂ = 1.5 the square bonds win. (Try <code>J2 = 3.0</code> later: then the dimers win instead.) Net magnetization: zero. Now let’s push on it with a field.</p>
+</section>
+<section id="turning-up-the-field-magnetization-plateaus" class="level2">
+<h2 class="anchored" data-anchor-id="turning-up-the-field-magnetization-plateaus">4. Turning up the field → magnetization plateaus</h2>
+<p>A normal magnet’s magnetization rises smoothly as you increase the field. A frustrated magnet can lock into special patterns that stay stable over a whole range of fields — so the magnetization stalls on flat steps: plateaus. SrCu₂(BO₃)₂ is famous for them experimentally.</p>
+<p>For each field value we ask the annealer for the ground state and record the average spin:</p>
+<div id="d1695992" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T01:01:38.110751Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T01:01:38.110540Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T01:01:43.735893Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T01:01:43.734267Z&quot;}}" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fields <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">49</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> magnetization_curve(J1_bonds, J2_bonds, sites):</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [np.mean(<span class="bu">list</span>(ground_state(h, J1_bonds, J2_bonds, sites)[<span class="dv">0</span>].values())) <span class="cf">for</span> h <span class="kw">in</span> fields]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>m_clean <span class="op">=</span> magnetization_curve(J1_bonds, J2_bonds, sites)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="fl">7.5</span>, <span class="fl">4.3</span>))</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>plt.plot(fields, m_clean, <span class="st">"o-"</span>, color<span class="op">=</span><span class="st">"royalblue"</span>, ms<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> level <span class="kw">in</span> (<span class="op">-</span><span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>):</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    plt.axhline(level, color<span class="op">=</span><span class="st">"grey"</span>, ls<span class="op">=</span><span class="st">":"</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="op">-</span><span class="fl">5.9</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">3</span> <span class="op">+</span> <span class="fl">0.04</span>, <span class="st">"m = 1/3"</span>, color<span class="op">=</span><span class="st">"grey"</span>)<span class="op">;</span> plt.text(<span class="fl">4.3</span>, <span class="op">-</span><span class="dv">1</span><span class="op">/</span><span class="dv">3</span> <span class="op">-</span> <span class="fl">0.1</span>, <span class="st">"m = −1/3"</span>, color<span class="op">=</span><span class="st">"grey"</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"magnetic field  h"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"magnetization  m"</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Clean 12×12 Shastry–Sutherland lattice"</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)<span class="op">;</span> plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Frustrated Magnets via Annealing_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Clear <strong>staircase</strong>: a plateau at <strong>m = 0</strong>, a wide plateau at <strong>m = 1/3</strong>, then saturation at <strong>m = 1</strong> (everything up). The 1/3 plateau means exactly 1 in 3 spins effectively points down in a stable, repeating pattern. Let’s see what that pattern looks like:</p>
+<div id="1fb8634d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T01:01:43.738169Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T01:01:43.737869Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T01:01:44.168099Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T01:01:44.166596Z&quot;}}" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>spins_13, _ <span class="op">=</span> ground_state(<span class="fl">3.0</span>, J1_bonds, J2_bonds, sites)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"h = 3.0  -&gt;  m = </span><span class="sc">{</span>np<span class="sc">.</span>mean(<span class="bu">list</span>(spins_13.values()))<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">4.4</span>))</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>draw_lattice(L, J1_bonds, J2_bonds, axes[<span class="dv">0</span>], spins<span class="op">=</span>[spins_13[i] <span class="cf">for</span> i <span class="kw">in</span> sites])</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"1/3-plateau state"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].imshow(spin_image(spins_13, L).T, cmap<span class="op">=</span>SPIN_CMAP, origin<span class="op">=</span><span class="st">"lower"</span>, vmin<span class="op">=-</span><span class="dv">1</span>, vmax<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"as an image: a regular stripe pattern"</span>)<span class="op">;</span> axes[<span class="dv">1</span>].axis(<span class="st">"off"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()<span class="op">;</span> plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>h = 3.0  -&gt;  m = 0.333</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Frustrated Magnets via Annealing_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="real-materials-have-defects" class="level2">
+<h2 class="anchored" data-anchor-id="real-materials-have-defects">5. Real materials have defects</h2>
+<p>Real crystals are never perfect. Two kinds of damage:</p>
+<ul>
+<li><strong>Site defects</strong> — a magnetic atom is missing (a vacancy)</li>
+<li><strong>Bond defects</strong> — a coupling between two atoms is broken</li>
+</ul>
+<p>Frustrated systems are <em>very</em> sensitive to this, because so many states are nearly tied — a small defect can tip the balance. Let’s randomly delete sites and bonds and redo the sweep:</p>
+<div id="74a817f3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T01:01:44.170569Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T01:01:44.170369Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T01:02:04.458387Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T01:02:04.456971Z&quot;}}" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_defects(site_frac, bond_frac, seed<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.default_rng(seed)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    removed <span class="op">=</span> <span class="bu">set</span>(rng.choice(L <span class="op">*</span> L, <span class="bu">int</span>(site_frac <span class="op">*</span> L <span class="op">*</span> L), replace<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    keep_site <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(L <span class="op">*</span> L) <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> removed]</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    ok <span class="op">=</span> <span class="kw">lambda</span> b: b[<span class="dv">0</span>] <span class="kw">not</span> <span class="kw">in</span> removed <span class="kw">and</span> b[<span class="dv">1</span>] <span class="kw">not</span> <span class="kw">in</span> removed <span class="kw">and</span> rng.random() <span class="op">&gt;</span> bond_frac</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [b <span class="cf">for</span> b <span class="kw">in</span> J1_bonds <span class="cf">if</span> ok(b)], [b <span class="cf">for</span> b <span class="kw">in</span> J2_bonds <span class="cf">if</span> ok(b)], keep_site</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>cases <span class="op">=</span> [(<span class="fl">0.00</span>, <span class="fl">0.00</span>), (<span class="fl">0.05</span>, <span class="fl">0.05</span>), (<span class="fl">0.10</span>, <span class="fl">0.15</span>), (<span class="fl">0.20</span>, <span class="fl">0.30</span>)]</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="fl">4.8</span>))</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (fs, fb), color <span class="kw">in</span> <span class="bu">zip</span>(cases, [<span class="st">"royalblue"</span>, <span class="st">"seagreen"</span>, <span class="st">"darkorange"</span>, <span class="st">"crimson"</span>]):</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> magnetization_curve(<span class="op">*</span>add_defects(fs, fb))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    plt.plot(fields, m, <span class="st">"o-"</span>, ms<span class="op">=</span><span class="dv">3</span>, color<span class="op">=</span>color, label<span class="op">=</span><span class="ss">f"sites </span><span class="sc">{</span>fs<span class="sc">:.0%}</span><span class="ss">, bonds </span><span class="sc">{</span>fb<span class="sc">:.0%}</span><span class="ss"> removed"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, color<span class="op">=</span><span class="st">"grey"</span>, ls<span class="op">=</span><span class="st">":"</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"magnetic field  h"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"magnetization  m"</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Defects smear out the plateaus"</span>)<span class="op">;</span> plt.legend(fontsize<span class="op">=</span><span class="dv">9</span>)<span class="op">;</span> plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)<span class="op">;</span> plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Frustrated Magnets via Annealing_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As the defect concentration grows, the sharp steps titlt and shift With heavy damage the clean plateau structure is essentially gone. That’s a hint that the type of critical behaviour itself is changing.</p>
+<div id="9e7ea81c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T01:02:04.460302Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T01:02:04.460125Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T01:02:05.104985Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T01:02:05.103059Z&quot;}}" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(cases), figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="fl">3.4</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (fs, fb) <span class="kw">in</span> <span class="bu">zip</span>(axes, cases):</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    b1, b2, keep <span class="op">=</span> add_defects(fs, fb)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    s, _ <span class="op">=</span> ground_state(<span class="fl">3.0</span>, b1, b2, keep)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> np.zeros((L, L))                                <span class="co"># 0 = missing atom (white)</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> keep: img[<span class="bu">divmod</span>(i, L)] <span class="op">=</span> s[i]</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    ax.imshow(img.T, cmap<span class="op">=</span>SPIN_CMAP, origin<span class="op">=</span><span class="st">"lower"</span>, vmin<span class="op">=-</span><span class="dv">1</span>, vmax<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"sites </span><span class="sc">{</span>fs<span class="sc">:.0%}</span><span class="ss">, bonds </span><span class="sc">{</span>fb<span class="sc">:.0%}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span> ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Spin patterns at h = 3 (white = missing atom): order breaks up as defects grow"</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()<span class="op">;</span> plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Frustrated Magnets via Annealing_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="where-this-is-going-letting-machine-learning-read-the-pictures" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-is-going-letting-machine-learning-read-the-pictures">6. Where this is going: letting machine learning read the pictures</h2>
+<p>Physicists sort phase transitions into <strong>universality classes</strong> — families that behave the same way near the transition regardless of microscopic details. Our question: <em>do enough defects create a new one?</em></p>
+<p>Those spin-pattern images above are exactly what a machine-learning classifier can learn from. The plan (ongoing work):</p>
+<ol type="1">
+<li>Generate many such images with the annealer and with DMRG (a precise classical method) for clean and defected lattices</li>
+<li>Label them by class: <strong>clean 2D Ising</strong>, <strong>random-field Ising</strong>, or <strong>defect-dominated</strong></li>
+<li>Train a classifier to recognise the class directly from the spin patterns</li>
+<li>Move to the D-Wave Advantage 2 QPU to generate data a classical computer struggles with</li>
+</ol>
+</section>
+<section id="try-it-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-yourself">Try it yourself</h2>
+<ul>
+<li>Change <code>J2</code> (try <code>1.0</code>, <code>2.0</code>, <code>3.0</code>) — do the plateaus move or disappear?</li>
+<li>Try different defect fractions or seeds in <code>cases</code></li>
+<li>Swap in the QPU sampler above if you have a Leap account</li>
+</ul>
+<section id="references" class="level3">
+<h3 class="anchored" data-anchor-id="references">References</h3>
+<ul>
+<li>P. Kairys <em>et al.</em>, <em>Simulating the Shastry–Sutherland Ising model using quantum annealing</em>, PRX Quantum <strong>1</strong>, 020320 (2020)</li>
+<li>B. S. Shastry &amp; B. Sutherland, <em>Exact ground state of a quantum mechanical antiferromagnet</em>, Physica B+C <strong>108</strong>, 1069 (1981)</li>
+<li>S. Basak <em>et al.</em>, <em>Deep learning Hamiltonians from disordered image data in quantum materials</em>, Phys. Rev.&nbsp;B <strong>107</strong>, 205121 (2023)</li>
+<li>M. W. Johnson <em>et al.</em>, <em>Quantum annealing with manufactured spins</em>, Nature <strong>473</strong>, 194 (2011)</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
